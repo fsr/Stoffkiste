@@ -1,0 +1,143 @@
+% "THE BEER-WARE LICENSE" (Revision 42):
+%
+% <timklge@wh2.tu-dresden.de> wrote this file. As long as you
+% retain this notice you can do whatever you want with this stuff.
+% If we meet some day, and you think this stuff is worth it,
+% you can buy me a beer in return - Tim Kluge
+
+\documentclass[12pt,landscape]{article}
+\usepackage{multicol}
+\usepackage{calc}
+\usepackage{delarray}
+\usepackage{amssymb}
+\usepackage[landscape]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{color}
+\usepackage{amsmath}
+% \usepackage[compact]{titlesec}
+
+\pagestyle{empty}
+\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm}
+
+\makeatletter
+
+\makeatother
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+
+\footnotesize
+\begin{multicols}{3}
+
+\begin{center}
+     \Large{\textbf{Mathe 3 Cheatsheet}} \\
+     \small{Bodo Baumann}
+\end{center}
+
+\section{Algebra}
+\paragraph{Halbgruppen} Halbgruppe ist definiert als $(H, \circ)$, also einer Operation $\circ$ über einer Trägermenge $H$, wobei $\forall a, b, c \in H : a \circ (b \circ c) = (a \circ b) \circ c$ (Ggf. Kommutativ). Jede endliche Halbgruppe, in der die Kürzungsregeln von unten gelten, ist eine Gruppe. Gibt es ein linksneutrales und linksinverses Element in einer Halbgruppe, ist diese eine Gruppe (analog: rechts).
+\paragraph{Monoid} Existiert ein neutrales Element $e \in H$ mit $\forall a \in H : a = e \circ a = a \circ e$, so ist $H$ Monoid (und Halbgruppe mit neutralem Element $e$)
+\paragraph{Unterhalbgruppe} Sei $U \subseteq H$ mit $a, b \in U \Rightarrow a \circ b \in U$. $b \in H$ ist das Inverse zu $a \in H$, falls gilt $a \circ b = b \circ a = e$ (höchstens ein Inverses pro Element)
+\paragraph{Gruppe} Sei $H*$ die Menge der invertierbaren Elemente in $H$, dann ist $G = (H, \circ)$ eine Gruppe, falls $H* = H$. Abelsche Gruppe = Kommutative Gruppe. Zur Invertierung gilt:
+\begin{eqnarray}
+ e \in H*, e^{-1} = e \\
+ a \in H* \Rightarrow a^{-1} \in H*, (a^{-1})^{-1} = a \\
+ a, b \in H* \Rightarrow a \circ b \in H*, (a \circ b)^{-1} = b^{-1} \circ a^{-1}
+\end{eqnarray}
+Es gelten die Kürzungsregeln:
+\begin{eqnarray}
+\forall a, x_1, x_2 \in G : a \circ x_1 = a \circ x_2 \Rightarrow x_1 = x_2 \\
+\forall a, x_1, x_2 \in G : y_1 \circ a = y_2 \circ a \Rightarrow y_1 = y_2
+\end{eqnarray}
+In jeder Gruppe sind alle Gleichungen mit $a \circ x = b$ und $y \circ a = b$ mit $a, b \in G$ eindeutig lösbar. Eine zyklische Gruppe wird bloß von einem Element aufgespannt.
+ mit Ring $\rightarrow$ kommutativer Ring $\rightarrow$ Integritätsring $\rightarrow$ Körper
+\paragraph{Kongruenzrelation} Relation, die Trägermenge einer Halbgruppe in disjunkte Äquivalenzklassen einteilt (Reflexiv, Symetrisch, Transitiv, Invariant). Invariant: $\forall (a,b),(c,d) \in R \Rightarrow (a \circ c, b \circ d) \in R$, 
+\paragraph{Permutationen} Bijektive Abbildungen aus einer Menge auf die Menge. Invertierung durch Tauschen der Zeilen in der 2-Zeilen-Form, in der Zyklenschreibweise durch Spiegelung, $(1, 5, 6)$ wird zu $(6, 5, 1)$. Produkt zweier Permutationen in Zyklenschreibweise: \[(1, 3, 5, 4) \circ (3, 4, 1, 2, 5) = \begin{pmatrix}
+3 & 4 & 1 & 2 & 5 \\
+1 & 3 & 2 & 4 & 5
+\end{pmatrix}\]. Dabei wird der hintere Zyklus durchlaufen, zunächst 3 auf 4 zugeordnet. Im vorderen Zyklus wird 4 zu 1 zugeordnet. Daher wird im Produkt 3 zu 1 zugeordnet. Eine Permutation ist genau dann gerade die Anzahl gerader Zyklen gerade ist, d. h. wenn die Anzahl an Transpositionen gerade ist.
+\paragraph{Stabilisator} Stabilisator als neutrales Element bei Gruppenhomomorphismen, Bahn beschreibt alle "Positionen", die ein Element bei der Abbildung einnehmen kann
+\paragraph{Ring} Für $(R; +, *)$ mit $+, *$ als Operationen auf einer Menge $R$ muss gelten:
+\begin{eqnarray}
+a + (b + c) = (a + b) + c \forall a,b,c \in R \\
+\exists 0 \in R: a + 0 = 0 + a = a \forall a \in R \\
+\forall a \in R: \exists b \in R, a + b = b + a = 0 \\
+a + b = b + a \forall a, b \in R \\
+a * (b * c) = (a * b) * c \forall a, b, c \in R \\
+a * (b + c) = a * b + a * c \\
+(b + c) * a = b * a + c * a \forall a, b, c \in R
+\end{eqnarray}
+\paragraph{Kommutativer Ring} Ist Ring und es gilt $a * b = b * a \forall a, b \in R$ ($+$ muss sowieso kommutativ sein in jedem Ring)
+\paragraph{Unterring-Kriterium} $(S; +, *)$ ist dann ein Unterring von $(R; +, *)$, wenn $S \subseteq R$ mit $\forall a, b \in S: a + b \in S, a * b \in S$ (Abgeschlossenheit der beiden Operationen) und $\forall a \in S: \exists -a \in S$ (Inverses der Addition). Für endliche Ringe muss nur die Abgeschlossenheit gezeigt werden.  $S$ nicht leer.
+\paragraph{Einselelement} Gibt es ein $1 \in R$ mit $1 \neq 0$ und $a * 1 = 1 * a = a \forall a \in R$, dann ist $1$ Einselelement im Ring $(R, +, *)$ (analog zu Nullelement bei der Addition)
+\paragraph{Nullteiler} Auf kommutativem Ring  $S$: $a, b \in R$ gilt $a * b = 0$, dann werden $a$ und $b$ (nicht $0$) Nullteiler genannt.
+\paragraph{Einheit} Auf kommutativem Ring mit Einselelement $S$: $a, b \in R$ gilt $a * b = 1$, dann werden $a$ und $b$ (nicht $0$) Einheiten genannt.
+\paragraph{Integritätsring} Ein kommutativer, nullteilerfreier Ring mit Einselelement ist ein Integritätsring. Jeder endliche Integritätsring ist Körper.
+\paragraph{Körper} Ein kommutativer Ring mit Einselelement ist Körper, wenn wenn jedes vom Nullelement verschiedene Element eine Einheit ist. Jeder Körper ist Integritätsring.
+\paragraph{Faktorringe} Zu je zwei Elementen gibt es einen größten gemeinsamen Teiler im Ring. Wenn man zur Berechnung des ggT den euklidischen Algorithmus benutzen kann, handelt es sich um einen euklidischen Ring
+\paragraph{Polynomring} Polynomring $R[x]$ ist ein Integritätsring, wenn $R$ ein Integritätsring ist, euklidisch, wenn R Körper ist. In Polynomringen sind alle Polynome vom Grad 0 Einheiten. $K[x] / p(x)$ ist Körper gdw $p(x)$ ist irreduzibel in $K[x]$ gdw $p(x)$ hat keine Nullstellen
+\paragraph{Einheitswurzeln} Für einen Körper $GF(2^4)$ (Polynomkörper!) gibt es für alle Teiler von $2^4 - 1 = 15$ $\phi(n)$ primtive Einheitswurzeln. $(x^n)^5 = 1$ sind dann fünfte Einheitswurzeln. Erste mögliche Einheitswurzel ist $x^{\frac{15}{5}} = x^3$. Primitive Einheitswurzeln in Polynomkörpern sind dann $x^n$, wenn $n$ Einheit ist / die vom Element aufgespannte Untergruppe alle Elemente enthält (hier 15). Im Komplexen: $e^{\frac{2\pi ik}{n}}, k = 0, 1, ..., n - 1$ (nte Einheitswurzeln, für $k=1$ primitiv). Vierte Einheitswurzel im Komplexen ist $i$. In $GF(n)$ muss die Untergruppe der primitiven 3. Einheitswurzel 3 Elemente und die 1 enthalten. Die n-te Einheitswurzel $\zeta_n^k$ ist genau dann primitiv, wenn k und n teilerfremd sind. 
+\paragraph{Normalteiler} Die trivialen Untergruppen ${e}$ und $G$ sind Normalteiler in $G$. Ist die Gruppe $G$ abelsch, dann ist jede Untegruppe von $G$ ein Normalteiler. Jede Untergruppe der Ordnung $\frac{1}{2} * G$ ist ein Normalteiler.
+\paragraph{Erweiterter euklidischer Algorithmus}
+ggT wird mit euklidischem Algorithmus bestimmt. In erweiterter Form:\\
+\begin{tabular}{ccccccc}
+	$i$ & $n_i$ & $n_{i+1}$ &  $r$ & $q_i$ & $a_{i+1}$ & $a{_i}$ \\ 
+	1. & \textcolor{red}{238} & \textcolor{blue}{154} & 84 & 1 & \textcolor{blue}{2} & \textcolor{red}{-3} \\ 
+	2. & 154 &  84 & 70 & 1 & -1 & 2 \\ 
+	3. & 84 & 70 & 14 & 1 & 1 & -1 \\ 
+	4. & 70 & 14 & 0 & 5 & 0 & 1 \\ 
+	5. & 14 & 0 & &  & 1 & 0 \\ 
+\end{tabular}\\
+Hier ist $ggT(238, 154) = 14$\\
+$a_i = a_{i+2} - q_i * a_{i+1}$ (In Polynomkörper + !)\\
+%$q_i = n_i \div n_{i+1}$\\
+\paragraph{Horner-Schema} Nullstellenberechnung: Nullstelle rausfinden und Hornerschema ausführen mit Nullstelle als x. Ableitung: Funktionswert als Rest bei der ersten Iteration, dann erste Ableitung etc. Ergebnis am Ende * Fakultät der Ableitung. $p(x) = q(x) * (x - x_0) + p(x_0)$
+\paragraph{Schnelle Multiplikation} Grad beider Polynome multipliziert + 1.
+\paragraph{Differentialgleichungssysteme} Allgemeine Lösung des DGL-Systems, wenn reell:
+\[
+\begin{pmatrix}
+x(t) \\
+y(t)
+\end{pmatrix} = c_1 \vec{e_1} e^{t{\lambda}_1} + c_2 \vec{e_2} e^{t{\lambda}_2}
+\]
+Dabei sind $c_1, c_2 \in R$ beliebig und $\vec{e_n}$ die Einheitsvektoren mit ${\lambda}_n$ als den zugehörigen Einheitswerten. 
+Allgemeine Lösung des DGL-Systems wenn $\lambda = a \pm i \beta$ komplexer Eigenwert der Vielfachheit 1 und $v = a + ib$ der zugehörige Vektor ist, dann gilt:
+\[
+\begin{pmatrix}
+x(t) \\
+y(t)
+\end{pmatrix} = e^{\alpha t} \{  c_1 (a \cos(\beta t) - b \sin(\beta t)) + c_2 (b \cos(\beta t) + a \sin (\beta t))
+\} 
+\]
+\paragraph{Wahrscheinlichkeitsraum} Wahrscheinlichkeitsraum $(\Omega, p)$ mit Menge $\Omega := {\omega_1, \omega_2, \omega_3...}$ wobei $\omega_n$ ein Elementarereignis ist und $p$ einem Elementarereignis eine Wahrscheinlichkeit zuordnet. Teilmengen von $\Omega$ sind Ereignisse. Wahrscheinlichkeitsrau ist dann $(\Omega, A, P)$, der ein Zufallsexperiment beschreibt (hier mit $A$ als Menge der Ereignisse). Vollständiges Ereignisfeld: Die Summe aller Wahrscheinlichkeiten ist immer 1, alle Ereignisse sind disjunkt.
+\paragraph{Unabhängige Ereignisse} $A$ und $B$ sind dann unabhängig, wenn gilt $p(A \bigcap B) = p(A) * p(B)$. Wahrscheinlichkeit von $B$ unter der Bedingung $A$: $p(A|B) := \frac{p(A \bigcap B)}{p(B)}$. Gesetz der totalen Wahrscheinlichkeit (Nur ausführbar, wenn $\bigcup^{\infty}_{j=1} B_j = \Omega$): $P(A) = \sum_{j=1}^{\infty} = P(A|B_j) * P(B_j)$
+\paragraph{Negative Binomialverteilung} Beschreibt die Anzahl der Versuche, die erforderlich sind, um in einem Bernoulli-Prozess eine vorgegebene Anzahl von Erfolgen zu erzielen. $r > 0$: Anzahl Erfolge bis zum Abbruch, $p \in (0,1)$: Einzel-Erfolgs-Wahrscheinlichkeit.
+\paragraph{Hypergeometrische Verteilung} Einer dichotomen Grundgesamtheit werden in einer Stichprobe zufällig n Elemente ohne Zurücklegen entnommen. Die hypergeometrische Verteilung gibt dann Auskunft darüber, mit welcher Wahrscheinlichkeit in der Stichprobe eine bestimmte Anzahl von Elementen vorkommt, die die gewünschte Eigenschaft haben
+\subsection{Kanonische Darstellung und Teiler}
+\begin{itemize}
+	\item Primfaktorzerlegung ist kanonische Darstellung, bswp. 22: $22 = 2^1 * 11^1$. 3 teilt $n \in \mathbb{N}$, wenn Quersumme durch 3 teilbar ist. 7 teilt $n \in \mathbb{N}$ dann, alternierende 3er-Quersumme durch 7 teilbar ist. 11 teilt $n \in \mathbb{N}$, wenn alternierende Quersumme durch 11 teilbar ist. Bspw. 61259: $6 - 1 + 2 - 5 + 9 = 11 \surd$
+	\item Anzahl Teiler von $n$: Summe der Exponenten der Primfaktoren, jeweils + 1, bspw. 22: $teilerzahl(22) = (1+1)*(1+1) = 4$ (nämlich 2, 11, 1, 22)
+	\item Anzahl teilerfremder Zahlen zu $n$: Eulersche $\varphi$-Funktion. Für $n \in \mathbb{N}$ mit den Primfaktoren $p_1^a ... p_k^l$: $\varphi(n)=n*(1-\frac{1}{p_1})*(1-\frac{1}{p_2})*...*(1-\frac{1}{p_k})$ (p sind also immer die Basen)
+	\item Paar Primzahlen: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499, 503, 509, 521, 523, 541, 547, 557, 563, 569, 571, 577, 587, 593, 599, 601, 607, 613, 617, 619, 631, 641, 643, 647, 653, 659, 661, 673, 677, 683, 691, 701, 709, 719, 727, 733, 739, 743, 751, 757, 761, 769, 773, 787, 797, 809, 811, 821, 823, 827, 829, 839, 853, 857, 859, 863, 877, 881, 883, 887, 907, 911, 919, 929, 937, 941, 947, 953, 967, 971, 977, 983, 991, 997, 1009, 1013, 1019, 1021, 1031, 1033, 1039, 1049, 1051, 1061, 1063, 1069, 1087, 1091, 1093, 1097, 1103, 1109, 1117, 1123, 1129, 1151, 1153, 1163, 1171, 1181, 1187, 1193, 1201, 1213, 1217, 1223, 1229, 1231, 1237, 1249, 1259, 1277, 1279, 1283, 1289, 1291, 1297, 1301, 1303, 1307, 1319, 1321, 1327, 1361, 1367, 1373, 1381, 1399, 1409, 1423, 1427, 1429, 1433, 1439, 1447, 1451, 1453, 1459, 1471, 1481, 1483, 1487, 1489, 1493, 1499, 1511, 1523, 1531, 1543, 1549, 1553, 1559, 1567, 1571, 1579, 1583, 1597, 1601, 1607, 1609, 1613, 1619, 1621, 1627, 1637, 1657, 1663, 1667, 1669, 1693, 1697, 1699, 1709, 1721, 1723, 1733, 1741, 1747, 1753, 1759, 1777, 1783, 1787, 1789, 1801, 1811, 1823, 1831, 1847, 1861, 1867, 1871, 1873, 1877, 1879, 1889, 1901, 1907, 1913, 1931, 1933, 1949, 1951, 1973, 1979, 1987, 1993, 1997, 1999
+\paragraph{Substitution} Gesucht sei 
+\[
+ \int \frac{1}{5x - 7} dx = ?
+\]
+Dann kann $5x - 7$ substituiert werden:
+\[
+	z = 5x - 7
+\]
+Nun ist $\frac{dz}{dx} = 5$ und damit $dx = \frac{dz}{5}$. Substituieren:
+\[
+ \int \frac{1}{5x - 7} dx = \int \frac{1}{z} * \frac{dz}{5}
+\]
+\[
+	\int \frac{1}{z} * \frac{dz}{5} = \frac{1}{5} \int \frac{1}{z} dz = \frac{1}{5} \ln |z| + C
+\]
+Rücksubstitution:
+\[
+	\frac{1}{5} \ln |z| + C = 	\frac{1}{5} \ln |5x - 7| + C
+\]
+\end{itemize}
+\end{multicols}
+\end{document}

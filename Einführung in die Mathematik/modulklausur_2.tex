@@ -1,0 +1,219 @@
+% "THE BEER-WARE LICENSE" (Revision 42):
+%
+% <timklge@wh2.tu-dresden.de> wrote this file. As long as you
+% retain this notice you can do whatever you want with this stuff.
+% If we meet some day, and you think this stuff is worth it,
+% you can buy me a beer in return - Tim Kluge
+
+\documentclass[12pt,landscape]{article}
+\usepackage{multicol}
+\usepackage{calc}
+\usepackage{delarray}
+\usepackage{amssymb}
+\usepackage[landscape]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{color}
+\usepackage{amsmath}
+% \usepackage[compact]{titlesec}
+
+\pagestyle{empty}
+\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm}
+
+\makeatletter
+
+\makeatother
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+
+\footnotesize
+\begin{multicols}{3}
+
+\begin{center}
+     \Large{\textbf{Mathe 1 Cheatsheet}} \\
+     \small{Für Modulklausur (Ganter, Noack)}
+\end{center}
+
+\section{Lineare Algebra}
+\begin{itemize}
+\item Lineare Abbildung ist injektiv, wenn Kern nur den Nullvektor enthält, $A\vec{x} = \vec{0}$ hat nur triviale Lösung), jede Spalte von $A$ ist Pivotspalte
+\item Lineare Abbildung ist surjektiv, wenn Abbildungsmatrix vollen Zeilenrang hat (Jede Zeile von A enthält eine Pivotposition), $A\vec{x} = \vec{b}$ ist für jedes x lösbar. Anzahl an Zeilen, die nicht 0 sind, ist Zeilenrang.
+\item Ähnliche Matrizen: $A$ und $B$ über $K$ sind ähnlich, wenn es eine Matrix $P$ gibt mit $B = P^{-1}AP$, äquivalent wenn es eine Matrix gibt mit $PB = AP$
+\item Lineare Abbildung ist bijektiv, wenn invertierbar /
+\item Isomorphimus: Bijektiv und linear
+\item Homomorphismus: Linear
+\item Dimension: Anzahl linear unabhängiger Spalten
+\item Spaltenrang / Rang = Dimension des Spaltenraums, d. h. Anzahl Pivotspalten. Errechnen mit Gauss.
+\item Kern einer Abbildung: Alle Vektoren, die auf den Nullvektor abgebildet werden
+\item Defekt: Dimension des Kerns einer Matrix
+\item Rangsatz / Dimensionssatz für eine Abbildung $V \rightarrow W$: $\dim V = rang(f) + def(f)$, 
+\item Charakteristische Polynom: Determinante der (Matrix - $\lambda$ mal Eigenwert) (auf der Diagonalen), Nullstellen sind Eigenwerte der Matrix. Algebraische Vielfachheit der Eigenwerte gibt an, wie oft der gleiche Eigenwert vorkommt (Für alle Eigenwerte aufstellen). Geometrische Vielfachheit eines Eigenwertes ist größer oder gleich 1 und stets kleiner oder gleich seiner algebraischen Vielfachheit.
+\item Eigenvektor: Matrix * Vektor ergibt den Vektor mal Faktor (Linear abhängig)
+\item Nachweis von Linearität: f ist homogen: $f(ax) = af(x)$, f ist additiv: $f(x + y) = f(x) + f(y)$
+\item Bestimmung von Eigenvektoren (Für jeden Eigenwert): (Matrix - $\lambda  * E$ = 0) lösen (Kern berechnen), dann parametrische Vektorform, Spannraum daraus ist Eigenraum $E_A(\lambda)$. Die Dimension davon ist die geometrische Vielfachheit von $\lambda$. 
+\item Matrix ist diagonalisierbar, wenn alle Eigenräume aufstellbar sind und die algebraischen Vielfachheiten der Eigenwerte die Spaltenanzahl sind (algebraische Vielfachheit = geometrische Vielfachheit für jeden Eigenwert) und alle Eigenwerte reell sind
+\item Diagonalisierung einer Matrix $A$: $n$ Eigenwerte berechnen, alle Eigenräume aufstellen (Basen). Wenn die Anzahl der Vektoren in den Basen $n$ entsprechen, bilden alle als Spalten die Matrix P. Ansonsten nicht diagonalisierbar. Ist $A$ diagonalisierbar, so ist $A = P * D * P^{-1}$. In D sitzen die die Eigenwerte auf der Diagonalen, ansonsten ist sie leer.
+\item Abbildungsmatrix aufstellen (beispielhaft für Abbildung von $\mathbb{R}^3 \rightarrow \mathbb{R}^2$):
+\[\begin{pmatrix}
+2x - 3y \\ x - 2y + z
+\end{pmatrix})
+\]
+Wird zu:
+\[\begin{pmatrix}
+2 & -3 & 0 \\
+1 & -2 & 1
+\end{pmatrix}
+\]
+\item Abbildungsmatrix aufstellen, wenn zwei Werte bekannt sind: Abbildungsmatrix multipliziert mit Urbild ergibt Bild, d. h. 
+\end{itemize}
+\subsection{Basiswechsel}
+Basiswechsel / Transformation von einer Basis $A$ nach Basis $B$ $W^A_B$: Vektoren der Basis $A$ werden als Linearkombination der Vektoren der Basis $B$ dargestellt. Die Faktoren in einer Zeile sind dann je die Spalten der Basiswechselmatrix.\\
+Um Vektor von einer Basis in eine andere zu überführen, diesen in Koordinatenform der ersten Basis ausdrücken, mit der Basiswechselmatrix multiplizieren und mit der neuen Basis multiplizieren.
+\subsection{Transformationen}
+\begin{itemize}
+\item Rotation: $\begin{pmatrix}
+\cos \alpha & -\sin \beta \\ \sin \alpha & \cos \alpha 
+\end{pmatrix}\begin{pmatrix}
+x \\ y
+\end{pmatrix}$
+\item Scherung: $\begin{pmatrix}
+1 & s \\ 0 & 1
+\end{pmatrix}\begin{pmatrix}
+x \\ y
+\end{pmatrix}$
+\item Skalierung: $\begin{pmatrix}
+a & 0 \\ 0 & b
+\end{pmatrix}$
+\end{itemize}
+\subsection{Determinante}
+Determinante bei 4x4-Matrizen mit Matrixentwicklungssatz berechnen (nach einer Spalte / Zeile), bei 2x2 Matrizen mit der Formel \[ det \begin{vmatrix}a & b \\ c & d\end{vmatrix} = ad - bc \]\\
+Bei 3x3-Matrizen Satz von Sarruz.
+\begin{itemize}
+\item Determinante nicht 0: Quadratische Matrix invertierbar
+\item Determinante ist Produkt aller Eigenwerte.
+\end{itemize}
+\subsection{Gram Schmidt-Verfahren}
+\begin{itemize}
+\item Dient der Bildung einer Orthogonalbasis (\textit{nicht} orthonormal) aus einer anderen Basis
+\item Bildung aus Basis $w_1, ... , w_2$: $v_1$ = $w_1$, $v_2 = w_2 - \frac{<v_1, w_2>}{<v_1, v_1>} * v_1$, $v_3 = w_3 - \frac{<v_1, w_3>}{<v_1, v_1>} * v_1 - \frac{<v_2, w_3>}{<v_2, v_2>} * v_2$; d. h. $v_n = w_n - \frac{<v_1, w_n>}{<v_1, v_1>} * v_1 - \frac{<v_2, w_2>}{<v_2, v_2>} - \frac{<v_{n-1}, w_{n-1}>}{<v_{n-1}, v_{n-1}>} * v_{n-1}$
+\item Vektor $u$ als Projektion von $y$ zur Basis $c_1, c_2$: $\frac{<c_1, y>}{<c_1, c_1>} * c_1 + \frac{<c_2, y>}{<c_2, c_2>} * c_2$
+\end{itemize}
+\section{Diskrete Strukturen}
+\subsection{Square and Multiply}
+Zum Ausrechnen von $a^b$ in $\mathbb{Z}_c$, Square and Multiply anwenden: $b$ binär ausdrücken (durch 2 dividieren, Rest ). Für jede 1 dann Square+Multiply ausführen, für 0 Multiply - $(1^2)*a$ [...]
+\subsection{RSA PublicKey-Krypto}
+Ablauf: Alice überlegt sich Primzahlen $p$, $q$, $n = pq$ und $m = (p - 1)(q - 1)$, bspw. $n = 77$, $m = 60$ (Privat: $p = 7$, $q = 11$). Dann eine zu $m$ teilerfremde Zahl $a$, bspw. $a = 23$. $n$ und $a$ ist öffentlicher Schlüssel.\\
+Alice überlegt sich $b = a^{-1} mod m$ als privaten Schlüssel (bspw. $b = 47$).
+Bob verschlüsselt $x < n$ mit $y = x^a mod n$ (bspw. $y = 44$). Alice entschlüsselt mit $x = y^b mod n = 11$.
+\subsection{Komplexe Zahlen}
+$\mathbb{C}$ ist Menge der komplexen Zahlen, die aus einem realen und einem imaginären Teil bestehen ($a + bi$). Es gilt $i = (-1)^2$ (imaginäre Einheit), $i^2 = -1$, $i^3 = -i$, $i^4 = 1$, $i^5 = i$, $i^6 = -1$, $i^7 = -i$, $i^8 = 1$. Die Grundrechenarten sind definiert als:
+\begin{enumerate}
+\item Addition / Subtraktion: $(a_1 + b_1i) + (a_2 + b_2i) = (a_1 + a_2) + (b_1 + b_2)i$
+\item Multiplikation: $(a_1 + b_1i) * (a_2 + b_2i) = (a_1a_2 - b_1b_2) + (a_1b_2 + a_2b_1)i$
+\item Betrag: $|z| := \sqrt{a^2 + b^2}$
+\item Komplexe Konjugation: $\overline{z} := a - bi$
+\item Division: $\frac{a_1 + b_1i}{a_2 + b_2i} = \frac{a_1a_2 + b_1b_2}{a_2^2 + b_2^2} + i * \frac{a_2b_1 - a_1b_2}{a_2^2 + b_2^2}$ oder $\frac{z_1}{z_2} = \frac{z_1*\overline{z_2}}{z_2*\overline{z_2}} = \frac{z_1 * \overline{z_2}}{|z_2|^2}$
+\item $\sqrt[n]{z} = \sqrt[n]{r} * e^{i\frac{\theta+2k\pi}{n}}$, k von 0 bis $n - 1$ für $z = re^{i\theta}$
+\item Quadratische Gleichungen: $-\frac{p}{2} \pm \sqrt{\frac{p}{2}^2 - q}$, Mitternachtsformel: $-b \pm \frac{\sqrt{b^2 -4ac}}{2a}$
+\end{enumerate}
+Polarkoordinaten:
+\begin{itemize}
+\item Komplexe Zahl $z = a + bi$ mit Betrag $r = |z|$, Winkel $\theta$ an der reellen positiven Achse
+\item $a = r\cos \theta$, $b = r\sin \theta$, d. h. $z = r(\cos \theta + i\sin \theta)$
+\item Bei der komplexen Multiplikation multiplizieren sich die Beträge und addieren sich die Winkel
+\item Exponentialschreibweise $e^{ix} = \cos x + i * \sin y$, da die Potenzreihen von $e^{ix}$ gegen die von $\cos x$ + $i * \sin x$ konvergiert
+\item Die schönste Formel der Welt: $e^{ix} + 1 = 0$
+\item $\bigl(\begin{smallmatrix}a & b \\ -b & a\end{smallmatrix} \bigr)$ als Darstellung für komplexe Zahlen möglich (2x2-Matrizen in $\mathbb{R}$), da Multiplikation einer reellen Zahl mit $re^{i\theta}$ eine Drehsteckung darstellt
+\end{itemize}
+\subsection{Relationen}
+\begin{itemize}
+\item Reflexiv: Jedes Element steht mit sich selbst in Relation
+\item Irreflexiv: Kein Element steht mit sich selbst in Relation
+\item Symmetrisch: Wenn $(a, b)$ in Relation sind, immer auch $(b, a)$
+\item Antisymmetrisch: Wenn $(a, b)$ in Relation sind, sind $(b, a)$ \textbf{nie} in Relation
+\item Konnex: Wenn $(a, b)$ nicht in $R$ sind und $a$ nicht $b$ ist, dann ist immer $(b, a)$ drin
+\item Transitiv: Wenn $(a, b)$ in Relation sind, sind $(b, c)$ auch in Relation
+\item Äquivalenzrelation: Reflexive, Transitive und Symetrisch
+\item Relationenprodukt $R;S$ aus $R$ und $S$: Wenn $(a, b)$ in $R$ und $(b, c)$ in $S$, dann $(a, c)$ in $R;S$
+\item Kern $ker$ einer Abbildung $f$: Setzt alle Elemente $(a, b)$ von $f$ in Relation, für die $f(a) = f(b)$, immer Äquivalenzrelation
+\item Äquivalenzklasse eines Elements $a$ über einer Relation $R$: Alle Elemente, mit denen $a$ in Relation steht $(a, b)$
+\item Faktormenge: Menge aller Äquivalenzklassen
+\end{itemize}
+Ferner:
+\begin{itemize}
+\item Eine \textbf{partition} ist eine Menge $P$ nicht leerer Teilmengen von $A$, die paarweise disjunkt sind und deren Vereinigung $A$ ist. Die Elemente von $P$ sind die Klassen von $P$.
+\item Eine Äquivalenzrelation ist feiner oder gleich wie eine andere Äquivalenzrelation auf derselben Menge, wenn sie eine Teilmenge davon ist (gröber entsprechend anders herum).
+\item Ein Split ist eine Partition einer Menge $A$ in zwei Klassen (Anzahl Splits: $2^{|A|-1} - 1$, Menge aller Splits: Splits). Split ist verträglich mit Äquivalenzrelation, wenn er sie vergröbert.
+\item Binomialkoeffizient: Wie viele verschiedene Arten kann man $k$ Objekte aus einer Menge von $n$ verschiedenen Objekten auswählen:
+\[\begin{pmatrix}n \\ k\end{pmatrix} = \frac{n!}{k! * (n - k)!}\]
+\item Wieviele Partitionen einer $n$-elementigen Menge in $k$ Klassen: Stirling-Zahlen zweiter Art:
+\begin{enumerate}
+\item $S(n,k) = 0$, wenn n < k
+\item $S(n, n) = 1 = S(n, 1)$
+\item $S(n, k) = S(n - 1, k - 1) + kS(n - 1, k)$ für alle $n$ und $k$
+\item $S(n, 2)$: Anzahl Splits einer $n$-elementigen Menge
+\end{enumerate}
+\item Anzahl Partitionen einer $n$-elementigen Menge: Bell-Zahlen für $n >= 1$: 
+\[B_n = \sum_{k=1}^{n}\begin{pmatrix}n - 1 \\ k - 1\end{pmatrix} B_{n-k} \] 
+\item Anzahl Abbildungen von $A$ nach $B$: $|B^A| = |B|^{|A|}$
+\item Anzahl bijektiver Abbildungen von $A$ nach $B$: 0, wenn $|A| \neq |B|$, $n!$, wenn $|A| = |B| = n$
+\item Anzahl injektiver Abbildungen von $A$ nach $B$: 0, falls $|B| > |A|$, sonst $n! * \begin{pmatrix}m \\ n\end{pmatrix} = \frac{m!}{(m - n)!}$
+\item Anzahl surjektiver Abbildungen von $A$ nach $B$: 0, wenn $|A| < |B|$, sonst gleich $m! * S(n,m) = \sum_{i=0}^{m} (-1)^{m-i}\begin{pmatrix}m \\ i\end{pmatrix} i^n$
+\end{itemize}
+\subsection{Ordnungsrelationen}
+\begin{itemize}
+\item Tupel $(A, B)$: A muss vor B fertig sein
+\item In Diagrammen ist unten der Beginn. Ordnungsrelationen sind reflexiv, azyklisch, transitiv, antisymmetrisch.
+\item Transitive Hülle einer Relation ist die Vereinigung aller Relationenprodukte der Relation mit sich selbst (kleinste transitive Relation, die $R$ enthält).
+\item Eine Relation ist genau dann azyklisch, wenn ihre transitive Hülle irreflexiv ist.
+\item Ist $R$ azyklisch auf $J$, dann ist die reflexiv transitive Hülle $trans(R)$ verbunden mit $id_j$ eine Ordnungsrelation.
+\item Lineare Ordnungsrelationen sind konnex.
+\item Ordnungserweiterung: $R_1$ Teilmenge von $R_2$. Ist $R_2$ konnex, bezeichnet man die Erweiterung als linear.
+\item Lemma von Szpilrajn: Relation hat genau dann eine Ordnungserweiterung, wenn $R \ \Delta_j$ azyklisch ist.
+\item Algorithmus von Lawler: Lege zunächst fest, welcher Job als letztes ausgeführt wird. Wähle dazu unter allen Jobs, die bezüglich <= keine Nachfolger haben, eine dessen Verzugskosten für den betreffenden Zeitpunkt minimal sind. Für die verbleibenden Jobs verfahre entsprechend -> minimiert die maximalen Verzugskosten.
+\end{itemize}
+\subsection{Graphen}
+\begin{itemize}
+\item In Bäumen: $|E| = |V| - 1$
+\item Eulersche Polyederformel: $V + F = E + 2$ (Knoten + Flächen = Kanten + 2) in Diagrammen
+\item Graph ist planar, wenn $|E| <= 3 * |V| - 6$; besser: Graph ist nicht planar, wenn er $K_{3,3}$ oder $K_5$ enthält
+\item Anzahl der Bäume mit $n$ Knoten: $n^{n-2}$
+\item Kruskal-Algorithmus: Kante mit kleinstem Gewicht wählen, solange gewählte Kanten kein Gerüst ergeben; Es dürfen nur Kanten so hinzugefügt werden, dass diese keinen Zyklus ergeben
+\item Summe der Knotengerade eines Graphen ist genau doppelt so groß wie die Anzahl seiner Kanten
+\item Dijkstra-Algorithmus: Zwei Tabellen; erste mit links gewählter Kante, rechts mit neu gefundenen Kanten - zweite Tabelle mit Knoten, Weg und Distanz
+\item Graphengerüstsatz: In einem Graphen mit der Ajdazenzmatrix $A$ und der diagonalen Gradmatrix $D$ gibt es $|det(D-A)|$ Gerüste
+\end{itemize}
+\subsection{Eulersche Linien}
+\begin{itemize}
+\item Offene eulersche Linie: Entlang von verschiedenen Kanten alle Knoten eines ablaufen (Haus vom Nikolaus); Geht, wenn alle Knotengrade gerade und genau zwei ungerade sind
+\item Geschlossene eulersche Linie: Von einem Knoten über den Graphen zu selben zurücklaufen; Geht, wenn alle Knotengerade gerade sind
+\item Halmitonscher Kreis: Geschlossener Kantenzug, der alle Knoten genau einmal durchläuft. Graph mit halmitonschem Kreis ist hamiltonsch.
+\item Halmitonscher Weg: Offener Kantenzug, der alle Knoten genau einmal durchläuft
+\item Sei $(V, E)$ ein Graph mit $n >= 3$ Knoten, von denen jeder Knotengrad $>= \frac{n}{2}$ hat. Dann ist $(V, E)$ hamiltonsch
+\end{itemize}
+\subsection{Rechnen mit 0 und 1}
+\begin{itemize}
+\item $p \Rightarrow q = \neg p \vee q$
+\item de Morgan: $\neg (p \wedge q)  = \neg p \vee \neg q$, $\neg (p \vee q)  = \neg p \wedge \neg q$
+\item $x \wedge y =$ NAND(NAND(x,y), NAND(x, y))
+\item $\neg x =$ x NAND x
+\item $x \vee y =$ (x NAND x) NAND (y NAND y)
+\item Konjunktive Normalform: Wo 0 rauskommt: Terme mit UND verknüpfen, negierte einzelne Werte mit ODER verknüpfen
+\item Disjunktive Normalform: Wo 1 rauskommt: Terme mit ODER verknüpfen, einzelne Werte mit UND verknüpfen
+\item ODER mathematisch: $(x_1 * x_2) + x_1 + x_2$
+\end{itemize}
+\subsection{Transportnetze}
+\begin{itemize}
+\item Satz von König: In jedem endlichen bipartiten Graphen ist die größtmögliche Mächtigkeit eines Matchings gleich der kleinsten Anzahl von Knoten, deren Wegnahme die Senke unerreichbar macht (Schnitt)
+\item Maximales Matching mit Markierungsalgorithmus bestimmen: Kanten von der Quelle und zur Senke haben Kapazität 1, Kanten in der Mitte haben als Kapazität Knotenanzahl
+\item Maximaler Fluss = Minimaler Schnitt (Schnitt: So viele Kanten entfernen, dass Senke nicht mehr erreichbar ist), d. h. die errechnete Kapazität der wegstrichenen Kanten ist der maximale Schnitt
+\end{itemize}
+Angabe: $($Kapazität$|$Durchlauf$)$ \\
+Minimale Knotenüberdeckung: Die Knoten, die entfernt werden müssen, sodass alle Wege von der Quelle zur Senke entfernt werden.
+\\
+\rule{0.3\linewidth}{0.25pt}
+\\
+\scriptsize
+Gebaut mit \LaTeX
+\end{multicols}
+\end{document}
