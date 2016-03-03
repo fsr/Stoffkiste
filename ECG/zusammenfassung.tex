@@ -1,0 +1,468 @@
+% "THE BEER-WARE LICENSE" (Revision 42):
+%
+% <timklge@wh2.tu-dresden.de> wrote this file. As long as you
+% retain this notice you can do whatever you want with this stuff.
+% If we meet some day, and you think this stuff is worth it,
+% you can buy me a beer in return - Tim Kluge
+
+\documentclass[12pt,landscape]{article}
+\usepackage{multicol}
+\usepackage{calc}
+\usepackage{paralist}
+\usepackage{delarray}
+\usepackage{amssymb}
+\usepackage{listings}
+\lstset{language=c++}
+\usepackage[landscape]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{color}
+\usepackage{amsmath}
+\usepackage[compact]{titlesec}
+
+\pagestyle{empty}
+\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm}
+
+\makeatletter
+
+\makeatother
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+
+\footnotesize
+\begin{multicols}{3}
+
+\begin{center}
+     \Large{\textbf{Einführung in die Computergrafik}} \\
+     \small{Für Modulklausur}
+\end{center}
+\section{Modellierung}
+\begin{compactitem}
+\item Mengen: Einzelne große Buchstaben ($N$, $R$)
+\item Skalare: Einzelne kleine Buchstaben (lateinisch, griechisch) ($a$, $b$, $\alpha$, $\beta$)
+\item Punkte: Kleine fette Buchstaben unterstrichen ($\underline{a}$)
+\item Vektoren: Kleine Buchstaben mit Pfeil ($\vec{a}$)
+\item Farben (RGBA): Drei Punkte über Kleinbuchstaben ($\dddot{c}$)
+\item Normierte Vektoren: $\hat{a}$
+\item Matrizen: Einezlner großer Buchstabe
+\item Homogene Vektoren (Dimension um eins erweitert und letzte für letzte Dimension eins als Koordinate): Schlange ($\tilde{a}$)
+\item Homogene Matrizen: Schlange über einzelnem großen Buchstaben ($\tilde{A}$)
+\end{compactitem}
+\begin{compactitem}
+\item Drahtgitter: Graphen von Kanten und Kurven
+\item Flächenmodell: Erweiterung durch Flächen
+\item Körpermodell: Mengenoperationen über Grundkörper (CSG) / Abzählen von Zellen (Octree)
+\item Topologie: Gibt es eine Verbindung zwischen zwei Punkten auf einem Objekt?
+\item Geometrisches Modellieren: Rechnergestütztes Entwerfen von geometrischen Objekten und ihren Lagebeziehungen; Alternativ: Einscannen mittels 3D-Kamera
+\item Einheitskreis: $\sin^2 \alpha + \cos^2 \alpha = 1$ 
+\item Skalarprodukt: $\vec{a} * \vec{b} = \langle \vec{u}, \vec{v} \rangle = u_{x}v_{x} + u_{y}v_{y} + u_{z}v_{z}$. Skalarprodukt entspricht $\langle \vec{u}, \vec{v} \rangle = |\vec{u}| * |\vec{v}| * \cos \alpha$
+\item Kreuzprodukt: $\vec{u} \times \vec{v}$: Ergebnis orthognal zu $\vec{u}$ und $\vec{v}$ ($\vec{u} \perp \vec{u} \times \vec{v} \perp \vec{v}$) - Gibt außerdem Flächeninhalt an, der von $\vec{u}$ und $\vec{v}$ aufgespannt wird
+\item Orthonormales Koordinatensystem zu einem normierten Vektor $\vec{z}$ aufstellen: $\hat{x} = \frac{\vec{v}\times \hat{z}}{||\vec{v} \times \hat{z}||}$ und $\hat{y} = \hat{z} \times \hat{x}$. $\vec{v}$ nicht parallel zu $\vec{z}$. $\vec{v} = \vec{0}$ und kleinste Komponente von z in v auf 1 setzen
+\item Winkelberechnung: $\arctan2(\langle \vec{u}, \vec{v} \rangle, ||\vec{u} \times \vec{v}||$)
+\item Spatprodukt: $[\vec{u}, \vec{v}, \vec{w}] = \langle \vec{u}, \vec{v} \times \vec{w} \rangle = \det(\vec{u}, \vec{v}, \vec{w})$, Tetraedervolumen ein sechstel davon
+\item $\text{dist}(\underline{x}) = \langle \hat{n}, \underline{x} - \underline{r} \rangle$, wobei $\underline{x}$ der Punkt ist und $\underline{r}$ ein Punkt auf der Ebene
+\item Projektion eines Punktes auf den nächstgelegenen Punkt der Ebene (Lot): $\text{Proj}(\underline{x}) = \underline{x} - \text{dist}(\underline{x})\hat{n}$ 
+\item Bayzentrische Koordinaten: Punkt $\underline{p}$ im Dreieck $\underline{p_0}$, $\underline{p_1}$, $\underline{p_2}$ mit $\underline{p} = \sigma_0 \underline{p_0} \sigma_1 \underline{p_1} \sigma_2 \underline{p_2}$ und $\sigma_0 + \sigma_1 + \sigma_2 = 1$. Im Fall $\underline{p} = \underline{p_i}$ gilt $\sigma_i = 1$ und $\sigma_{j \neq i} = 0$. Berechnung mit LGS:
+\[
+\begin{pmatrix}x \\ y \\ z\end{pmatrix}
+=
+\begin{pmatrix}
+x_0 & x_1 & x_2 \\
+y_0 & y_1 & y_2 \\
+z_0 & z_1 & z_2
+\end{pmatrix}\begin{pmatrix}
+\sigma_0 \\ \sigma_1 \\ \sigma_2
+\end{pmatrix}
+\] Positionstests: Auf Eckpunkten ist ein $\sigma$ 1, auf Kanten ist eins 0. Ist ein $\sigma$ kleiner als null oder größer
+\item Modellierungs Ansätze: Implizit ($f(x,y) = x^2 + y^2 - r^2$ gegeben, auf Formrand ist $f = 0$ (Formrand = Implizite Kurve), innen $f < 0$, außen $f > 0$), Parametrisch mit Parameter $t$ und einem Vektor, der für jedes $t$ einen Punkt zuordnet (Umkehrfunktion: Einbettung)
+\item Implizite Modellierung: Sehr viele Körperteile und Schleifen können definiert werden ohne sie explizit modellieren zu müssen, Abspalten und Vereinen von Schleifen bei Animation erfordert keine Beachtung, aber offene Flächen etc. können nicht modelliert werden
+\item Parametrische Modellierung: Intuitive lokale Änderung von Form möglich über "Kontrollpunktparadigma", Zusammensetzungen / Ausblendungen ermöglichen einfache Kombination, dabei kann es aber zu ungewollten scharfen Ecken / Kanten kommen
+\item Facette: Fläche eines Körpers, Attribute werden pro Facettenecke angegeben (Keil / corner / wedge genannt / vertex), z. B. Texturkoordinate, Farbe, Normale
+\item Umlaufsinn: Ecken werden in konsistenter Richtung durchlaufen (Finger in die Richtung: Daumen zeigt Normalenrichtung)
+\item Backface Culling: Nichtzeichnen von Flächen, auf die "von innen" geschaut wird 
+\item Indizierte Speicherung von Modelldaten: Zu Beginn der Modellbeschreibung wird eine Liste mit allen Vertexpositionen und Normalen gespeichert und später nur noch der Index angegeben
+\item Normalenberechnung: Im Dreieck einfach Kreuzprodukt von zwei Kanten, bei Polygonen gegen den Uhrzeigersinn das Kreuzprodukt von je zwei Punkten nehmen (und das vom letzten Punkt mit dem Ersten) und Addieren
+\item Normalenschätzung für einen Knoten: Alle Normalenvektoren der umliegenden Flächen addiert und jeweils gewichtet (gleich, mit Keilwinkel oder Dreiecksfläche) - bei scharfen Kanten sollte für jede Ecke eigene Normale benutzt werden
+\item Triangulierung: Zerlegung eines Polygons in Dreiecke
+\item Einfaches Polygon: Eine Schleife (in jedem Punkt schneiden sich genau 2 Kanten), bei allgemeinen Polygonen schneiden sich Kanten ggf.
+\item Polygon ist konvex, wenn die Verbindung zweier beliebiger Punkte im Polygon liegt (hinreichend) und alle Innenwinkel kleiner als 180 Grad sind (hinreichend)
+\item Für die Winkelberechnung wird zusätzlich 3. Dimension eingeführt, die null ist (beim Kreuzprodukt dann als einziges nicht null ist), $||\vec{u} \times \vec{v}|| = |u_{x}v_{y} - u_{y}v_{x}$
+\item Polygonecke (Drei aufeinanderfolgende Knoten) zu mittlerem Knoten ist Ohr, wenn Innenwinkel kleiner 180 Grad sind (konvex) und kein Knoten im beschriebenen Dreieck liegt
+\item Ear-Cutting-Algorithmus: Alle Ohren abschneiden. In Pseudo-Code:
+\begin{enumerate}
+\item Klassifiziere alle Knoten als Konkav / Konvex
+\item $n - 3$ mal wiederholen: Für alle konvexen Knoten prüfen, ob Ecke ein Ohr ist (nur gegen konkave Knoten testen) und ggf. Ohr abschneiden und benachbarte Knoten neu klassifizieren und innere Iteration abbrechen
+\item Ein Polygon mit $n$ Knoten enthält $n-2$ Dreiecke, daher müssen $n - 3$ Ear-Cuts gemacht werden. Worst-Case-Laufzeit: $O((n-3)*k*(n-k))$
+\end{enumerate}
+\item Texture Mapping: Zuordnen eines Bildes (Textur) zu einer Fläche, Bump Mapping: Änderung der Normale durch Bump Mapping. Texturkoordinaten im Wertebereich 0 bis 1. Texturkoordinaten werden baryzentrisch interpoliert.
+\item Benachbarte Dreiecke sollten auch im "Texturraum" benachbart sein
+\item Wavefront-Object-Format (*.obj): Zeilenbasiert, eine Zeile beginnt mit "v" (Vertexkoordinaten) / "vt" (Vertexindex) / "vn" (Normale) / "f" (Flächenbeschreibung). Flächenbeschreibung mit Tripel aus Positions- / Textur- und Normalenindex pro Knoten (z. B. "f 1/1/2 3/1/3 4/3/2". Texturkoordinate kann z. B. weggelassen werden
+\item Szenengraph (Hierachische Organisation der Objekte einer Szene): Besteht aus Gruppenknoten, Objektknoten, Transformationsknoten, Geometrieknoten, Kameraknoten, Materialknoten, Lichtknoten, Animationsknoten (vgl. Komposition bei SWT!)
+\item Graphen: Knotentiefe (Weg bis zur Wurzel inklusive Wurzel und Knoten)
+\item Implizite Modellierung: Repräsentierte Kurve / Fläche als Nullstellenmenge über $\mathbb{R}^2$ oder $\mathbb{R}^3$ (Einheitskugel: $f(x,y,z) = x^2 + y^2 + r^2 - 1 = 0$
+\item Gradient $\vec{\bigtriangleup} f$ sind die partiellen Ableitungen von $f$ komponentenweise. An Flächenpunkten zeigt $\vec{\bigtriangleup} f$ in Normalenrichtung.
+\item Implizit repräsentierte Kurve / Fläche kann durch Marching Squares / Cubes mit einem Polygon angenähert werden. Schritte:
+\begin{enumerate}
+\item Definiere Gitter aus Ausdehnung und Auflösung
+\item Pro Knoten: Werte Funktion aus und klassifiziere in innen \ außen
+\item Pro Kante, die innen mit außen verbindet, erzeuge Kantenpunkt
+\item Pro Zelle verbinde Kantenpunkte mit Liniensegmenten
+\end{enumerate}
+Wenn eine Kante innen mit außen verbindet, muss es auf der Kante eine Nullstelle der Funktion geben.\\
+Es gibt 16 mögliche Fälle (4 Symetrieklassen). Ist auf allen 4 Kanten einer Zelle ein Punkt, gibt es zwei Möglichkeiten, wie die Kantenpunkte verbunden werden können.
+\item Implizite Modellierung: Funktionen können z. B. auch vereinigt werden oder die Schnittmenge genommen werden ($\min$ und $\max$)
+\item Constructive Solid Geometry (CSG): Verknüpfung durch Mengenoperationen (Schnittmenge, Differenz, Vereinigung etc.)
+\item Ableitung nach $t$: "Geschwindigkeitsvektor" spannt zusammen mit dem Kurvenpunkt die Tangente auf
+\item Parametrische Flächen werden über zwei Paramter $u$, $v$ parametrisiert. Partiell abgeleitet nach $u'$ und $v'$ spannen sie die Tangentialebene auf
+\item Das Kreuzprodukt der Tangentenvektoren ergibt die Flächennormale von $A$
+\end{compactitem}
+\section{Rasterisierung}
+\begin{compactitem}
+\item Speicher $\leftrightarrow$ CPU $\rightarrow$ Matrizmultiplizierstufe $\rightarrow$ Clippingteilstufe $\rightarrow$ Vektorengenerator $\rightarrow$ CRT
+\item Vektordisplays: "Braunsche Röhre", Elektronenstrahl wird mittels Elektromagneten auf Bildschirmposition gelenkt und zeichnet so die zu zeichnenden Formen direkt nach. Rasterdisplays: Pixelmatrix. Um Formen zu zeichnen, werden diese vorher gerastert.
+\item Vektordisplays: geringer Speicherbedarf, schnelles Umschalten für Animation, begrenzte Komplexität möglich (Füllen ist aufwendig), Beispiele: Plotter
+\item Rasterdisplays: Hohe Parallelisierbarkeit, beliebige Komplexität, unterschiedliche Displaytechnologien (IPS, TFT), Abtastprobleme, Beispiele: Rasterdisplay, Tintenstrahldrucker
+\item Primitive zum Rasterisieren: Stilisierte Kurven, Polygone, Ellipsensegmente, Füllalgorithmen, Schriften, Verläufe, Muster 
+\item Rastergrafik-APIs für Anwendungen: Java AWT, Java 2D, Qt, Gtk+
+\item Echtzeitgrafik: Szene wird tesseliert (in ebene Drei- und Vierecke zerlegt) und an die GPU gesendet. Diese transformiert die Knoten in Bildkoordinaten, zerlegt die Polygone in Fragmente (Pixel) und berechnet deren Farbe und Tiefe
+\item Rasterisieren von Linien: Rasteralgorithmus sollte keine doppelte Dicke haben, einfach zu implementieren sein, ganzzahlige Arithmetik verwenden (Numerische Ungenauigkeiten vermeiden) und inkrementell arbeiten
+\item DDA, Bresenham, Mittelpunkt
+\item Vor dem Rasterisieren wird jede Linie $\underline{p} \rightarrow \underline{q}$ auf den Standardfall zurückgeführt: $\underline{p}$ im 4. Quadranten (X negativ, Y positiv), $\underline{q}$ im 1. Quadranten (X positiv, Y positiv), wobei $\underline{p}_y < \underline{q}_y$ gilt
+\item DDA (Digital Differential Analyzer): Steigung $m$ ist konstant, daher gilt $y_i = y_0 + m(x_i - x_0)$. Inkrementelle Ablaufweise / Pseudocode
+\begin{enumerate}
+\item y mit y0 initialisieren
+\item m setzen: $m = (y_n - y_0) / (x_n - x_0)$ 
+\end{enumerate}
+\item Bresenham: Welcher Mittelpunkt eines Pixels liegt näher an der Linie? Mittelpunktalgorithmus: Auf welcher Seite liegt der Mittelpunkt der angrenzenden Pixel?
+\item Bei Linien von $\underline{p} - \underline{q} = \begin{pmatrix}\Delta x \\ \Delta y\end{pmatrix}$ gilt $\vec{n} = \begin{pmatrix}-\Delta y \\ \Delta x\end{pmatrix}$ (90 Grad-Winkel)
+\item Für die Berechnung des Abstands zu einer Linie: Abstand von $\underline{x}$ zur Linie ist $\frac{\langle \underline{x} - \underline{p}, \vec{n} \rangle}{||\vec{n}||}$
+\item Bresenham: $2 \Delta y - \Delta x \leq 2d_i$ zur Entscheidung, ob man nach rechts oder nach rechts oben geht ($d^\text{rechts}_{i+1} = \langle \underline{x_i} + \begin{pmatrix}1 \\ 0\end{pmatrix} - \underline{p}, \vec{n} \rangle$ = $d_i - \Delta y$ bzw. $d^\text{rechtsoben}_{i+1} = \dots = d_i - \Delta y + \Delta x$
+\item Ablauf zur Rasterisierung: $y$ auf $y_0$ initalisieren, $d$ auf 0, $\Delta x$ und $\Delta y$ ausrechnen mit $x_n - x_0$ bzw. $y_n - y_0$. $\Delta d_{(+1,0)} = -\Delta y$ und $\Delta d_{(+1,+1)} = \Delta x - \Delta y$ setzen. $c_{\text{test}} = 2*\Delta y - \Delta x$ setzen. Dann x von $x_0$ nach $x_n$ iterieren und den Pixel an $x, y$ setzen. Dann entscheiden, ob $c_{\text{test}} \leq 2d$ gilt. Tut dies, dann $d = d + \Delta d_{+1,0}$ setzen, ansonsten $y += 1$ und $d += \Delta d_{(+1,+1)}$ setzen
+\item Treppenstufenartefakte: Treten durch Unterabtastung des Pixelgitters auf. Behebung durch Antialiasing (Kantenglättung): Darstellung in höherer Auflösung (und anschließender Herunterrechnung) oder Filterung während des Zeichnens (nicht gut, weil erfordert Transparenz und führt zu fehlerhaften Überlappungen o. ä.)
+\item Gekrümmte Linien: Inkrementelle Algorithmen (vgl. $x_2 + y_2 = r_2$
+\item Dicke Linien zeichnen durch widerholen einer Maske ("Pinsel"): Ineffizient oder durch Randberechnung und Füllen (kompliziert)
+\item Füllalgorithmen (für Dreiecke, Polygone, Kreise): Farbe, Muster, Farbverlauf, Struktur zu füllen. Dabei werden farblich \textit{ähnliche} nahe Pixel gefüllt
+\item Entweder Füllen mit 4er-Nachbarschaft (kann zu unvollständigem Füllen führen, da diagonal nicht gefüllt wird) oder 8er-Nachbarschaft (kann zu Ausläufen führen)
+\item Rekursives Füllen: Funktion \lstinline|fill(x,y)| färbt den Pixel an $x, y$ (falls dieser nicht außerhalb des Bildbereichs liegt und eine ähnliche Farbe wie der) und ruft sich selbst für die umliegenden Pixel auf. Toll einfach zu implementieren, aber führt zu Stapelüberläufen und abhängig von Definition der Pixelnachbarschaft
+\item Pixellaufalgorithmus: Füllfunktion füllt eine Linie in einem Polygon auf und startet Rekursion für Pixel der darüber und darunterliegenden Zeile, an denen ein Pixellauf von rechts beginnt
+\item Graphisches Debuggen: Fehler treten erst nach sehr vielen Iterationen auf, daher muss ein "graphischer Debugger" geschaffen werden, der erlaubt, die Anzahl der Iterationen für einen Algorithmus vorzugeben. Vorher wird Zustand der Datenstrukturen gespeichert. Dann wird der Algorithmus mit verschiedenen Iterationszählern gestartet.
+\item Brute-Force-Algorithmus für das Füllen von Dreiecken: Rechteck um das Dreieck wird betrachtet, anschließend werden die bayzentrischen Koordinaten für jeden Pixel bestimmt und damit geprüft, ob der Pixel im Dreieck liegt (inkrementell)
+\item Sweep-Line-Algorithmus: Alle vom Dreieck geschnittenen Zeilen werden durchwandert (da Dreieck konvex ist, ist der Schnit ein Interval). Interval und Koordinaten werden von Zeile zu Zeile mitgeführt und alle inneren Pixel auf berechnete Farbe gesetzt. Bei Polygonen können dies entsprechend mehrere Intervalle sein ("Liste aktiver Intervalle wird mitgeführt"). Bei Dreiecken nebeneinander soll jeder Pixel nur einmal gezeichnet werden (keine Löcher, keine doppelten Pixel bei Transparenz).\\ Daher zeichne Pixel, deren Zentrum im Dreieck liegt. Pixel auf Kanten: Zwei Richtungen werden festgelegt, wobei der Punkt der ersten Richtung zugerdnet wird, wenn die Kante nicht parallel zur ersten Richtung ist. Punkt auf Ecke: Wenn Kante parallel zur ersten Richtung die Ecke verlässt, weise Punkt dem rechts gelegenen Dreieck zu, ansonsten dem auf das die Richtung zeit
+\item Polygon: Kantenzug, der Eckpunkte verbindet. Einfache Polygone: konvex, konkav - nicht einfach: nicht überlappend, überlappend. Überlappende Polygone können dabei Einschlüsse haben
+\end{compactitem}
+\section{Transformationen}
+\begin{compactitem}
+\item Koordinatensystem mit Ursprung $\underline{0}$ spannt zusammen mit Vektoren $\hat{x}$, $\hat{y}$ auf. Die Koordinatenachsen bilden eine Basis, die orthonormal ist, wenn die Vektoren normiert sind und alle orthogonal zueinander stehen
+\item Lineare Abbildung (vgl. Einführung in die Mathematik 2): Ursprung bleibt erhalten. Es werden praktisch die Koordinatenachsen transformiert, wobei die erste Spalte von $M$ angibt, mit was die X-Koordinate eines Vektors transformiert wird und die zweite Spalte entsprechend für Y-Koordinate. Kann durch Matrix dargestellt werden und durch Matrix-Vektor-Multiplikation:
+\[
+\mathbb{R}^{2 \times 2}: M = \begin{pmatrix}M_{11} & M_{12} \\
+M_{21} & M_{22}\end{pmatrix} = (\hat{x}^{'} \vec{y}') = \begin{pmatrix}\vec{f}(\hat{x}) & \vec{f}(\vec{y})\end{pmatrix}
+\]
+\item Beispiel für Transformationsmatrix $M$ mit Rotation um den Winkel $\alpha$ gegen den Uhrzeigersinn: 
+\[
+M = \begin{pmatrix}
+\cos \alpha & -\sin \alpha \\
+\sin \alpha & \cos \alpha
+\end{pmatrix}
+\]
+\item Identitätstransformation entsprechend:
+\[
+I = I^{-1} = \begin{pmatrix}
+1 & 0 \\ 0 & 1
+\end{pmatrix}
+\]
+\item Punktspiegelung (= Rotation um 180 Grad in $\mathbb{R}^2$:
+\[
+N = \begin{pmatrix}
+-1 & 0 \\ 0 & -1
+\end{pmatrix}
+\]
+\item Achsenspiegelung:
+\[
+N_x = \begin{pmatrix}
+-1 & 0 \\ 0 & 1
+\end{pmatrix}
+\]
+\item Projektionen: Eine Koordinate wird weggelassen (2D $\rightarrow$ 1D), z. B. $\begin{pmatrix} 0 & 0 \\ 0 & 1\end{pmatrix}$, um auf die Y-Achse zu projizieren
+\item Skalierung um $a, b$ ($< 0$: Verkleinerung, $> 1$: Vergrößerung) : \[ S(a,b) = \begin{pmatrix}
+a & 0 \\ 0 & b
+\end{pmatrix} \]
+\item Scherung in $Y$-Richtung:
+\[
+H_{y}(s) = \begin{pmatrix}
+1 & s \\ 0 & 1
+\end{pmatrix}
+\]
+\item Diese Transformationen können nach $\mathbb{R}^3$ übertragen. Bei Rotation ist dann entsprechend die Rotation um die $X$-Achse, die $Y$-Achse oder die $Z$-Achse möglich. Dabei bleibt jeweils die Koordinate erhalten, um die rotiert wird. Die anderen werden so rotiert, wie in $\mathbb{R}^2$.
+\item Modelltransformation: Positionierung von Objekten in einer Szene (vgl. Szenengraph), dies sind die bisher eingeführten Transformationen
+\item Systemtransformation: Umrechnung der Koordinaten in ein anderes Koordinatensystem, z. B. zur Projektion von der 3D-"Objektebene" in die 2D-Bildebene des Betrachters. Systemtransformationen sind praktisch invertierte Modelltransformationen, da die Koordinatendarstellung eines transformierten Vektors im ursprünglichen Koordinatensystem berechnet wird. \\ Die Systemtransformation ergibt sich durch Invertieren der Matrix mit den transformierten Basisvektoren in den Spalten
+\item Vektor in Komponentendarstellung des Koordinatensystems $A$: $\vec{v}_A$. Systemtransformation von Koordinatensystem $B$ ins Koordinatensystem $A$: $M^{B}_{A}$
+\item Modelltransformationen können über Matrixmultiplikation verkettet werden. Dabei wird die zweite Transformationsmatrix von rechts an die erste multipliziert. Daher ist die verkettete Transformation gleich die Systemtransformation vom letzten Koordinatensystem ins Anfangskoordinatensystem.
+\item Affine Abbildungen erweitern lineare Abbildungen um Translationen / Verschiebungen, bei denen der Ursprung des Koordinatensystems verschoben wird
+\item Affine Transformationen werden durch homogene Vektoren mit Matrix-Vektor-Multiplikation beschrieben, dabei wird zunächst eine zusätzliche Dimension mit $1$ festgelegt \\
+Die Transformationsmatrix wird zu:
+\[
+\tilde{M} = \begin{pmatrix}
+M_{11} & M_{12} & t_x \\
+M_{21} & M_{22} & t_y \\
+0 & 0 & 1
+\end{pmatrix}
+\]
+Dabei ist die letzte Spalte das Bild des Ursprungs
+\item Lineare Transformationen und Translationen ergeben somit zusammen affine Transformationen.
+\item Affine Kombination: Linearkombination mit mehreren Vektoren, bei denen sich die Gewichte (Faktoren) der einzelnen Vektoren auf eins aufsummieren
+\item Affine Invarianz: Beim Zeichnen einer zu transformierenden Kurve ist es das Gleiche, erst die Kurvenpunkte zu transformieren und dann die Kurve zu berechnen oder erst die Kurvenpunkte zu berechnen und dann die Transformation auf die einzelnen Punkte anzuwenden
+\item Affine Transformationen erhalten \textbf{nicht} die Winkel zwischen Vektoren. Daher müssen transformierte Normalenvektoren nach der Transformation mit der inverstransponierten Transformationsmatrix multipliziert werden: $\vec{n}' = (M^{-1})^T \hat{n}$. Anschließend muss $\vec{n}'$ normiert werden.
+\item Klassische Projektionen: Ebene Projektion, Parallele Projektion, Perspektivisch (1-Punkt, 2-Punkt ,3-Punkt). Parallele Projektionen können rechtwinklig oder schiefwinklig sein. Koordinatensystem wird an Hauptrichtungen eines zu zeichnenden Objektes ausgerichtet.
+\item Parallelprojektion: Objekt wird in $xz$, $yz$, $xy$-Ebene o. ä. projiziert, wobei die Information entlang der Projektionsrichtung verloren geht (eine Koordinate wird also praktisch weggelassen)
+\item Projiziert man nicht entlang einer der Hauptrichtungen, ist das Verhältnis der Koordinatenachsen untereinander entscheidend: Bei Isometrischer Projektion ist das Verhältnis gleich, bei dimetrischer Projektion entsprechend das Verhältnis zweier Achsen, bei trimetrischer Projektion alle verschieden
+\item Perspektische Projektion: Strahlen auf die Bildebene des Betrachters, $z_0$ ist dabei der Abstand von der Bildebene zum Projektionszentrum. Diese können mit hogener Matrizenschreibweise repräsentiert werden. Dabei wird die homogene Transformationsmatrix $\tilde{M}$ zu \[
+\begin{pmatrix}
+z_0 & 0 & 0 & 0 \\
+0 & z_0 & 0 & 0 \\
+0 & 0 & 0 & 0 \\
+0 & 0 & -1 & z_0
+\end{pmatrix} \]
+$z_0$ funnktioniert also als gemeinsamer Nenner. $\underline{p}$ wird um $-z$ transformiert, damit die Bildebene erreicht wird.
+\item Rationale Zahlen können durch einen homogenen Vektor dargestellt werden, um Quotienten zu repräsentieren (Erste Komponente des Vektors ist dann Zähler, zweite Nenner). Alle homogenen Vektoren mit einer 0 in der zweiten Komponente repräsentieren $\infty$, aber entweder $-\infty$ oder $+\infty$. $(0,0)$ ist ungültig.
+\item Rationale Funktionen können durch homogene Matrizen dargestellt werden:
+\[f(q) = \frac{aq + b}{cq + d} \rightarrowtail \begin{pmatrix}
+a & b \\ c & d
+\end{pmatrix} \eqsim \lambda \begin{pmatrix}
+a & b \\ c & d
+\end{pmatrix} \]
+\item Erweitert man rationale Funktionen auf 2 oder 3 Dimensionen, wird nur eine $w$-Komponente für einen gemeinsamen Nenner hinzugefügt \[\tilde{M} = \begin{pmatrix}
+M_{11} & M_{12} & t_x \\
+M_{21} & M_{22} & t_y \\
+p_x & p_y & 1
+\end{pmatrix} \]
+\item Die perspektivische Projektion auf die Bildebene kann als Verkettung einer umkehrbaren perspektivischen Abbildung gefolgt von einer Projektion entlang der z-Richtung interpretiert werden. Daher wird zunächst die Z-Koordinate weggelassen und dann mit $p_z = \frac{-1}{z_0}$ transformiert
+\item Perspektivische Transformation am Beispiel von $\tilde{P}_y$ mit $p_y = \frac{1}{2}$: Punkte auf der x-Achse bleiben an der selben Stelle und heißen Fixpunkte
+\item Punkte, die zwischen Auge und x-Achse liegen, werden nach außen und unten geschoben
+\item Strecken können auseinander gerissen werden, wenn ein Endpunkt vor und der andere hinter dem Auge liegt
+\item Um zu verhindern, dass Objekte von hinter dem Auge vor das Auge gebracht werden, muss vorher an der near-clipping Ebene geclippt werden
+\item Punkte auf der zur $x$-Achse parallelen Gerade durch den Augpunkt werden auf Punkte im unendlichen abgebildet
+\item Hessesche Normalform für Ebenen: $n_{x}x + n_{y}y + n_{z}z + d = 0$ ($\tilde{n}^{T}\tilde{x} = 0$, wobei $\tilde{n} = \begin{pmatrix}n_x \\ n_y \\ n_z \\ d\end{pmatrix}$ mit $d$ als Abstand zum Ursprung) Die homogene Ebenendarstellung transformiert sich mit der Inverstransponierten.
+\item Nach perspektivischer Abbildung können sich eigentlich parallele Linien schneiden; der Schnittpunkt ist ein Fluchtpunkt. Jede Raumrichtung kann einen anderen Fluchtpunkt haben. Man spricht von 1-, 2- oder 3-Punktperspektive, wenn es für 1, 2 oder 3 Hauptrichtungen einen Hautpfluchtpunkt gibt (Hauptfluchtpunkt für $y$ ist dann der Fluchtpunkt, in dem sich alle parallel zur $y$-Achse verlaufenden Geraden schneiden
+\item Der Fluchtpunkt in einer Richtung $\vec{v}$ kann mit Hilfe der Abbildungsmatrix $\tilde{f}_{\vec{v}} = \tilde{P}(\vec{p})\tilde{v} mit \tilde{v} = \begin{pmatrix}
+\vec{v} \\ 0\end{pmatrix}$ bestimmt werden. Dafür multipliziert man die homogene Transformationsmatrix $\tilde{M}$, wobei $p_x$, $p_y$ und $p_z$ variabel sind, mit dem RIchtungsvektor $\vec{v}$. 
+\item In den Spalten einer homogenen Matrix stehen die homogenen Fluchtpunkte der Hauptachsen und das homogene Bild des Ursprungs
+\item Lineare Transformationen: Repräsentieren Vektoren, Ortsvektoren in $2 \times 2$ Matrix im $\mathbb{R}^2$ bzw. $3 \times 3$ Matrix im $\mathbb{R}^3$. Geht für Skalierung, Spiegelung, Projektion, Rotation, Scherung. Transformation mit $\vec{v}' = M\vec{v}$, Vorsicht: Normalenvektoren mit $\vec{n}' = (M^{-1})^{T}\hat{n}$
+\item Affine Transformation: Punkte und Vektoren, homogene Matrix (Dimension + 1), zusätzlich Translation unterstützt, Punkte werden mit $\begin{pmatrix}\underline{p'} \\ 1\end{pmatrix} = \tilde{M} \begin{pmatrix}\underline{p} \\ 1\end{pmatrix}$ transformiert, Vektoren mit $\begin{pmatrix}\vec{p'} \\ 0\end{pmatrix} = \tilde{M} \begin{pmatrix}\vec{p} \\ 0\end{pmatrix}$ transformiert
+\item Perspektivische Transformation: Punkte / Ebenen werden mit homogener Matrix transformiert, zusätzlich ist perspektivische Transformation mögliche. Transformation durch: 
+\[ \begin{pmatrix}\vec{n}' \\ d'\end{pmatrix} = (\tilde{M}^{-1})^{T} \begin{pmatrix}\hat{n} \\ d \end{pmatrix}\]
+\item Bei Rotationstransformationen und Translationen werden generell alle Größen (Längen, Winkel, Flächen, Längenverhältnisse und affine Koordinaten, Reihenfolge von Punkten, Verhältnisse von Verhältnissen, Geraden, Ebenen, Geradensegmente) erhalten, bei Scherung Längen und Winkel nicht. Bei affiner Transformation werden Längen, Winkel und Flächen nicht unbedingt erhalten. Bei perspektivischer Transformation nur Verhältnisse von Verhältnissen sowie Geraden und Ebenen.
+\item OpenGL: Objektkoordinaten werden über Modelview-Matrix auf Aufkoordinaten gerechnet, dann über Projektionsmatrix auf Clipkoordinaten, dann über w-Clip auf normalisierte Devicekoordinaten und schließlich über Viewport-Transformation auf Fensterkoordinaten
+\item OpenGL-Pipeline zur Pixelberechnung: Rechteckigen Bildausschnitt definieren, Textur- / Shaderberechnung, Alphatest, Tiefentest, Blending
+\item OpenGL-Matrixstapel: Alle Transformationen werden mit homogenen Matrizen dargestellt, alle Punkte mit homogenem Vektor. Transformationsmatrizen: \lstinline|GL_PROJECTION| für Transformation von Weltkoordinaten in Bildkoordinaten, \lstinline|GL_MODELVIEW| für Transformation von Objektkoordinaten in Kamera- oder Weltkoordinaten, \lstinline|GL_TEXTURE| für Transformation von Texturkoordinaten
+\item Aktuell gewählter Matrizenstapel kann mit \lstinline|glLoadIdentity, glPushMatrix, glPopMatrix| etc. verändert werden
+\item Jeder Knoten wird dann mit Modelview- \textit{und} Projektionsmatrix in Bildkoordinaten überführt
+\item Dies kann z. B. genutzt werden, um einen Würfelbaum zu zeichnen, bei dem das aktuelle Koordinatensystem rotiert, verschoben und skaliert wird
+\end{compactitem}
+\section{Grafikprogrammierung}
+\begin{compactitem}
+\item Grundlage: Ereignisverarbeitung - Abfragen von Eingabegeräten, Berechnen der Welt, Zeichnen der Szene $\rightarrowtail$ Volle Auslastung des Rechners ohne Pause. Daher am Besten zwischendurch mal schlafen.
+\item Grafik-APIs (OpenGL) erlauben die Programmierung der GPU (Konfiguration, Ansichtsdefinition, Beleuchtung, Materialparameter, Geometrie). Die GPU generiert dann daraus ein Pixelbild (Rasterisierung)
+\item GLU: Hilfsbibiliothek für Bildmanipulation, Triangulierung, NURBS etc. GLUT: Fenster, Ereignisverarbeitung, Menüs, Schriften
+\item GPU enthält Bildpuffer für Farbe und Tiefenpuffer mit Tiefe für jedes Fragment / Bereich
+\item Alpha-Kanal des Farbpuffers: Transparenzwert, Double Buffer: Zweiter Bildpuffer, in den gezeichnet wird und der am Ende mit dem Bildschirmpuffer getauscht wird, Tiefenpuffer: Tiefensortierung von Fragmenten mit Tiefentest, Stencil-Puffer: Schattenberechnung o. ä., Accum-Puffer: Antialiasing, Motion-Blur
+\item Globaler Zustand wird gespeichert (Kontext: Zeichenfarbe, Liniendicke...). Daher entfällt Verwaltungsarbeit, dieselbe Funktion kann mit unterschliedlichem Zustand für verschiedene Aufgaben verwendet werden, der Zustand muss den Zeichenmethoden nicht übergeben werden. Aber ist nicht parallelisierbar. Es kann außerdem zu unerwünschten Ergebnissen kommen, wenn der Zustand innerhalb einer Funktion geändert und nicht wieder freigegeben wird.
+\item Tripel Buffering: Double Buffering kann zu Tearing führen, weil die Grafikkarte während der Pufferfüllung das Bild abschickt. Mit Tripel Buffering wird der Puffer nur nach vollständigem Abstasten des aktuellen Bildpuffers durchgeführt.
+\item GPUs unterstützen nur Dreiecke (oder Vierecke über zwei Dreiecke), daher werden Polygone mit Facetten approximiert (ebene Flächen)
+\item Flat Shading: Beleuchtung nach Form
+\item Gouraud Shading: Beleuchtung mit Normalen
+\item Phong Shading: Beleuchtung pro Pixel
+\item OpenGL unterstützt Strecken (\lstinline|GL_POINTS|), Lines, Triangles, Quads, Polygon
+\item Für jeden Vertex können mit \lstinline|glColor, glNormal| und \lstinline|glTexCoords| Vertexparameter festgelegt werden. Anschließend wird mit \lstinline|glVertex| gezeichnet
+\item Reihenfolge: Gegen den Uhrzeigersinn
+\item Dreiecks- und Vierecksstriefen sind am Effizientesten zum Zeichnen von z. B. Landschaften
+\item Smooth Shading: Interpolation der Farbe und Normale (vgl. baryzentrische Koordinaten). Flat Shading: Nur Wert vom letzten Vertex nehmen
+\item Direct Mode: Nicht indizierte Spezifikation, Senden der Daten für jeden Vertex direkt an die GPU (flexibel, langsam)
+\item Vertex Array: Indizierte Spezifikation mit einer Indizierung möglich
+\item Display Lists: Speicherung zusammenhängender, mehrfach genutzter Befehle in Display Listen - Schnell in der Ausführung, langsam in der Erstellung
+\item Lochkamera: Bild wird durch ein Loch auf eine Projektionsfläche projiziert (auf dem Kopf). Je größer das Loch, desto unschärfer. Computergrafik: Ideales unendlich kleines Loch, alles scharf
+\item Lochkameramodell wird in OpenGL verwendet. Augposition ist Position des Lochs bei der Kamera. Virtuelle Bildebene wird definiert, damit Bild nicht auf dem Kopf steht. Tiefenpuffer begrenzt durch Clipping dargestelltes Bild.
+\item Kameradefinition: Bildausschnitt im Fenster in Pixelkoordinaten, Sichtvolumen relativ zum Augkoordinatensystem (Öffnungswinkel, Verhätlnis Breite / Höhe, Clipping-Bereich des Tiefenpuffers). Positionierung der Kamera im Koordinatensystem der Szene (Augpunkt, Fokus, Obenrichtung)
+\item Culling / Clipping: Elimination von Objekten, die nicht auf den Bildschirm projizieren
+\item Clipping: Verwurf der nicht im Bildschirmbereich befindlichen Objekte
+\item Im 3D wird an Sichtpyramide geclipped
+\item Sutherland-Hodgman zum Clippen eines beliebigen Polygons mit einem anderen beliebigen Polygon
+\item Sutherland-Cohen zum Clippen einer Linie mit einem Rechteck: Bereichen um das Bildschirmrechteck wird eine Bitmaske zugeordnet (links z. B. $1000$, rechts $0100$, Mitte immer $0000$). Den Endpunkten der Linie wird ein Bereich zugeordnet. Haben die beiden Endpunkte ein gemeinsames Bit (logisches Und), ist die Linie außerhalb des Bildschirms und braucht nicht gezeichnet zu werden. Ist sie innerhalb des Bildschirms, sind beide Bereiche $0000$. Ansonsten werden die Schnittpunkte mit dem Rechteck berechnet und die Linien entsprechend gekürzt.
+\item Culling: Dem Beobachter abgewandte Seiten werden nich gezeichnet; Back-Face-Culling: Abgewandte Seiten werden wegen ihres Umlaufsinns eliminiert. Kann bei Objekten mit Rand / Löchern zu Problemen führen
+\item Transformation in OpenGL: Rotate, Translate, Scale
+\item Vertigo Effect / Dolly Zoom: Gleichzeitiges Wegbewegen und Hineinzoomen
+\item OpenGL-Lichtquellen: Richtungslichtquellen (Globale Richtung und farbige Intensität), Punktlichtquellen (Position, farbige Intensität und Intensitätsabfall mit Distanz), gerichteter Strahler (Punktlichtquelle plus Abstrahlrichtung, Bündelung und Öffnungswinkel)
+\item Ambientes Licht: Unabhängig der Richtung, simuliert Streulicht in der wirklichen Welt
+\item Diffuses Licht: Abhängig von Orientierung der Oberfläche zur Lichtquelle (Am stärksten bei senkrechter Einstrahlung)
+\item Spekulares Licht: Hängt zusätzlich von Beobachterposition ab (am hellsten bei spiegelnder Reflektion). Emuliert Glanzlichter, Fokusierung über shininess-Faktor
+\item In OpenGL bis zu acht Lichtquellen, die parametrisiert werden
+\item MipMapping: Vorhalten vorgerechneter Texturen in verschiedener Auflösung, damit die Grafikkarte nicht beim Zeichnen herunterrechnen muss
+\item Texturfilterung: Darstellung eines sich wiederholenden Musters kann in der Ferne zu Geisterfrequenzen und Treppenartefakten führen: Bildfilterung notwendig!
+\item Abtasttheorem: $f_a > 2f_{\text{orig}}$
+\item Lineare MipMap-Filterung hilft zur Vermeidung von Geisterfrequenzen
+\end{compactitem}
+\section{Kurven}
+\begin{compactitem}
+\item Monombasis: Polynom
+\item Berechnung von Binomialkoeffizienten über das pascalsche Dreieck: $i$ ist die Spalte, $n$ die Zeile (jeweils von null, Spalte von links)
+\item Bernsteinbasis: $B^{g}_{i}(t) = \begin{pmatrix}g \\ i\end{pmatrix} (1-t)^{g-i}t^i$
+\item Polynome können in verschiedenen Basen dargestellt werden. Die Umrechnung des Koeffienztenvektors in eine andere Basis heißt Basistransformation 
+\item Die Transformationsmatrix für den Koeffizientenvektor ergibt sich durch Transponieren und invertieren
+\item Horner-Schema: Spart Multiplikationsschritte (vorher: $2n - 1$, nachher: $n$). Dafür wird das Polynom $a + bx + cx_2$ so gerechnet: $a + x(b + x(c + x))$
+\item Kontrollpunkte definieren den Kurvenverlauf, die Kontrollpunkte können dabei verschieden gewichtet werden
+\item Basis: Der Einfluss der verschiedenen Kontrollpunkte wird durch polynomiale Basisfunktion gesteuert
+\item Einfachste Kurve: Verbindung zwischen zwei Punkten
+\item Splines: Glatter Übergang aus mehreren Kurvensegmenten
+\item Bezier-Kurven: \[
+\sum_{i=0}^{g} \underline{b}_i B_i^g(t)
+\] Dabei ist $B$ die Bernsteinbasis
+\item Kontrollpunkte können auch als Kontrollpunktmatrix gegeben werden (zeilenweise die Basen, oben für $i = 0$)
+\item Endtangenteninterpolation: Tangente der Kurvenendpunkte entspricht der Tangente an den Endsegmenten des Kontrollpolygons
+\item Konvexe-Hüllen-Eigenschaft: Kurvenverlauf nur innerhalb der konvexen Hülle der Kontrollpunkte
+\item Matrixdarstellung: Kontrollpunkte werden als Matrix dargestellt. Für Bezierkurve: 
+\[ \underline{c}(t) = \sum_{i=0}^{g} \underline{b}_i B_i^g(t) = \] \[ \begin{pmatrix}
+b_{0,x} & b{1,x} & b{2,x} & b{3,x} \\ 
+b_{0,y} & b{1,y} & b{2,y} & b{3,y} \\ 
+\end{pmatrix}\begin{pmatrix}
+(1-t)^3 \\
+3(1-t)^2t \\
+3(1-t)t^2 \\
+t^3
+\end{pmatrix}\]
+Kontrollpunkte werden also spaltenweise genommen.
+\item Beziér-Kurven dritten Grades bestehen aus 4 definierten Kontrollpunkten: Startpunkt $\underline{b_0}$, Endpunkt $\underline{b_3}$, Tangente des Startpunktes $\underline{b_1}$, Tangente des Endpunktes $\underline{b_2}$
+\item De-Casteljau: Festlegung eines Faktors $t$ (z. B. $0.2$). Dann Verbinden der Punkte, die bei den einzelnen Verbindungen der Kontrollpunkte bei $0.2$ markiert werden. Der Punkte, der als letztes markiert wird, liegt dann auf der Beziérkurve.
+\item Lagrange-Kurve: Kurve geht durch alle Kontrollpunkte (Interpolationseigenschaft)
+\[ L_i^g(t) = \prod_{0=k\neq i}^{g} \frac{t-u_k}{u_i - u_k}\]
+\item Bei vielen Knoten kommt es bei Lagrange-Kurven zu Überschwingungen
+\item Affine Invarianz (s. o.): Die Basisfunktionen summieren sich für alle $t$ zu $1$
+\item Konvexe Hülleneigenschaft für Lagrange-Kurven nicht erfüllt
+\item Hermite Interpolation: Interpolation von Positions- und Tangenteninformation
+\item Mit wachsendem Grad folgen Bezierkurven immer weniger den Kontrollpunkten $\rightarrow$ Splines
+\item Je mehr Ableitungen an Nahtstellen gleich sind, desto besser
+\item Parametrisch stetig: Die ersten $k$ Ableitungen sind nach dem Parameter identisch; Geometrisch stetig: Die ersten $k$ Ableitungen sind nach der Kurvenlänge identisch. 
+\item Geschlossene Splines: Splines bilden einen geschlossenen Polygonzug, offene entsprechend nicht
+\item B-Splines werden mit der rekursiven Konstruktionsformel nach Cox und de Boor definiert
+\item Bei einem uniformen Spline sind die Abstände zwischen zwei Knoten immer gleich
+\item Basis-Splines: $i$: Laufindex, $n$: Segmentanzahl, $g$: Grad der Kurvensegmente, $k=g-1$: Stetigkeit der Kurvensegmente, $K=n+g$ oder $n$: Anzahl Kontrollpunkte, $m=K+g+1$: Anzahl Einträge im Knotenvektor
+\item Rekursion nach Cox De Boor bei offenen Splinebasen:
+$N^0_i(t) = 1$, falls $u_i \leq t \leq u_{i+1}$ und $u_i < u_{i+1}$
+\item Wählt man aufeinander folgende Knoten gleich, so bekommt der entstandene Knoten eine Multiplizität $\mu$. Bei $\mu = g + 1$ bekommt der Spline einen Sprung. Dies ist nur an den Endpunkten bei offenen Splines erlaubt.
+\item \[
+\sum_{i=0}^{K-1} \underline{d_i} N_i^g(t)
+\]
+\item Splines liegen in der Kombination der konvexen Hüllen, wenn je drei Kontrollpunkte verbunden werden
+\item Die Basisfunktion $N_i^g$ bzw. der De-Boor-Punkt $d_i$ beeinflusst den Spline im Parameterbereich $[u_i,u_{i+g+1})$
+\item Alle Kurven bis auf Hermite affin invariant
+\item Bernstein-Basis für Bezier-Kurven positiv. Approximierend, Konvexhülleneigenschaft, Endtangenteninterpolation
+\item Lagrange-Basis: Kontrollpunktinterpolation (Kontrollpunkte liegen auf der Kurve), unabhängig
+\item Hermite-Basis: Kontrolltangenteninterpolation, lokaler Kontrolltangenteneinfluss, $C^1$-stetig
+\item Natürliche Basis (Splines): Positiv, lokale Definition, Endtangenteninterpolation, lokaler Kontrollpunkteinfluss, Konvexhülleneigenschaft, $C^{g-1}$-stetig
+\end{compactitem}
+\section{Beleuchtung}
+\begin{compactitem}
+\item Licht besteht aus Überlagerung von Photonen (Wellenmodell)
+\item Sichtbares Licht: ca. $400$ bis $800$ nm Wellenlänge
+\item Wellenlänge, Frequenz, Energie (definieren Farbe), Polarisation (linear, zirkulär)
+\item Laser: Licht einer Wellenlänge, bei anderen Lichtquellen verschiedene Farben
+\item Leistungsspektrum: Ähnlich zu Histogramm bei Bildern, Darstellung welcher Anteil der Lichtquelle welche Wellenlänge hat
+\item Die Farben von Gegenständen sind relativ zur Beleuchtung (rot angestrahlt: sieht rot aus (oh))
+\item Emission: Lichtquelle strahlt Licht ab, Transport: Im Vakuum bewegen sich Photonen auf geraden Bahnen, Streuung: in transparenten Materialien (Glas) prallen Photonen an Atomen ab, Reflektion: Reflektion an Oberflächen, Brechung: z. B. Glas lässt Photonen durch (aber in anderem Winkel), Absorption: in transparenten Medien und an Oberflächen werden Photonen absorbiert, Detektion: im Auge oder Photosensor werden Photonen gezählt
+\item Strahlungsgleichgewicht innerhalb einer Szenerie, da genauso viele Photonen "reinkommen" wie "rausgehen"
+\item Lichtleistung in einem Punkt $p$ in Richtung $\omega$ gibt Photonen an, die gerichtete Lichtleistung nennt man auch die Strahldichte (Menschliche Wahrnehmung: Leuchtdichte)
+\item Beide Kenngrößen sind im Vakuum entlang von Strahlen konstant (da entsprechend keine Photonen verloren gehen)
+\item Bei Beleuchtungssimulation wird Streuung häufig weggelassen (nur Berechnung von Emission, Reflektionen, Absorptionen, Detektion)
+\item Light Tracing: Verfolgen von Photonenpfaden ausgehend von der Lichtquelle, Visibility Tracing: Verfolgen von Photonenpfaden in umgekehrter Richtung
+\item Menschliches Auge hat 3 Farbrezeptoren (R, G, B), vgl. Zapfen bei EMI, Notation: $\dddot{L} = (R, G, B)$, bei Simulation lohnt sich aber Betrachtung von mehr Farben (verschiedenen Wellenlängen), da sich diese bei Streuung und Reflektion anders verhalten
+\item LEDs, Energiesparlampen, Glühbirnen, organische LEDs als Flächenlichtquellen
+\item Lichtleistung: $\frac{\text{Wahrgenommene Lichtleistung}}{\text{Zugeführte Leistung}}$. Grünes Licht ($555$ nm) wird am stärksten wahrgenommen
+\item Richtungslichtquellen: Einfachste Lichtquelle, Lichtstrahlen fallen angenährt parallel ein, Richtung $\omega$ als Richtung \textbf{zur} Lichtquelle und Lichtausstrahlung $M$ (Leistung pro Fläche)
+\item Punktlichtquelle: Sendet Licht in alle Richtungen mit gleicher Stärke aus (isotrop), definiert durch Position, Lichtstärke $I$ (in Candela) als Leistung pro Richtung 
+\item Weit entfernte Punktlichtquelle verhält sich wie Richtungslichtquelle
+\item Goniometrische Lichtquelle: Lichtstärke abhängig von Abstrahlrichtung
+\item Lichtstrahler (Spot): Richtungsabhängigkeit, die Lichtkegel erzeugt: \[
+\dddot{I}(\phi, o) = \dddot{I_0} * (cos o)^n
+\]
+Dies gilt nur, falls $|o| < o_{\max}$. $o_{\max}$ ist der Öffnungswinkel. Strahler sind im OpenGL-Standard.
+\item Flächenlichtquellen: Ausgedehnte Lichtquellen, wird durch Oberfläche und Abstrahlleistung pro Richtung und Fläche definiert. Ist oft isotrop (d. h. an allen Oberflächenpunkten in alle Richtungen gleich hell). Schwer zu simulieren, wird daher durch viele Punktquellen approximiert. Erzeugt weiche Schatten.
+\item Lokale Beleuchtungsmodelle beschreiben Reflektions- und Absorptionsverhalten von Licht an Oberflächen
+\item Globale Beleuchtungsmodelle simulieren die Lichtausbreitung über mehrere Reflektionen etc.
+\item Echtzeitgrafik (OpenGL etc.) benutzt lokale Beleuchtungsmodelle und nährt andere Effekte nur an
+\item BRDF (Bidirektionale Reflektionsverteilungsfunktion): Richtung $\omega_{\text{in}}$ zur Lichtquelle, $\omega_{\text{out}}$, einfallende Strahldichte $L_{in}$, mehrere Parameter $r_{\alpha}$ wie Reflektionsfarbe, Rauigkeit. Strahldichte $L_{\text{out}}$, das zum Beobachter reflektiert wird.
+\item Physikalisch richtig ist bei einer Kugel Integration der BRDF über eine Halbkugel 
+\item Bei Punkt- und Richtungslichtquellen wird dann das einfallende Licht auf ein Objekt die Summe aller sichtbaren Lichtquellen
+\item Bei Betrachtung nur einer Lichtquelle ist die BRDF ein lokales Beleuchtungsmodell
+\item Diffuse Reflektion: Anteil hängt nicht von Beobachter ab. Wird in alle Richtungen gleich reflektiert.
+\item Gerichtet diffus (spekular): Am stärksten an der an der Normale gespiegelten Einfallsrichtung des Lichtes
+\item Spiegelnd: Nur ein Betrag, wenn der Betrachter genau aus der Einfallsrichtung des Lichts guckt
+\item In allen lokalen Beleuchtungsmodellen wird der diffuse Anteil gleich modelliert. Die BRDF wird als konstant angenommen und auf eine konstante Farbe gesetzt.
+\item $\otimes$ ist die komponentenweise Multiplikation zweier Vektoren
+\item Diffuse Reflektion kann berechnet werden mit: $\dddot{L_\text{out}} = \dddot{r}_\text{diffuse} \otimes \dddot{L}_\text{in} \cos_{+} \alpha$. Dies entspricht $\dddot{L_\text{out}} = \dddot{r}_\text{diffuse} \otimes \dddot{L}_\text{in} {\langle \hat{\omega_{\text{in}}}, \hat{n} \rangle}_{+}$.
+\item Phong- und Blinn-Phong-Modell zur Lichtberechnung (Blinn-Phong ist Standard in OpenGL).
+\item Glattheit wird durch Exponenten $m$ definiert (shininess). Je größer $m$ desto fokussierter die Highlights.
+\[ \dddot{L_\text{out (diff)}} = \dddot{r}_\text{diffuse} \otimes \dddot{L}_\text{in} {\langle \hat{\omega_{\text{in}}}, \hat{n} \rangle}_{+} \]
+Dazu kommt der spekulare Anteil, falls $\langle \hat{\omega}_\text{in}, \hat{n} \rangle \geq 0$ gilt: \\
+Phong:
+\[ \dddot{r_{\text{specular}}} \otimes \dddot{L_\text{in}} * {\langle \hat{\omega}_\text{out}, \hat{\omega}_\text{refl} \rangle}^m \]
+Blinn-Phong:
+\[ \dddot{r_{\text{specular}}} \otimes \dddot{L_\text{in}} * {\langle \frac{\hat{w}_\text{in} + \hat{w}_\text{out}}{||\hat{w}_\text{in} + \hat{w}_\text{out}||}, \hat{n} \rangle}^m \]
+\item Liegen der Normalenvektor, die einfallende Lichtrichtung und das ausgehende Licht in einer Ebene, liefern Blinn und Blinn-Phong ungefähr das selbe Ergebnis
+\item Blinn-Phong-Modell ist realistischer (Abweichung Blinn vs Blinn-Phong steigt, je weiter die drei Vektoren nicht in einer Ebene liegen)
+\item Brechung nach dem Gesetz nach Snellnius: Brechungsindizes zweier benachbarter Materialien ($n_1, n_2$) werden genommen. Je höher der Brechungsindex, desto langsamer breiten sich Photonen aus. Beim Übergang in ein Medium mit kleinerem Brechungsindex gibt es einen Grenzwinkel, ab dem das gesamte Licht reflektiert wird.
+\[ n_1 \sin \theta_1 = n_2 \sin \theta_2 \]
+\item Ambientes Licht approximiert Streulicht und wird einfach auf den diffusen und spekularen Anteil addiert
+\item Ambient Occlusion: Für jeden Oberflächenpunkt wird Winkel bestimmt, aus dem die Oberfläche ungehindert beleuchtet werden kann. Dadurch kann die ambiente Beleuchtung realistischer approximiert werden.
+\item Subsurface Scattering: Durchscheinende Materialien verursachen starke Streuung und Absorption. Approximation dieser Effekte nur nahe der Oberfläche mit einem diffusen Transmissionsmodell
+\item Kaustiken: Gekrümmte transparente Objekte können Licht bündeln und Kaustiken (fokussiertes Licht) erzeugen (Lupe / Glas)
+\item Radiosity: Alle Lichtquellen und Oberflächen werden als diffus angenommen und sind somit unabhängig vom Betrachter. Das Bild wird also vor der Darstellung der Szene berechnet und unterstützt diffuse Reflektion, Streuung, weiche Schatten und Farbbluten, aber keine gerichtete diffuse Reflektion (Spekulare Reflektion), Spiegelung, Brechung, Kaustiken
+\item Raytracing: Verfolgen von Lichtstrahlen vom Auge in die Szene. Unterstützt Spiegelung und Brechung und kann durch Abwandlung von Simulationsparametern und mehrfachem Verfolgen von Lichtstrahlen Effekte wie Motion Blur, Tiefenunschärfe und weiche Schatten erzeugen. Unterstützt diffuse Reflektionen und Kaustiken, ist aber noch nicht wirklich echtzeitfähig
+\item Bidirektionales Pathtracing: Zufällige Generierung von Lichtstrahlen vom und zum Betrachter mit Verknüpfung dieser Strahlen. Unterstützt alle Effekte (Streuung in transparenten Medien meist nicht unterstützt), ist aber nicht echtzeitfähig.
+\end{compactitem}
+\section{Raytracing}
+\begin{compactitem}
+\item Für jeden Pixel der Kamera wird ein Lichtstrahl in die Szene geschickt (Primärstrahlen)
+\item Schnittpunkte der Primärstrahlen werden berechnet, gibt es keinen, wird die Hintergrundfarbe angenommen. Anschließend wird für alle Lichtquellen, deren Licht den Schnittpunkt erreicht, das reflektierte Licht addiert. Kann Licht an der Oberfläche brechen, wird ein sekundärer Lichtstrahl ausgesandt, dessen Farbwert dann auf den des Primärstrahls aufaddiert wird. 
+\item Supersampling: Um Treppenartefakte zu vermeiden (Aliasing), kann das Bild in höherer Auflösung gerendert werden und wird dann gefiltert. Oder Pixel werden mehrfach abgetastet: Gitter / Zufall / Jitter (zufällig pro Gitterzelle)
+\item Adaptives Sampling: Anfangen mit großem Grundraster, an den Ecken der Gitterzellen Strahlen aussenden. Dort, wo Farbwerte an den Seiten sich deutlich unterscheiden, wird unterteilt.
+\item Sekundärstrahlen werden bei einfallendem Licht $\vec{v}$ nach $\vec{v} - 2\langle \hat{n}, \vec{v} \rangle \hat{n}$ berechnet
+\item Durch numerische Ungenauigkeiten kommt es bei Sekundärstrahlen zum erneuten Schnitt mit der Oberfläche kommen, von der der Strahl eigentlich reflektiert wurde. Dafür kann ein globales $\epsilon$ gewählt werden, das als Schwellenwert dient
+\item Bei jedem Schnitt eines Strahls mit einer Oberfläche wird vom Schnittpunkt aus ein Strahl zu jeder Lichtquelle geschickt und geprüft, ob ein anderes Objekt dazwischen liegt (d. h., ob das Licht dieser Lichtquelle betrachtet werden muss).\\
+Daher werden zwei Schnittfunktionen implementiert: Schnittprüfung mit beliebigem Schnittpunkt und Schnittprüfung mit Rückgabe des Schnittpunktes.
+\item Materialparameter (Diffuse Reflektion, Spekulare Reflektion) werden erweitert durch skalaren Refraktionskoeffizienten und einen Brechungsindex
+\item Schattenfühler können statt allgemeiner Existenz eines blockierenden Objektes auch zurückgeben, wieviel Licht durchgelassen wird. Dafür wird die Länge des Durchgangs durch das Objekt mit dem Absorptionsfaktor des Objekts multipliziert. Zusätzlich wird zweimal der Transmissionskoeffizient multipliziert (Nur Approximation, da Brechung des Strahls nicht berücksichtigt wird)
+\item $\#_{\text{rays}} =  O(w*h*s*(1+m)*2^{d+1})$, $d$: Maximale Rekursionstiefe, $s$: Supersampling-Faktor, $n$: Anzahl Objekte in der Szene, $m$: Anzahl Lichtquellen
+\item Anzahl Berechnungen: $\#_{\text{rays}}$ multipliziert mit der Anzahl der Objekte in der Szene
+\item Maximale Rekursionstiefe (Sekundärstrahlen) wird limitiert und Beschleunigerstrukturen verwendet, dadurch $\#_{\text{comp}} = O(w * h * s * m * \log n)$
+\item Distribution Raytracing: Beim Supersampling werden einzelne Abtastpunkte verwendet, um weiche Schatten, Motion Blur etc. zu erzeugen. Dazu werden die entsprechenden Parameter (Position auf der Flächenlichtquelle, Zeitpunkt, Position auf der Blendenöffnung) gewählt und mitgerechnet
+\item Motion Blur: Für jeden Strahl wird zufällig ein Zeitpunkt in dem gewählten Zeitinterval ausgewählt, Bewegte Objekte müssen pro Strahl neu positioniert werden!
+\item Tiefenunschärfe: Abstand zum Fokus der virtuellen Linse kleiner als eigentliche Distanz
+\item Diffuse Spiegelung: Lichstrahlen werden an glatter Oberfläche reflektiert, entsteht verwaschene Reflektion
+\item Hesssche Normalform: \[
+	\langle \hat{n}, \underline{x} \rangle = d
+\]
+\item Strahl-Pritimitv-Berechnung: Parametrische Form des Strahls $\underline{p} + t\vec{v}$ wird in implizite Darstellung des Primitivs eingesetzt und berechnet den Strahlparameter. Beispiel Ebene:
+\[ \langle \hat{n}, \underline{p} + t_{*}\vec{v}  \rangle = d \]
+\item Keinen, einen oder viele Schnittpunkte (Bei Ebene keinen oder einen). Der mit kleinstem $t$ (kleinstem Abstand) wird herausgesucht und die Normale am Schnittpunkt berechnet.
+\item Beim Schnitt von Strahl mit Kugel geht man genauso vor, ebenso 
+\item Quader sind wichtig für Hierachie von Hüllvolumen. Idee: Aufspalten in einzelne Ebenen (Ebenenstreifen)
+\item Achsenparallele Ebenenstreifen: Fallunterscheidung für Parallelität
+\item Schnittberechnung: Bei Schnitt eines Strahls mit einem Körper schneidet der Strahl den Körper über einem Interval
+\item Achsenparallele Quader: Berechne Schnittinterval $T_{x/y/z}$ mit den drei Ebenenstreifen, $T_Q = T_X \cap T_Y \cap T_Z$
+\item Normale ergibt sich entlang einer einer Koordinatenachse
+\item Schnittberechnung mit Dreieck: Schnitt mit Ebene testen und dann bayzentrische Koordinaten testen
+\item Unterteile Welt in regelmäßiges Voxelgitter zur Beschleunigung und markiere Voxel, in denen Objekte enthalten sind
+\item Traversierung: Voxel entlang des Strahls verfolgen
+\item Gitterauflösung ist dabei entscheidend für Qualität des Ergebnisses, sehr kleine Objekte kommen nicht gut. Mögliche Verbesserung durch Schachtelung des Gitters.
+\item Mailbox-Technik: Wenn Objekte von mehreren umgebundenen Volumen referenziert werden können (Gitter), jeder Strahl kriegt eine eindeutige ID und jedes Objekt eine "Mailbox" mit letzter Schnittberechnung (ID, Schnittinfo). Strahle können so mehr oder weniger gecached werden.
+\item Hüllenvolumen: Bounding Volumes (Quader, die das Objekt einschließen) werden zu jedem Objekt erstellt und der Schnitt damit zunächst geprüft (schneller als Schnittprüfung mit dem komplexen Objekt).
+\item Hüllvolumen-Hierarchie: Umschließe die Objekte in einer Hierarchie von sich überlappenden Hüllvolumen (BVH)
+\item Kompromiss zwischen einfachem Hüllenvolumen (Quader, Kugel etc) mit viel Trefferzahlen und enganliegender Hülle (konvexe Hülle) mit hohen Schnittkosten
+\item k-Drops ergeben guten Kompromiss (6-DOP: Würfel, 14-DOP: Fußballähnliches Gebilde aus Rechtecken)
+\item Aufbau Hüllvolumen: Umschließe alle Objekte der Szene mit axis aligned Bounding Box (AABB) der Szene, spalte Box entlang der Koordinatenrichtung und verteile Objekte möglichst gleichmäßig. Dann Kindboxen so berechnen, dass sie die Objekte ganz umschließen (dadurch überlagern sich Boxen). Für nächste Koordinatenrichtung wiederholen, bis Anzahl der Objekte in den Kindboxen klein genug ist.
+\item Traversierung: Baum aufbauen (s. o.), $t_m = \infty$ setzen und Baum dann so sortieren dass zuerst AABB geprüft wird, die als erstes getroffen wird. Beim Erreichen von Blättern am Baum (Objekte) wird Schnitt berechnet und $t_m$ aktualisiert
+\item KD-Baum: Berechne für jeden Körper AABB und damit AABB der ganzen Szene. AABB der Szene rekursiv an einer achsenparallelen Ebene schneiden (Mögliche Optimierung der Splits: Position der Schnittebene, eine von den Achsen). Optimiere nach Kosten für den Schnitt mit einem zufälligen Strahl.
+\item Pro Knoten: Split entscheiden (Ob, Wo). Kosten beachten: Primitve mit Schnittkosten $N$, Kosten für Traversierung eines inneren Knotens $t_t$, Wahrscheinlichkeit, dass Strahl, der den Knoten schneidet, auch einen Kindknoten schneidet: $p_a$. 
+\item KD-Baum Optimierung mit SAH (Surface Area Heuristic). Wahrscheinlichkeit, dass Strahl, der Knoten schneidet, auch Kindknoten schneidet, wird mit $\frac{A(\text{Kindknoten})}{A(\text{Knoten})}$ bestimmt.
+\end{compactitem}
+\end{multicols}
+\end{document}

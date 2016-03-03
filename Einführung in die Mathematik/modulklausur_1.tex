@@ -1,0 +1,161 @@
+% "THE BEER-WARE LICENSE" (Revision 42):
+%
+% <timklge@wh2.tu-dresden.de> wrote this file. As long as you
+% retain this notice you can do whatever you want with this stuff.
+% If we meet some day, and you think this stuff is worth it,
+% you can buy me a beer in return - Tim Kluge
+
+\documentclass[12pt,landscape]{article}
+\usepackage{multicol}
+\usepackage{calc}
+\usepackage{delarray}
+\usepackage{amssymb}
+\usepackage[landscape]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{color}
+% \usepackage[compact]{titlesec}
+
+\pagestyle{empty}
+\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm}
+
+\makeatletter
+
+\makeatother
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+
+\footnotesize
+\begin{multicols}{3}
+
+\begin{center}
+     \Large{\textbf{Mathe 1 Cheatsheet}} \\
+     \small{Für \textcolor{red}{Probeklausur} (Ganter, Noack)}
+\end{center}
+
+\section{LAG}
+\subsection{Vollständige Induktion}
+Beweis erfolgt für $n \geq 1, n \in{\mathbb{N}}$ mittels vollständiger Induktion.\\
+\textbf{IV} für $n = 1$: $\sum_{k=1}^N(4k-3) = n(2n - 1) \iff (4*1-3) = 1*(2-1) \iff 1 = 1 \surd$ \\
+\textbf{IA} für $n \geq 1$: $\sum_{k=1}^N(4k-3) = n(2n-1)$\\
+\textbf{IS} für $n = n + 1:$\\
+$\sum_{k=1}^{N+1}(4k-3) = (n+1)(2(n+1)-1) \iff \sum_{k=1}^{N}(4k-3) + (4*(n+1)-3) = (n+1)(2n+1)$\\
+\textit{nach IA gilt}:\\
+$n(2n-1)+(4*(n+1)-3)=(n+1)(2n+1)\iff
+2n^2-n+4n+4-3=(n+1)(2n+1) \iff
+(2n^2+3n+1 = 2n^2 + n + 2n + 1 \iff 2n^2 + 3n + 1 = 2n^2 + 3n + 1 \surd$
+\subsection{Ebenengleichungen}
+In $\mathbb{R}_3$ kann es Ebenen der folgenden Formen geben:
+\begin{enumerate}
+\item Parameterform: $E: \vec{x} = \vec{p} + \vec{s} * n + \vec{t} * m$ mit $\vec{p}$ als Stützvektor und $\vec{s}, \vec{t}$ als Richtungsvektoren, $n, m \in \mathbb{R}$
+\item Koordinatenform: $E: ax_1 + bx_2 + cx_3 = d$ mit $a, b, c, d \in \mathbb{R}$. $(x_1,x_2,x_3)^T = \vec{x}$ ist dann ein Normalenvektor der Ebene
+\item Normalform: $E:(\vec{x} - \vec{p}) * \vec{n} = 0$ mit $\vec{p}$ als Ortsvektor, der in $E$ liegt und $\vec{N}$ als Normalenvektor von $E$.
+\end{enumerate}
+\subsection{Lineare Gleichungssysteme}
+Lösen von linearem Gleichungssystem $A\vec{x}=\vec{b}$ mit Gauss durch elementare Zeilenumformungen (Addieren eines Vielfachen von anderen Gleichungen, Umtauschen von Gleichungen und Skalierung). Erw. Koeffizietenmatrix:
+\[\begin{array}({ccc|c})
+  A_{1,1} & A_{1,2} & A_{1,3} & \vec{b}_1\\
+  A_{2,1} & A_{2,2} & A_{2,3} & \vec{b}_2
+\end{array}\]
+\subsection{Inverse zu Matrizen}
+Es existiert ein $A^{-1}$ zu einer Matrix $A$, wenn $A$ quadratisch ist und das homogene LGS $A * \vec{x} = \vec{0}$ nur die triviale Lösung hat. Dann gilt $A^{-1} \times A = E$.
+\textit{Pivotspalten} sind Spalten, in denen nur in einer Zeile eine 1 steht. Gibt es nach Vor- und Rückwärtsphase noch Nicht-Pivotspalten, hat das LGS unendlich viele Lösungen. Gibt es eine Zeile $(0,0,0,c)$ mit $c \neq 0$, gibt es keine Lösung.
+\subsection{Körper}
+Ein Körper enthält eine Menge $K$ an Elementen, für die Addition und Multiplikation definiert und kommutativ ist. Es gelten die Distributivgesetze.
+\subsection{Vektorräume}
+Ein Vektorraum über einem Körper $K$ (z. B. $\mathbb{R}$) enthält Elemente aus $K$. Addition und Multiplikation mit einem Skalar sind kommutativ, assoziativ und im Vektorraum abgeschlossen. Es gibt zu jedem Element ein Inverses und jeder Vektorraum muss ein neutrales Element enthalten.
+Für einen Untervektorraum $U$ gilt:\\
+\begin{enumerate}
+\item $\vec{0} \in U$
+\item $\forall \vec{u}, \vec{v} \in U: \vec{u} + \vec{v} \in U$
+\item $\forall \vec{u} \in U, \forall c \in K: c\vec{u} \in U$
+\end{enumerate}
+\subsection{Lineare Unabhängigkeit}
+Zeigen von linearer (Un-)Abhängigkeit durch Gauss-Verfahren: Alle Vektoren als Spalten in eine Matrix packen. Wenn nur die triviale Lösung herauskommt, sind die Vektoren linear unabhängig. Ansonsten sind sie linear abhängig (Die triviale Lösung kommt dann heraus, wenn die Matrix nur Pivotspalten enthält).
+\subsection{LU-Faktorisierung}
+\begin{itemize}
+\item Soll A als untere Dreickecksmatrix $L$ und obere Dreieckmatrix $U$ faktorisiert werden, gilt $A = L \times U$
+\item $U$ ist die erste durch elementare Zeilenumformungen erreichte Matrix in Zeilenstufenform (ZSF) (\textbf{nicht} reduziert). Vertauschungen und Skalierungen sind zwecks Eindeutigkeit \textbf{nicht} erlaubt!
+\item $L$ ist das Produkt der invertierten Elementarmatrizen $L = E_1^{-1} \times E_2^{-1} \times E_n^{-1}$ bis zum Erreichen von $U$. Beim Invertieren der Elementarmatrizen wird das Vorzeichen aller Spalten darin außer auf der Diagonalen vertauscht.
+\item Lösung von $L \times U = \vec{b}$, wenn $L$ und $U$ bekannt sind durch $L \times \vec{y} = \vec{b}$. Dann $U \times \vec{x} = \vec{y}$ lösen.
+\end{itemize}
+\section{Diskrete Strukturen}
+\subsection{Mengenoperationen}
+\begin{enumerate}
+\item Durchschnitt von $A$ und $B$: $A \cap B := \{x | x \in A \wedge x \in B\}$
+\item Vereinigung von $A$ und $B$: $A \cup B := \{x | x \in A \vee x \in B\}$
+\item Komplement $\overline{A}$ einer Menge in $E$: $\overline{A} := \{x | x \in E \wedge x \notin A\}$
+\item Differenz von $A$ und $B$: $A \backslash B := \{x | x \in A \wedge x \notin B\} = A \cap \overline{B}$
+\end{enumerate}
+Seien $A, B, C$ Teilmengen einer Grundmenge $E$:
+\begin{itemize}
+\item Kommutativgesetze: $A \cap B = B \cap A$ und $A \cup B = B \cup A$
+\item Assoziativgesetze: $(A \cap B) \cap C = A \cap (B \cap C)$ und $(A \cup B) \cup C = A \cup (B \cup C)$
+\item Distributivgesetze: $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$ und $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$
+\item Absorptionsgesetze: $A \cap (A \cup B) = A$ und $A \cup (A \cap B) = A$
+\item Idempotenzgesetze: $A \cap A = A$ und $A \cup A = A$
+\item Gesetze für das Komplement: $A \cap \overline{A} = \emptyset$ und $A \cup \overline{A} = E$
+\item De Morgan-Gesetze: $\overline{A \cap B} = \overline{A} \cup \overline{B}$ und $\overline{A \cup B} = \overline{A} \cap \overline{B}$
+\item Neutrale Elemente: $A \cap E = A$ und $A \cup \emptyset = A$
+\item Dominanzgesetze: $A \cap \emptyset = \emptyset$ und $A \cup E = E$
+\item $\emptyset$ und $E$-Komplemente : $\overline{\emptyset} = E$ und $\overline{E} = \emptyset$
+\item Doppeltes Komplement: $\overline{\overline{A}} = A$
+\item Potenzmenge $P(A)$ einer Menge $A$ enthält alle Teilmengen von $A$ und $\emptyset$. Es gilt: $|P(A)| = 2^{|A|}$
+\item Kartesisches Produkt zweier Mengen $A \times B$ enthält alle geordneten Paare. Es gilt $|A \times B| = |A| * |B|$. Beispiel: 
+\end{itemize}
+\subsection{Begriffsverbände}
+\begin{itemize}
+\item Formaler Kontext $G, M, I$ in Tabelle: Merkmale oben, Gegenstände links. 
+\item Lesen von Begriffsverband: Von oben nach unten
+\end{itemize}
+\subsection{Kanonische Darstellung und Teiler}
+\begin{itemize}
+\item Primfaktorzerlegung ist kanonische Darstellung, bswp. 22: $22 = 2^1 * 11^1$. 3 teilt $n \in \mathbb{N}$, wenn Quersumme durch 3 teilbar ist. 7 teilt $n \in \mathbb{N}$ dann, alternierende 3er-Quersumme durch 7 teilbar ist. 11 teilt $n \in \mathbb{N}$, wenn alternierende Quersumme durch 11 teilbar ist. Bspw. 61259: $6 - 1 + 2 - 5 + 9 = 11 \surd$
+\item Anzahl Teiler von $n$: Summe der Exponenten der Primfaktoren, jeweils + 1, bspw. 22: $teilerzahl(22) = (1+1)*(1+1) = 4$ (nämlich 2, 11, 1, 22)
+\item Anzahl teilerfremder Zahlen zu $n$: Eulersche $\varphi$-Funktion. Für $n \in \mathbb{N}$ mit den Primfaktoren $p_1^a ... p_k^l$: $\varphi(n)=n*(1-\frac{1}{p_1})*(1-\frac{1}{p_2})*...*(1-\frac{1}{p_k})$ (p sind also immer die Basen)
+\item Paar Primzahlen: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499, 503, 509, 521, 523, 541, 547, 557, 563, 569, 571, 577, 587, 593, 599, 601, 607, 613, 617, 619, 631, 641, 643, 647, 653, 659, 661, 673, 677, 683, 691, 701, 709, 719, 727, 733, 739, 743, 751, 757, 761, 769, 773, 787, 797, 809, 811, 821, 823, 827, 829, 839, 853, 857, 859, 863, 877, 881, 883, 887, 907, 911, 919, 929, 937, 941, 947, 953, 967, 971, 977, 983, 991, 997, 1009, 1013, 1019, 1021, 1031, 1033, 1039, 1049, 1051, 1061, 1063, 1069, 1087, 1091, 1093, 1097, 1103, 1109, 1117, 1123, 1129, 1151, 1153, 1163, 1171, 1181, 1187, 1193, 1201, 1213, 1217, 1223, 1229, 1231, 1237, 1249, 1259, 1277, 1279, 1283, 1289, 1291, 1297, 1301, 1303, 1307, 1319, 1321, 1327, 1361, 1367, 1373, 1381, 1399, 1409, 1423, 1427, 1429, 1433, 1439, 1447, 1451, 1453, 1459, 1471, 1481, 1483, 1487, 1489, 1493, 1499, 1511, 1523, 1531, 1543, 1549, 1553, 1559, 1567, 1571, 1579, 1583, 1597, 1601, 1607, 1609, 1613, 1619, 1621, 1627, 1637, 1657, 1663, 1667, 1669, 1693, 1697, 1699, 1709, 1721, 1723, 1733, 1741, 1747, 1753, 1759, 1777, 1783, 1787, 1789, 1801, 1811, 1823, 1831, 1847, 1861, 1867, 1871, 1873, 1877, 1879, 1889, 1901, 1907, 1913, 1931, 1933, 1949, 1951, 1973, 1979, 1987, 1993, 1997, 1999
+\end{itemize}
+\subsection{ggT und euklidischer Algorithmus}
+ggT wird mit euklidischem Algorithmus bestimmt. In erweiterter Form:\\
+\begin{tabular}{ccccccc}
+$i$ & $n_i$ & $n_{i+1}$ &  $r$ & $q_i$ & $a_{i+1}$ & $a{_i}$ \\ 
+1. & \textcolor{red}{238} & \textcolor{blue}{154} & 84 & 1 & \textcolor{blue}{2} & \textcolor{red}{-3} \\ 
+2. & 154 &  84 & 70 & 1 & -1 & 2 \\ 
+3. & 84 & 70 & 14 & 1 & 1 & -1 \\ 
+4. & 70 & 14 & 0 & 5 & 0 & 1 \\ 
+5. & 14 & 0 & &  & 1 & 0 \\ 
+\end{tabular}\\
+Hier ist $ggT(238, 154) = 14$\\
+$a_i = a_{i+2} - q_i * a_{i+1}$\\
+$q_i = n_i div n_{i+1}$\\
+\subsection{Restklassenringe}
+\begin{itemize}
+\item In $\mathbb{Z}_{22}$ sind 0-21 drin, negative Zahlen: Solange $22 \equiv 0$ (mod n) addieren, bis Ergebnis in $\mathbb{Z}_{n}$ liegt
+\item Einheit: Zahl $a \in \mathbb{Z}_{n}$ ist Einheit, wenn $a * b \equiv 1$ (mod n). Das gilt dann, wenn $ggT(a, n) = 1$.
+\item Nullteiler: Zahl $a \in \mathbb{Z}_{n}$ ist Nullteiler, wenn $a * b \equiv 0$ (mod n)
+\item Division nur für Einheiten. Ist $a$ Einheit in $\mathbb{Z}_{n}$, dann wird inverses Element $n^{-1}$ durch erw. euklidischen Algorithmus bestimmt (mit $n$ als erstem Wert und $a$ als zweitem). Inverses zu n ist dann der Wert, der als $a_1$ oben rechts rauskommt.
+\item Rechnen mit Potenzen: $a^m * a^n = a^{m+n}$, $a^n=a^{n \bmod (p-1)}$ 
+\item Lemma von Euler-Fermat: $a^{\varphi(n)} \bmod n = 1$, falls $a$ zu $n$ teilerfremd ist ($ggT(a, n)=1$)
+\end{itemize}
+\subsection{Gruppen}
+Eine Gruppe $G$ enthält Elemente, für die eine Operation $\circ$ definiert ist ($\circ$ muss in $G$ abgeschlossen sein). Es existiert für jedes $a \in G$ ein inverses Element $a^{-1}$ und es gibt ein neutrales Element $e \in G$. Außerdem ist $\circ$ assoziativ:
+\begin{enumerate}
+\item $a \circ (b \circ c) = (a \circ b) \circ c$ für alle $a, b, c \in G$
+\item $g \circ e = g = e \circ g$ für alle $g \in G$
+\item $g \circ g^{-1} = g^{-1} \circ g = e$ für alle $g \in G$
+\end{enumerate}
+Die Anzahl $|G|$ der Elemente einer Gruppe ist die Ordnung der Gruppe $G$.
+\subsection{Untergruppen}
+\begin{enumerate}
+\item Untergruppen von $G$ müssen dann alle diese Kriterien erfüllen. Zu jeder Teilmenge $T$ aus $G$ gibt es eine kleinste erzeugte Untergruppe, die $<T>$ geschrieben wird. Sie enthält das neutrale Element, alle Elemente von $T$ und alle Elemente aus $G$, die man durch das wiederholte Anwenden der Gruppenoperation und Invertieren rauskriegt.
+\item Die Ordnung eines Elements ist die Ordnung der davon erzeugten Untergruppe.
+\item Ist $U$ eine Untergruppe der Gruppe $G$ und $g$ ein Element von $G$, dann nennt man $g \circ U := \{g \circ u | u \in U\}$ Linksnebenklasse von $U$. Die Linksnebenklasse über $g$ enthält also alle Elemente, die rauskommen, wenn man $g$ an ein Element aus $U$ von links ranrechnet (rechts rum: Rechtsnebenklassen...)
+\item Satz von Lagrange: Die Ordnung einer Untergruppe teilt stets die Ordnung der Gruppe: $[G : U] = \frac{|G|}{|U|}$
+\item Anzahl der Nebenklassen einer Untergruppe: $G : U$
+\end{enumerate}
+\rule{0.3\linewidth}{0.25pt}
+\scriptsize
+
+Gebaut mit \LaTeX
+\end{multicols}
+\end{document}
