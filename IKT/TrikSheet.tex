@@ -1,0 +1,339 @@
+\documentclass[8pt,a4paper,landscape]{extarticle}
+
+\usepackage[landscape,margin=1cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{bold-extra}
+\usepackage[utf8]{inputenc}
+\usepackage[compact]{titlesec}
+\usepackage{paralist}
+\usepackage{multicol}
+\usepackage[ngerman]{babel}
+\usepackage[fleqn]{amsmath}
+\usepackage{icomma}
+\usepackage{ragged2e}
+%\usepackage{amssymb}
+%\usepackage{mathtools}
+
+\DeclareMathOperator*{\ld}{ld}
+\DeclareMathOperator*{\grad}{grad}
+\DeclareMathOperator*{\kgV}{kgV}
+\setlength{\JustifyingParindent}{0pt}
+\pagestyle{empty}
+%\everymath{\displaystyle}
+
+\begin{document}
+\begin{multicols*}{6}
+\RaggedRight
+\section{Diskrete Quellen}
+Alphabet $X = \left\lbrace x_1, x_2, \dots , x_N\right\rbrace$
+
+Verteilung $(p(x_i)) = (p(x_1), p(x_2), \dots, p(x_N))$ mit $0 \leq p(x_i) \leq 1$.
+
+Vereinbarung
+
+$\displaystyle \sum_i := \sum_{i=1}^N$, $\displaystyle \sum_j := \sum_{j=1}^M$
+
+Satz der vollständigen Wahr\-schein\-lich\-keit $\sum_i p(x_i) = 1$.
+
+Unbestimmtheit/Ent\-ropie/Infor\-ma\-tions\-ge\-halt
+
+$\boxed{H_i = \ld \frac{1}{p(x_i)}} = -\ld p(x_i)$
+
+Mittlerer Informationsgehalt $\boxed{H_m = \sum_i p(x_i) \frac{1}{\ld p(x_i)}}$
+
+Bei Gleichverteilung gilt:
+
+$p(x_i) = \frac{1}{N}$ $H_Q = H_0 = \ld N$
+
+\subsection{Markow-Quellen}
+Entropie $H_Q = H_M = \boxed{\sum_{i,j} \overline{p(x_i)} p(x_j | x_i) \ld \frac{1}{p(x_j | x_i)}}$
+
+Stationärer Fall $p(x_i) = \overline{p(x_i)}$:
+
+$\lim_{n \rightarrow \infty} (p(x_j | x_i))^n  = (\overline{p(x_i)})$
+
+\subsection{Verbundquellen}
+Zwei diskrete Quellen $X$ und $Y$ mit Verbundwahrscheinlichkeiten $(p(x_i, y_j))$, $i \in \lbrace1, 2, \dots, N\rbrace$, $j \in \lbrace1, 2, \dots, M\rbrace$ bilden eine Verbundquelle $(X, Y)$.
+
+Verbundwahrscheinlichkeiten
+$\boxed{\begin{aligned}
+	p(x_i, y_j)	&= p(x_i) \cdot p(y_j|x_i) \\
+			&= p(y_j) \cdot p(x_i|y_j)
+\end{aligned}}$
+
+Verbundentropie
+
+$\begin{aligned}
+	H(X, Y)	&= H(X) + H(Y|X) \\
+		&= H(Y) + H(X|Y)
+\end{aligned}$
+
+$H(X,Y) =
+\boxed{\sum_{i, j} p(x_i, x_j) \ld \frac{1}{p(x_i, x_j)}}$
+
+
+$H(X) = \sum_i p(x_i) \ld \frac{1}{p(x_i)}$
+
+$H(Y) = \sum_j p(y_j) \ld \frac{1}{p(y_j)}$
+
+$H(Y|X) = \boxed{\sum_{i, j} p(x_i) p(y_j | x_i) \ld \frac{1}{p(y_j | x_i)}}$
+
+$H(Y|X) = \boxed{\sum_{j, i} p(y_j) p(x_i | y_j) \ld \frac{1}{p(x_i | y_j)}}$
+
+In den Matrix-Darstellungen $(p(x_i, y_j))$, $(p(x_i|y_j))$ und $(p(y_j|x_i))$ läuft $i$ zeilenweise und $j$ spaltenweise.
+
+\section{Quellkodierung}
+Mittlere Kodewortlänge
+
+$\boxed{l_m = \sum_i p(x_i) l_i}$
+
+Gleichmäßiger Kode $l = \lceil \ld N \rceil$
+
+\paragraph{dekodierbar}
+$l_m \geq H_m$ oder auch $\sum_i 2^{-l_i} \leq 1$
+
+\paragraph{annäherend redundanzfrei}
+$\begin{alignedat}{2}
+	H_m	 &\leq l_m    &< H_m + 1 \\
+	2^{-l_i} &\leq p(x_i) &< 2^{-l_i +1}
+\end{alignedat}$
+
+\paragraph{redundanzfrei}
+$l_m = H_m \Leftrightarrow p(x_i) = 2^{-l_i}$
+
+Koderedundanz
+
+$\boxed{R_K = l_{m} \left[ \cdot H_K\right] - H_Q \geq 0}$
+
+\section{Kanäle}
+\subsection{Diskrete Kanäle}
+Quelle $X$, Senke $Y$
+
+Transinformation
+
+$\begin{aligned}
+	H_T	&= H(X) + H(Y) - H(X, Y) \\
+		&= H(X)- H(X|Y) \\
+		&= H(Y) - H(Y|X)
+\end{aligned}$
+%\begin{equation*}
+%	(p(y_j|x_i)) = \begin{pmatrix}
+%	p(y_0| x_0) & p(y_1| x_0) & \cdots & p(y_{M-1}|x_0) \\
+%	p(y_0| x_1) & p(y_1| x_1) & \cdots & p(y_{M-1}|x_1) \\
+%	\vdots & \vdots & \ddots & \vdots \\
+%	p(y_0| x_{N-1}) & p(y_1| x_{N-1}) & \cdots & p(y_{M-1}|x_{N-1})
+%	\end{pmatrix}
+%\end{equation*}
+
+Quelleninformationsfluß
+
+$\boxed{I_Q = f_Q H_Q}$
+
+Quellenkodeinformationsfluß
+
+$\boxed{I_{KQ} = f_Q l H_K}$
+
+Kanalkodeinformationsfluß
+
+$\boxed{I_{KK} = f_Q (l + \Delta l) H_K = f_Q n H_K}$
+
+Kanalsymbolfrequenz $f_K$
+
+Schrittgeschwindigkeit $v_s$
+
+$\boxed{f_K = v_s}$
+
+Übertragungsgeschwindigkeit
+
+$\boxed{v_{\text{ü}} = I_K = v_s H_K}$
+
+Transinformationsfluß
+
+$\boxed{I_T = v_s H_T}$
+
+Kanalkapzität
+
+$C = \max \left\lbrace I_T \right\rbrace = 2 B \max{H_T}$
+
+\paragraph{Ungesicherte Übertragung} \hfill \\
+$\boxed{I_K = I_{KQ}}$, $\boxed{v_s = \frac{I_{KQ}}{H_K} = f_Q l}$
+
+\paragraph{Gesicherte Übertragung} \hfill \\
+$\boxed{I_K = I_{KK} = f_Q n H_K}$ bzw. $\boxed{I_T = I_{KQ}}$
+
+$\boxed{v_s = \frac{I_{KQ}}{H_T} = f_Q l \frac{H_K}{H_T} = f_Q n}$
+
+$\boxed{
+\begin{aligned}
+	I_{KK}	&= f_Q \left( l \frac{H_K}{H_T} \right) H_K  \\
+		&= f_Q n H_K
+\end{aligned}}$
+
+\subsection{Analoge Kanäle}
+$H(X) = \int_{-\infty}^{+\infty} f(x) \ld \frac{1}{f(x)} \mathrm{d}x - \ld \Delta x$
+
+\subsubsection{Normalverteilung}
+$f(x) = \frac{1}{\sqrt{2\pi P}} \exp{-\frac{x^2}{2 P}}$
+
+$P_x$\dots{}mittlere Nutzsignalleistung
+
+$p_z$\dots{}mittlere Störsignalleistung
+
+$H(X) = \frac{1}{2} \ld (2 \pi \mathrm{e} P_x)$
+
+$H(Y|X) = \frac{1}{2} \ld (2 \pi \mathrm{e} P_z)$
+
+$H(Y) = \frac{1}{2} \ld (2 \pi \mathrm{e} (P_x + P_z))$
+
+$H_T = \frac{1}{2} \ld \left(1 + \frac{P_x}{P_z} \right)$
+
+Rauschabstand $r = 10 \log \frac{P_x}{P_z}$ $C = 2 B \frac{1}{2} \ld \left(1 + \frac{P_x}{P_z} \right)$
+
+Für $\frac{P_x}{P_z} \gg 1$ gilt:
+
+$\boxed{H_T \approx 0,166 r}$
+
+$\boxed{C \approx 0,332 B r}$
+
+\subsubsection{Zeitquantisierung}
+Abtastfrequenz $\boxed{f_A \ge 2 f_g}$
+
+Abstand der Abtastwerte
+
+$\boxed{t_A \le \frac{1}{2 f_g} = \frac{1}{f_A}}$
+
+Umsetzzeit $t_u \le \frac{1}{2 f_g}$
+
+$l = \lceil 0,166 r \rceil \rightarrow m = 2^l$
+
+$C \ge I_{KQ} = 2 f_g l H_K = f_A l H_K$
+
+\section{Kanalkodierung}
+Die Anzahl an Stellen an der sich zwei Kodewörter $a_i = (u_{i1}u_{i2}\dots{}u_{in})$ und $a_j = (u_{j1}u_{j2}\dots{}u_{jn})$
+unterscheiden heißt \textsc{Hamming}-Distanz $d(a_i, a_j) = \sum_{g=1}^n (u_{ig} \oplus u_{jg})$
+
+\textsc{Hamming}-Gewicht $w(a_i) = \sum_{g=1}^n u_{ig} = d(\mathbf{0}, a_i)$
+
+\textsc{Hamming}-Schranke $\boxed{2^k \ge \sum_{i=0}^{f_k} \binom{l+k}{i}}$
+
+Relative Redundanz $r_k = \frac{k}{n}$
+
+Koderate $R = \frac{l}{n}$
+
+\subsection{Eigenschaften}
+$(n, l, d_\text{min})$
+
+allgemein $d_\text{min} = f_e + f_k + 1$
+
+Fehlererkennungskode $\boxed{f_e = d_\text{min} - 1}$
+
+Fehlerkorrekturkode $\boxed{f_k = \left\lfloor \frac{d_\text{min} - 1}{2} \right\rfloor}$
+
+\subsection{Lineare Gruppenkodes}
+\justifying
+\subsubsection{Eigenschaften}
+Erfüllen Gruppenaxiome:
+\begin{compactenum}
+	\item Neutrales Element
+	\item Inverses Element
+	\item Abgeschlossenheit
+\end{compactenum}
+
+\subsubsection{Erzeugung}
+Können eindeutig durch eine Generatormatrix $G_{l \times n}$ beschrieben werden.
+%\begin{pmatrix}
+%	u_{11} & u_{12} & \cdots & u_{1n} \\
+%	u_{21} & u_{22} & \cdots & u_{2n} \\
+%	\vdots & \vdots & \ddots & \vdots \\
+%	u_{l1} & u_{l2} & \cdots & u_{ln}
+%\end{pmatrix}
+
+Bildung Kanalkodewort
+
+$\boxed{(a_i) = (a_i^{*}) \cdot G_{l \times n}}$
+
+Kanonische/reduzierte Form der Generatormatrix $G_{l \times n} = (I_l C)$, mit $I_l$ als $l\times l$-Einheitsmatrix
+
+\subsubsection{Fehlererkennung}
+\paragraph{Systematischer Kode}
+Quellkodewort kann durch Streichen redundanter Stellen aus dem Kanalkodewort entnommen werden.
+
+Kontrollmatrix
+
+$\boxed{H_{k \times n} = (C^{\mathsf{T}} I_k)}$
+
+Fehlersyndrom von Kanalwort $b$
+
+$\boxed{s = H \cdot b^{\mathsf{T}}}$
+
+$s = \mathbf{0} \Rightarrow$ kein Fehler.
+
+\subsubsection{Hamming-Kodesi}
+Spezieller dichtgepackter, einfach"=fehlerkorrigierender Gruppenkode mit $d_\text{min} = 3$ und Kode"=wort"=länge $n = 2^k - 1$. Redundante Stelle $k_i$ steht an Position $2^i$ im Kodewort $\Rightarrow$ Syndrom $s$ liefert die Position des fehlerhaften Elements.
+
+In Kontrollmatrix $H_{k \times n}$ steht in der $i$-ten Spalte der Wert $n-i + 1$ binär kodiert.
+
+\paragraph{Verkürzter Hamming-Kode}
+Bestimmen der minimal notwendigen Anzahl an Kontrollstellen $k$ und Streichen der überflüssigen Informationsstellen $l$.
+
+\paragraph{Erweiterter Hamming-Kode}
+Ein weiteres Kontrollelement $k_0$ (Paritätsbit) wird hinzugefügt. $d_\text{min} = 4$, $n \le 2^k$. Kontrollmatrix $H$ erhält eine zusätzliche mit Einsen besetze Zeile und eine zusätzliche Spalte.
+
+\subsection{Zyklische Kodes}
+\begin{compactitem}
+	\item Ein Kode heißt \emph{zyklisch}, wenn für jedes Kanalkodewort durch zyklische Verschiebung der Elemente wieder ein Kanalkodewort entsteht. Ein zyklischer Kode ist ein spezieller Linearkode, der die Gruppen- und Körperaxiome erfüllt.
+	\item Ein zyklischer Kode wird vollständig durch ein Produkt von \emph{irreduziblen} Minimalpolynomen, \emph{Generatorpolynom} $g(x)$ genannt, beschrieben.
+	\item Ein Polynom ist \emph{irreduzibel}, wenn es nicht in ein Produkt von Polynomen zerlegbar ist.
+	\item Das Modularpolynom $M(x)$ vom Grad $k_1 = \grad M(x)$ bestimmt den Kodeparameter $n \le 2^{k_1} - 1$.
+	\item Der tatsächliche Wert von $n$ berechnet sich aus dem \emph{Zyklus der Polynomreste} über $GF(2)$ mit $x_i \mod M(x)$ ($i \in \lbrace 0, 1, \dots{}, p\rbrace$) und bestimmt $n = p | 2^{k_1} - 1$
+	\item Ist $n = p = 2^{k_1} - 1$ dann ist $M(x)$ \emph{primitiv}.
+	\item BCH-Kodes können zusätzlich Bündelfehler $f_b \le k$ erkennen.
+\end{compactitem}
+
+\subsubsection{Kodeparamter}
+$n = 2^{k_1} - 1$
+
+$k_1 = \grad M(x)$
+
+$k = \grad g(x)$
+
+$l = n - k$
+
+$d_\text{min} = z + 1$, mit $z$ Anzahl aufeinander folgender Nullstellen 
+
+\subsubsection{Bildungsverfahren}
+\begin{compactdesc}
+	\item[Multiplikationsverfahren] $a(x) = a^{*}(x) g(x)$
+	\item[Divisionsverfahren] $a(x) = a^{*}(x) x^k + r(x)$ mit $r(x) = a^{*}(x) x^k \mod g(x)$ (Rest bei Divison). Erzeugt immer \emph{systematischen} Kode
+	\item[Generatormatrix] 
+\end{compactdesc}
+
+\subsubsection{Fehlererkennung}
+$a(x) \mod g(x) = 0 \Rightarrow $ kein Fehler.
+
+\subsubsection{Kode-Konstruktion}
+Entwurfsabstand $d_\text{E}$
+
+$g(x) = \kgV \lbrace m_{\mu}(x), m_{\mu + 1}(x)$, \\ $\dots{}, m_{\mu + d_\text{E} - 2}(x) \rbrace$
+
+Typischerweise $\mu \in \lbrace 0, 1 \rbrace$
+
+$d_\text{min} \ge d_\text{E}$
+
+\paragraph{Verkürzter Kode}
+$(n, l, d_\text{min}) \rightarrow (n - u, l - u, d_\text{min})$, $k$ konstant.
+
+\paragraph{Erweiterter Kode}
+$g(x)$ mit $(x + 1) = m_0(x)$ multiplizieren.
+$(n,l, d_\text{min}) \rightarrow (n+1, l, d_\text{min} + 1)$
+
+\paragraph{Zyklischer \textsc{Hamming}-Kode}
+$g(x) = M(x) = m_1(x) \rightarrow d_\text{min} = 3$
+
+\paragraph{Abramson-Kode}
+$g(x) = m_0(x) m_1(x) = (x + 1) M(x) \rightarrow d_\text{min} = 4$
+
+\end{multicols*}
+\end{document}
+
