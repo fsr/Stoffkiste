@@ -17,7 +17,7 @@ fi
 if [[ "$1" = "build" || "$1" = "deploy" ]]; then
     # building PDFs
     echo "building PDFs"
-    find .  -name "*.tex" -type f -print -execdir latexmk -quiet -halt-on-error -pdf {} \;
+    find .  -name "*.tex" -type f -print -execdir latexmk -halt-on-error -pdf {} \;
 
 
     # building index file
