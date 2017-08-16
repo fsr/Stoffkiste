@@ -1,0 +1,16 @@
+sudo: required
+
+before_install:
+- sudo apt-get update
+- sudo apt-get install texlive-latex-extra latexmk texlive-lang-german
+- mkdir -p ~/.ssh
+- echo $DEPLOY_KEY | base64 -d > ~/.ssh/id_ed25519
+
+script:
+- ./build.sh build
+
+deploy:
+  - provider: script
+    script: /bin/bash ./build.sh ssh://git@github.com/sgeisler/Stoffkiste.git gh-pages
+    on:
+      branch: master
