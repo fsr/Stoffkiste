@@ -13,6 +13,6 @@ script:
 deploy:
   - provider: script
     skip_cleanup: true
-    script: ./build.sh deploy ssh://git@github.com/sgeisler/Stoffkiste.git gh-pages
+    script: ./build.sh deploy ssh://git@github.com/fsr/Stoffkiste.git gh-pages
     on:
       branch: master
