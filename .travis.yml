@@ -1,0 +1,18 @@
+sudo: required
+
+before_install:
+- sudo apt-get update
+- sudo apt-get install texlive-latex-extra latexmk texlive-lang-german texlive-fonts-recommended cm-super
+- mkdir -p ~/.ssh
+- echo $DEPLOY_KEY | base64 -d > ~/.ssh/id_ed25519
+- chmod 600 ~/.ssh/id_ed25519
+
+script:
+- ./build.sh build
+
+deploy:
+  - provider: script
+    skip_cleanup: true
+    script: ./build.sh deploy ssh://git@github.com/fsr/Stoffkiste.git gh-pages
+    on:
+      branch: master
