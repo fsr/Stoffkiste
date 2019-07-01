@@ -65,6 +65,32 @@
     \item Bitübertragungsschicht (Umsetzung in elektrische Signale)
 \end{etaremune}
 
+\subsubsection{Effizienz}
+\begin{minipage}{0.5\textwidth}
+	\begin{tikzpicture}
+			\node[text width=6cm] at (1,0) (b0) {Roh-Datenrate $b_0$ ($b_{gross}$)};
+		\node[draw] at (0,0.5) (l1) {Layer 1};
+			\node[text width=6cm] at (1,1) (b1) {Netzwerk-Datenrate $b_1$ ($b_{net}$)};
+		\node[draw] at (0,1.5) (l2) {Layer 2};
+			\node[text width=6cm] at (1,2) (b2) {Datendurchsatz $b_2$  ($b_{throughput}$)};
+		\node[draw] at (0,2.5) (l3) {Layer 3};
+			\node[text width=6cm] at (1,3) (b3) {Vermittlungs-Datenrate $b_3$  ($b_{Layer-3}$)};
+		\node[draw] at (0,3.5) (l4) {Layer 4};
+			\node[text width=6cm] at (1,4) (b3) {Transferrate $b_4$  ($b_{goodput}$)};
+		\node[draw] at (0,4.5) (l5) {Layer 5};
+	\end{tikzpicture}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+	$b_{gross}=125Mbit/s$ bei Ethernet\\
+	$b_n=\eta_n \cdot b_{n-1}$
+	
+	Effizienzen:\\
+	$\eta_1=80\%$\\
+	$\eta_2=55-98\%$\\
+	$\eta_3=57-99\%$\\
+	$\eta_4=23-99\%$\\
+\end{minipage}
+
 \subsection{Sequenzdiagramme}
 \begin{description}
     \item[Req:] Request, von Client gesendet
@@ -73,6 +99,28 @@
     \item[Rsp:] Response, von Server gesendet
     \item[Cnf:] Confirmation, von Client empfangene Response
 \end{description}
+
+\begin{minipage}{0.5\textwidth}
+	\begin{tikzpicture}[node distance=2cm,auto,>=stealth']
+	\node[] (B) {B};
+	\node[left = of B] (A) {A};
+	\node[below of=B, node distance=6cm] (b_ground) {};
+	\node[below of=A, node distance=6cm] (a_ground) {};
+	%
+	\draw (A) -- (a_ground);
+	\draw (B) -- (b_ground);
+	\draw[->] ($(A)!0.05!(a_ground)$) node[left]{ConReq} -- ($(B)!0.08!(b_ground)$) node[right]{ConInd};
+	\draw[<-] ($(A)!0.20!(a_ground)$) node[left]{DisInd} -- node[below,scale=1,midway]{*} ($(B)!0.15!(b_ground)$) node[right]{DisReq};
+	\draw[->] ($(A)!0.30!(a_ground)$) node[left]{ConReq} -- ($(B)!0.35!(b_ground)$) node[right]{ConInd};
+	\draw[<-] ($(A)!0.50!(a_ground)$) node[left]{ConCnf} -- ($(B)!0.45!(b_ground)$) node[right]{ConRsp};
+	\draw[->] ($(A)!0.60!(a_ground)$) node[left]{DatReq} -- ($(B)!0.65!(b_ground)$) node[right]{DatInd};
+	\draw[<-] ($(A)!0.75!(a_ground)$) node[left]{DatReq} -- ($(B)!0.80!(b_ground)$) node[right]{DatInd};
+	\draw[->] ($(A)!0.90!(a_ground)$) node[left]{DisReq} -- ($(B)!0.95!(b_ground)$) node[right]{DisInd};
+	\end{tikzpicture}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+	* Erster Verbindungsversuch von B abgelehnt.
+\end{minipage}
 
 \subsection{OSI-Schichtenarchitektur}
 \begin{minipage}{0.75\textwidth}
@@ -305,6 +353,8 @@
     \end{tikzpicture}
 \end{minipage}
 Der IEEE 802.3 Standard beschreibt genau die invertierte Form der hier beschriebenen Manchesterkodierung.
+
+Bei Manchestercodierung entspricht die Übertragungsrate nur noch der Hälfte der Signalrate.
 \end{samepage}
 
 \subsubsection{Differentielle Manchesterkodierung}
@@ -354,7 +404,7 @@ Durch Leitungskodierungen wie z.B. die Manchesterkodierung können Fehler erkann
 \subsection{Multiplexing}
 \begin{description}
     \item[Synchrones Zeitmultiplexing:] Jeder Teilnehmer besitzt fest zugeordnete Zeitintervalle in denen er Nachrichten senden kann
-    \item[Asynchrones Zeitmultiplexing:] Die Nachrichten werden getaggt
+    \item[Asynchrones Zeitmultiplexing:] ebenfalls feste Zeitabschnitte. Benötigt ein Teilnehmer seinen Abschnitt nicht, kann dieser von einem anderen Teilnehmer genutzt werden. Die Nachrichten werden zur Kanalzuordnung mit Channel Identifier getaggt
     \item[Frequenzmultiplexing:] Die Teilnehmer senden mit verschiedenen Trägerfrequenzen
 \end{description}
 
@@ -406,7 +456,7 @@ Die Sicherungsschicht ist für \textit{Medium Access Control} (MAC; Medienzugrif
         \item Falls ja, dann sende ab sofort das \textit{Jam-Signal} anstatt dem Frame bis die Mindestframelänge erreicht ist; danach gehe zu 3.
         \item Gehe zu (i)
     \end{enumerate}
-    Das Jam-Signal sorgt dafür, dass der CRC des Frames bei allen Empfängern fehlschlägt.
+    Das Jam-Signal sorgt dafür, dass der CRC des Frames bei allen Empfängern fehlschlägt. Sendezeit für einen Rahmen muss mindestens $2\tau$ betragen.
 \end{description}
 \end{samepage}
 \begin{figure}[ht]
@@ -507,7 +557,7 @@ Die Sicherungsschicht ist für \textit{Medium Access Control} (MAC; Medienzugrif
     %
     \item[Store-and-forward Switching] Die Switch puffert den gesamten Frame, überprüft die Prüfsumme (CRC) und sendet bei Erfolg den Frame weiter. Ansonsten wird er verworfen.
     %
-    \item[Cut-through Switching] Die Switch puffert den Frame bis die Dst-MAC gelesen wurde und sendet ihn anschließend sofort weiter. Fehler werden erst beim Empfänger erkannt, aber die Übertragung ist schneller.
+    \item[Cut-through Switching] Die Switch puffert den Frame bis die Dst-MAC gelesen wurde und sendet ihn anschließend sofort weiter. Pro Switch verzögert sich die Übertagung um die Übertagungszeit des Headers (Start Delimiter, Dst MAC). Fehler werden erst beim Empfänger erkannt, aber die Übertragung ist schneller.
     %
     \item[Spanning Tree Protocol] Kreise im Netz werden ausfindig gemacht und durch Portabschaltungen aufgelöst.
 \end{description}
