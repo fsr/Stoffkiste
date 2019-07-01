@@ -643,6 +643,29 @@ Um zwischen verschiedenen Standorten (z.B. größere Firmen) mehrere getrennte L
     \item[Label] bestimmen pro Punkt-zu-Punkt-Verbindung eindeutig die Route.
 \end{description}
 
+\begin{table}[ht]
+\begin{minipage}{0.5\textwidth}
+	\centering
+	\begin{tabular}{c|c|c}
+		in & dest & out\\
+		\hline
+		(Port,Label) & IP & (Port,Label)\\
+		... & ... & ...
+	\end{tabular}
+	\caption{Ingress/Egress Routingtabelle}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+	\centering
+	\begin{tabular}{c|c}
+		in & out\\
+		\hline
+		(Port,Label)  & (Port,Label)\\
+		... & ...
+	\end{tabular}
+	\caption{Switch Routingtabelle}
+\end{minipage}
+\end{table}
+
 \subsection{SONET/SDH}
 \begin{description}
     \item[SONET:] Synchronous Optical Network
