@@ -20,6 +20,8 @@
 % For sine wave plots
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.9}
+% For ceil and floor symbols
+\usepackage{mathtools}
 
 % Set page margins
 \usepackage[top=2cm, bottom=2cm, left=3cm, right=3cm]{geometry}
@@ -414,11 +416,12 @@ Die Sicherungsschicht ist für \textit{Medium Access Control} (MAC; Medienzugrif
 \subsection{Fehlererkennung und -korrektur}
 \begin{description}
     \item[Gerades Paritätsbit:] $\sum_i d_i \mod 2 = p$ mit $d_1, \dots, d_n$ Datenbits und $p$ Paritätsbit
+    \item[Ungerades Paritätsbit:] Letztes Bit wird beim Senden so angefügt, dass insgesamt ungerade Anzahl Einsen vorhanden ist.
     \item[Hamming-Distanz $d$:] Zwichen zwei Bitfolgen $a, b$: Zahl der Bitflips um aus $a$ $b$ zu machen. Einer Menge an Bitfolgen: minimum aller paarweisen Hamming-Distanzen.
     \item[Erkennbare Fehler:] $f_e = d_{min}-1$
     \item[Korrigierbare Fehler:] $f_k = \left\lfloor \frac{d_{min}-1}{2} \right\rfloor$
     \item[Kreuzsicherung] Je eine Spalte und eine Zeile einer Matrix mit Paritätsbit ermöglichen Fehlererkennung in einer Matrix.
-    \item[Cycling Redundancy Check (CRC)] r = grad g(x), r*0 Bits an Datenpolynom $P_D$ anhängen, $P_D x^r : g(x)$ $=>$ Rest an $P_D$ anhängen = Sendesequenz $P_E$ \\Kontrolle: $P_E$ : g(x) mit Rest = 0 $=>$ korrekte Übertragung
+    \item[Cycling Redundancy Check (CRC)] r = grad g(x), $r$ mal Bit 0 an Datenpolynom $P_D$ anhängen, $P_D~0^r : g(x)$ (XOR) $=>$ Rest auf $P_D x^r$ addieren = Sendesequenz $P_E$ \\Kontrolle: $P_E$ : g(x) mit Rest = 0 $=>$ korrekte Übertragung
 \end{description}
 
 
@@ -731,6 +734,9 @@ Beide Technologien werden zur Bündelung mehrerer Datenströme (z.B. Telefonverb
 		\hline
 	\end{tabular}
 \end{minipage}
+
+\subsection{Rahmenbildung}
+Zwischen Rahmenbegrenzungsfeldern werden beliebige Bits übertragen. Problem, wenn Bitfolge der Rahmenbegrenzung in den Daten vorkommt. Lösung durch Bit-Stuffing (nach jeder fünften 1 wird eine 0 eingefügt) oder Byte-Stuffing (vor Bitfolge, welche Rahmenbegrenzung entspricht, wird Escape-Zeichen eingefügt).
 
 \section{Vermittlungsschicht}
 \subsection{Dijkstra}
