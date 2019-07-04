@@ -1003,7 +1003,8 @@ Zwischen Rahmenbegrenzungsfeldern werden beliebige Bits übertragen. Problem, we
     %
     \item[Schiebefensterprotokoll]
     \begin{samepage}
-    Effizienzsteigerung, indem man $F$ viele Pakete hintereinander versendet, ohne auf die Bestätigung des vorherigen Pakets warten zu müssen. (\textit{Stop-and-Wait ist wie ein Schiebefensterprotokoll mit $F = 1$})
+    Effizienzsteigerung, indem man $F$ viele Pakete hintereinander versendet, ohne auf die Bestätigung des vorherigen Pakets warten zu müssen. (\textit{Stop-and-Wait ist wie ein Schiebefensterprotokoll mit $F = 1$})\\
+    Bei Fenstergröße $n$ werden Laufnummern $0...n$ vergeben, damit bei wiederholtem Senden von $F0$ (ACK war verloren) der Empfänger das nicht als $F0$ im zweiten Durchlauf akzeptiert, da er noch auf $Fn$ wartet.
     \bigskip \\
     Bei Erhalt eines Pakets mit falscher Sequenznummer (Empfangs- = Sendereihenfolge!): \\
     \textbf{Go-Back-N:}
