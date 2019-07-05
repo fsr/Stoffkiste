@@ -1028,9 +1028,12 @@ Zwischen Rahmenbegrenzungsfeldern werden beliebige Bits übertragen. Problem, we
     %
     \item[Max-Min-Fairness] Jeder bekommt gleich viel\footnote{Oder gewichtet: Jeder bekommt $\frac{\text{eigenes Gewicht}}{\text{Summe aller Gewichte}}$ viel} aus dem Topf. Hat jemand mehr als er braucht, kommt der Überschuss wieder in den Topf. Dieser Algorithmus wird wiederholt bis alle gesättigt sind oder der Topf leer ist.
     %
-    \item[Lastberechnung] $\text{Last}_{\text{neu}} = a \cdot \text{Last}_{\text{alt}} + (1 - a) \cdot \text{Last}_{\text{gemessen}} \hs{1cm} a \ldots \text{Anpassungsfaktor}$
+    \item[Choke-Verfahren] Überlaststeuerung an Gateways. Wenn eingehender Traffic größer als möglicher ausgehender ($\text{Last}>\text{Schwellwert}$) ist, wird Choke-Paket gesendet, um Sender zum Stoppen aufzufordern.
+    \begin{description}
+    	\item[Lastberechnung] $\text{Last}_{\text{neu}} = a \cdot \text{Last}_{\text{alt}} + (1 - a) \cdot \text{Last}_{\text{gemessen}} \hs{1cm} a \ldots \text{Anpassungsfaktor}$
+	\end{description}
     %
-    \item[Bandwidth Delay Product] $\text{BDP} = b \cdot \frac{d}{v} \hs{1cm} b \ldots \text{Bitrate}, d \ldots \text{Kabellänge}, v \ldots \text{Übertragunsgeschw.}$
+    \item[Bandwidth Delay Product] $\text{BDP} = b \cdot T = b \cdot \frac{d}{v} \hs{1cm} b \ldots \text{Bitrate}, d \ldots \text{Kabellänge}, v \ldots \text{Übertragunsgeschw.}$ (Menge an Daten, die sich auf der Leitung befinden)
     %
     \begin{samepage}
     \item[Worst-Case-Paketeffizienz mit $F = 64$] \hfill
@@ -1042,6 +1045,15 @@ Zwischen Rahmenbegrenzungsfeldern werden beliebige Bits übertragen. Problem, we
     \end{itemize}
     \end{samepage}
 \end{description}
+
+\begin{tabular}{c|c|c}
+	Technik & IFG & Mindestframegröße\\
+	\hline
+	Ethernet & 47 Bit & 64 Byte\\
+	Fast Ethernet & 12 Byte & 64 Byte\\
+	Gigabit Ethernet & 8 Byte & 512 Byte\\
+	10GB Ethernet & 5 Byte & \\
+\end{tabular}
 
 \section{Internetdienste}
 
