@@ -1130,7 +1130,13 @@ Zwischen Rahmenbegrenzungsfeldern werden beliebige Bits übertragen. Problem, we
     \item[SIP (\textit{Session Initiation Protocol})] Protokoll zum Aufbauen von VoIP-Sessions, meist über SIP-Proxys. Es verwendet das SDP (\textit{Session Description Protocol}), was eigentlich nur eine Beschreibungssprache und \textit{kein} Protokoll ist.
     %
     \item[RTP (\textit{Real-time Transport Protocol})] Protokoll zur effizienten Übertragung von Audio- und Videodaten. Flusskontrolle und Quality-of-Service werden vom RTCP (\textit{Real-time Transport Control Protocol}) übernommen.
+    %
+    \item[RTCP (\textit{Real-Time Control Protocol})] Steuerung des Transports, z.B.\ Anpassung der Übertragungsrate
+    \item[MCU (\textit{Multipoint Control Unit})] Teilnehmer senden ihren Stream nur an MCU, welche den Stream an die anderen Teilnehmer verteilt. Ohne MCU sendet jeder Teilnehmer seinen Stream an jeden anderen Teilnehmer.
 \end{description}
+\begin{itemize}
+	\item Übergang von VoIP zu analoger Telefonie (PSTN, Public Switched Telephone Network) über Mediagateways bei Provider
+\end{itemize}
 
 \section{Verteilte Systeme}
 
