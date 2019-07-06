@@ -1066,8 +1066,9 @@ Zwischen Rahmenbegrenzungsfeldern werden beliebige Bits übertragen. Problem, we
     \begin{samepage}
     System zum Auflösen von {\host}s zu IPs.
     \begin{itemize}
-        \item Client sendet Ziel-\host an den lokalen DNS-Server
-        \item Lokaler DNS-Server befragt den Root-DNS-Server nach dem \host
+        \item Client sendet Ziel-\host an den lokalen DNS-Server, dieser kümmert sich um Namensauflösung und liefert Ergebnis zurück
+        \item Lokaler DNS-Server befragt entsprechend Namenshierarchie höhere/niedere DNS-Server nach dem \host, falls ihm IP unbekannt
+        \item DNS-Root-Server für Top Level Domains
         \item \textbf{Rekursiver Ansatz:} \texttt{lookup(rootServer, host)} \\
             \texttt{lookup(server, host):}
             \begin{itemize}
@@ -1107,7 +1108,7 @@ Zwischen Rahmenbegrenzungsfeldern werden beliebige Bits übertragen. Problem, we
     %
     \item[IMAP (\textit{Internet Message Access Protocol})] Protokoll zum selektiven Abrufen von E-Mails von Servern (\textit{E-Mail bleibt auf dem Server}).
     %
-    \item[SNMP (\textit{Simple Network Management Protocol})] Protokoll zum einheitlichen Konfigurieren und Verwalten von Netzwerkgeräten.
+    \item[SNMP (\textit{Simple Network Management Protocol})] Protokoll zum einheitlichen Konfigurieren und Verwalten von Netzwerkgeräten.Nachrichtentypen: \texttt{GET}, \texttt{GETNEXT}, \texttt{GETBULK}, \texttt{SET}, \texttt{RESPONSE}, \texttt{TRAP}
 \end{description}
 
 \section{Multimediakommunikation}
