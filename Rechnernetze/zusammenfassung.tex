@@ -563,6 +563,10 @@ Die Sicherungsschicht ist für \textit{Medium Access Control} (MAC; Medienzugrif
     \item[Cut-through Switching] Die Switch puffert den Frame bis die Dst-MAC gelesen wurde und sendet ihn anschließend sofort weiter. Pro Switch verzögert sich die Übertagung um die Übertagungszeit des Headers (Start Delimiter, Dst MAC). Fehler werden erst beim Empfänger erkannt, aber die Übertragung ist schneller.
     %
     \item[Spanning Tree Protocol] Kreise im Netz werden ausfindig gemacht und durch Portabschaltungen aufgelöst.
+    %
+    \item[Berechnung Übertragungszeit] Store-and-forward Switch: $t_{ges}=(n+1)\cdot t_f$ \\
+    Cut-through Switch: $t_{ges}=t_f+n\cdot\frac{14\cdot8}{b} \hspace{1cm}t_f=\frac{(F+26)\cdot8}{b}$\hspace{1cm}$n=$Anzahl Switches \\
+    Präambel + Zieladresse = 14 Byte ~Quelladresse + EtherType/Size + CRC = 12 Byte
 \end{description}
 
 \subsection{Funktechnologien}
@@ -580,6 +584,9 @@ Die Sicherungsschicht ist für \textit{Medium Access Control} (MAC; Medienzugrif
     \item[OFDM (\textit{Orthogonal frequency-division multiplexing})] Digitaler Datenstrom wird auf mehreren Trägerfrequenzen übertragen.
     %
     \item[MIMO (\textit{Multiple-input and multiple-output})] Nutzung von n Sende- und n Empfangsantennen pro Gerät für n-fache Kanalkapazität. Hardwarekosten steigen durch komplizierte Kanalmatrixberechnung.
+    %
+    \item [Fehlerrate]
+    $e_{Frame}=F\cdot8\cdot p$ wobei p die Bitfehlerrate ist. Genauer: $e_{Frame}=(1-(1-p))\cdot F\cdot8$
 \end{description}
 
 \subsection{Resilient Packet Ring (RPR)}
