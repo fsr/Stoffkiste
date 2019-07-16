@@ -20,6 +20,8 @@
 % For sine wave plots
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.9}
+% For ceil and floor symbols
+\usepackage{mathtools}
 
 % Set page margins
 \usepackage[top=2cm, bottom=2cm, left=3cm, right=3cm]{geometry}
@@ -38,8 +40,10 @@
     sgeisler\\\href{mailto:sgeisler@wh2.tu-dresden.de}{\tt sgeisler@wh2.tu-dresden.de} 
     \and
     chlewe\\\href{mailto:ch\_lewe@wh2.tu-dresden.de}{\tt ch\_lewe@wh2.tu-dresden.de}
+    \and
+    beyerm\\\href{mailto:beyerm@wh2.tu-dresden.de}{\tt beyerm@wh2.tu-dresden.de}
 }
-\date{August 2017\\Version: \texttt{GITVERSION}}
+\date{Juli 2019\\Version: \texttt{GITVERSION}}
 
 \begin{document}
 
@@ -65,6 +69,32 @@
     \item Bitübertragungsschicht (Umsetzung in elektrische Signale)
 \end{etaremune}
 
+\subsubsection{Effizienz}
+\begin{minipage}{0.5\textwidth}
+	\begin{tikzpicture}
+			\node[text width=6cm] at (1,0) (b0) {Roh-Datenrate $b_0$ ($b_{gross}$)};
+		\node[draw] at (0,0.5) (l1) {Layer 1};
+			\node[text width=6cm] at (1,1) (b1) {Netzwerk-Datenrate $b_1$ ($b_{net}$)};
+		\node[draw] at (0,1.5) (l2) {Layer 2};
+			\node[text width=6cm] at (1,2) (b2) {Datendurchsatz $b_2$  ($b_{throughput}$)};
+		\node[draw] at (0,2.5) (l3) {Layer 3};
+			\node[text width=6cm] at (1,3) (b3) {Vermittlungs-Datenrate $b_3$  ($b_{Layer-3}$)};
+		\node[draw] at (0,3.5) (l4) {Layer 4};
+			\node[text width=6cm] at (1,4) (b3) {Transferrate $b_4$  ($b_{goodput}$)};
+		\node[draw] at (0,4.5) (l5) {Layer 5};
+	\end{tikzpicture}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+	$b_{gross}=125Mbit/s$ bei Ethernet\\
+	$b_n=\eta_n \cdot b_{n-1}$
+	
+	Effizienzen:\\
+	$\eta_1=80\%$\\
+	$\eta_2=55-98\%$\\
+	$\eta_3=57-99\%$\\
+	$\eta_4=23-99\%$\\
+\end{minipage}
+
 \subsection{Sequenzdiagramme}
 \begin{description}
     \item[Req:] Request, von Client gesendet
@@ -73,6 +103,28 @@
     \item[Rsp:] Response, von Server gesendet
     \item[Cnf:] Confirmation, von Client empfangene Response
 \end{description}
+
+\begin{minipage}{0.5\textwidth}
+	\begin{tikzpicture}[node distance=2cm,auto,>=stealth']
+	\node[] (B) {B};
+	\node[left = of B] (A) {A};
+	\node[below of=B, node distance=6cm] (b_ground) {};
+	\node[below of=A, node distance=6cm] (a_ground) {};
+	%
+	\draw (A) -- (a_ground);
+	\draw (B) -- (b_ground);
+	\draw[->] ($(A)!0.05!(a_ground)$) node[left]{ConReq} -- ($(B)!0.08!(b_ground)$) node[right]{ConInd};
+	\draw[<-] ($(A)!0.20!(a_ground)$) node[left]{DisInd} -- node[below,scale=1,midway]{*} ($(B)!0.15!(b_ground)$) node[right]{DisReq};
+	\draw[->] ($(A)!0.30!(a_ground)$) node[left]{ConReq} -- ($(B)!0.35!(b_ground)$) node[right]{ConInd};
+	\draw[<-] ($(A)!0.50!(a_ground)$) node[left]{ConCnf} -- ($(B)!0.45!(b_ground)$) node[right]{ConRsp};
+	\draw[->] ($(A)!0.60!(a_ground)$) node[left]{DatReq} -- ($(B)!0.65!(b_ground)$) node[right]{DatInd};
+	\draw[<-] ($(A)!0.75!(a_ground)$) node[left]{DatReq} -- ($(B)!0.80!(b_ground)$) node[right]{DatInd};
+	\draw[->] ($(A)!0.90!(a_ground)$) node[left]{DisReq} -- ($(B)!0.95!(b_ground)$) node[right]{DisInd};
+	\end{tikzpicture}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+	* Erster Verbindungsversuch von B abgelehnt.
+\end{minipage}
 
 \subsection{OSI-Schichtenarchitektur}
 \begin{minipage}{0.75\textwidth}
@@ -305,15 +357,17 @@
     \end{tikzpicture}
 \end{minipage}
 Der IEEE 802.3 Standard beschreibt genau die invertierte Form der hier beschriebenen Manchesterkodierung.
+
+Bei Manchestercodierung entspricht die Übertragungsrate nur noch der Hälfte der Signalrate.
 \end{samepage}
 
 \subsubsection{Differentielle Manchesterkodierung}
 \begin{samepage}
 \begin{minipage}{0.5\textwidth}
-    Am Anfang einer jeden Zeiteinheit findet eine Pegeländerung statt. Der Datenstrom wird wie folgt kodiert:
+    In der Mitte jeder Zeiteinheit findet eine Pegeländerung statt. Der Datenstrom wird wie folgt kodiert:
     \begin{description}[style=unboxed,leftmargin=0cm]
-        \item[0:] eine weitere Pegeländerung findet in der Mitte der Zeiteinheit statt
-        \item[1:] während der Zeiteinheit findet keine weitere Pegeländerung statt
+        \item[0:] eine weitere Pegeländerung findet am Anfang der Zeiteinheit statt
+        \item[1:] keine weitere Pegeländerung
     \end{description}
 \end{minipage}
 %
@@ -334,15 +388,15 @@ Der IEEE 802.3 Standard beschreibt genau die invertierte Form der hier beschrieb
         \draw[dashed] (4.75,0)--(4.75,-1.2);
         \node[anchor=east, bold] at (-0.1,-0.8) {Kodierung};
         \draw[line width=0.5mm, draw=red]
-            (-0.01,-1.1)--(0.25,-1.1)--(0.25,-0.5)--(0.75,-0.5)-- %1
-            (0.75,-1.1)--(1,-1.1)--(1,-0.5)--(1.25,-0.5)-- %0
-            (1.25,-1.1)--(1.75,-1.1)-- %1
-            (1.75,-0.5)--(2,-0.5)--(2,-1.1)--(2.25,-1.1)-- %0
-            (2.25,-0.5)--(2.5,-0.5)--(2.5,-1.1)--(2.75,-1.1)-- %0
-            (2.75,-0.5)--(3.25,-0.5)-- %1
-            (3.25,-1.1)--(3.75,-1.1)-- %1
-            (3.75,-0.5)--(4.25,-0.5)-- %1
-            (4.25,-1.1)--(4.5,-1.1)--(4.5,-0.5)--(4.75,-0.5)--(4.75,-1.1)--(5,-1.1);
+            (-0.01,-1.1)--(0.5,-1.1)--(0.5,-0.5)--(0.75,-0.5)--(0.75,-1.1) %1
+            (0.75,-1.1)--(1,-1.1)--(1,-0.5)--(1.5,-0.5) %0
+            (1.5,-0.5)--(1.5,-1.1)--(1.75,-1.1) %1
+			(1.75,-1.1)--(1.75,-0.5)--(2.0,-0.5)--(2.0,-1.1)--(2.25,-1.1) %0
+			(2.25,-1.1)--(2.25,-0.5)--(2.5,-0.5)--(2.5,-1.1) %0
+			(2.5,-1.1)--(3.0,-1.1)--(3.0,-0.5) %1
+			(3.0,-0.5)--(3.5,-0.5)--(3.5,-1.1) %1
+			(3.5,-1.1)--(4.0,-1.1)--(4.0,-0.5)--(4.25,-0.5) %1
+			(4.25,-0.5)--(4.25,-1.1)--(4.5,-1.1)--(4.5,-0.5)--(4.75,-0.5); %0
     \end{tikzpicture}
 \end{minipage}
 
@@ -354,7 +408,7 @@ Durch Leitungskodierungen wie z.B. die Manchesterkodierung können Fehler erkann
 \subsection{Multiplexing}
 \begin{description}
     \item[Synchrones Zeitmultiplexing:] Jeder Teilnehmer besitzt fest zugeordnete Zeitintervalle in denen er Nachrichten senden kann
-    \item[Asynchrones Zeitmultiplexing:] Die Nachrichten werden getaggt
+    \item[Asynchrones Zeitmultiplexing:] ebenfalls feste Zeitabschnitte. Benötigt ein Teilnehmer seinen Abschnitt nicht, kann dieser von einem anderen Teilnehmer genutzt werden. Die Nachrichten werden zur Kanalzuordnung mit Channel Identifier getaggt
     \item[Frequenzmultiplexing:] Die Teilnehmer senden mit verschiedenen Trägerfrequenzen
 \end{description}
 
@@ -364,11 +418,12 @@ Die Sicherungsschicht ist für \textit{Medium Access Control} (MAC; Medienzugrif
 \subsection{Fehlererkennung und -korrektur}
 \begin{description}
     \item[Gerades Paritätsbit:] $\sum_i d_i \mod 2 = p$ mit $d_1, \dots, d_n$ Datenbits und $p$ Paritätsbit
+    \item[Ungerades Paritätsbit:] Letztes Bit wird beim Senden so angefügt, dass insgesamt ungerade Anzahl Einsen vorhanden ist.
     \item[Hamming-Distanz $d$:] Zwichen zwei Bitfolgen $a, b$: Zahl der Bitflips um aus $a$ $b$ zu machen. Einer Menge an Bitfolgen: minimum aller paarweisen Hamming-Distanzen.
     \item[Erkennbare Fehler:] $f_e = d_{min}-1$
     \item[Korrigierbare Fehler:] $f_k = \left\lfloor \frac{d_{min}-1}{2} \right\rfloor$
     \item[Kreuzsicherung] Je eine Spalte und eine Zeile einer Matrix mit Paritätsbit ermöglichen Fehlererkennung in einer Matrix.
-    \item[Cycling Redundancy Check (CRC)] r = grad g(x), r*0 Bits an Datenpolynom $P_D$ anhängen, $P_D x^r : g(x)$ $=>$ Rest an $P_D$ anhängen = Sendesequenz $P_E$ \\Kontrolle: $P_E$ : g(x) mit Rest = 0 $=>$ korrekte Übertragung
+    \item[Cycling Redundancy Check (CRC)] r = grad g(x), $r$ mal Bit 0 an Datenpolynom $P_D$ anhängen, $P_D~0^r : g(x)$ (XOR) $=>$ Rest auf $P_D x^r$ addieren = Sendesequenz $P_E$ \\Kontrolle: $P_E$ : g(x) mit Rest = 0 $=>$ korrekte Übertragung
 \end{description}
 
 
@@ -406,7 +461,7 @@ Die Sicherungsschicht ist für \textit{Medium Access Control} (MAC; Medienzugrif
         \item Falls ja, dann sende ab sofort das \textit{Jam-Signal} anstatt dem Frame bis die Mindestframelänge erreicht ist; danach gehe zu 3.
         \item Gehe zu (i)
     \end{enumerate}
-    Das Jam-Signal sorgt dafür, dass der CRC des Frames bei allen Empfängern fehlschlägt.
+    Das Jam-Signal sorgt dafür, dass der CRC des Frames bei allen Empfängern fehlschlägt. Sendezeit für einen Rahmen muss mindestens $2\tau$ betragen.
 \end{description}
 \end{samepage}
 \begin{figure}[ht]
@@ -507,9 +562,13 @@ Die Sicherungsschicht ist für \textit{Medium Access Control} (MAC; Medienzugrif
     %
     \item[Store-and-forward Switching] Die Switch puffert den gesamten Frame, überprüft die Prüfsumme (CRC) und sendet bei Erfolg den Frame weiter. Ansonsten wird er verworfen.
     %
-    \item[Cut-through Switching] Die Switch puffert den Frame bis die Dst-MAC gelesen wurde und sendet ihn anschließend sofort weiter. Fehler werden erst beim Empfänger erkannt, aber die Übertragung ist schneller.
+    \item[Cut-through Switching] Die Switch puffert den Frame bis die Dst-MAC gelesen wurde und sendet ihn anschließend sofort weiter. Pro Switch verzögert sich die Übertagung um die Übertagungszeit des Headers (Start Delimiter, Dst MAC). Fehler werden erst beim Empfänger erkannt, aber die Übertragung ist schneller.
     %
     \item[Spanning Tree Protocol] Kreise im Netz werden ausfindig gemacht und durch Portabschaltungen aufgelöst.
+    %
+    \item[Berechnung Übertragungszeit] Store-and-forward Switch: $t_{ges}=(n+1)\cdot t_f$ \\
+    Cut-through Switch: $t_{ges}=t_f+n\cdot\frac{14Byte\cdot8}{b} \hspace{1cm}t_f=\frac{(F+26Byte)\cdot8}{b}$\hspace{1cm}$n=$Anzahl Switches \\
+    Präambel + Zieladresse = 14 Byte \hfill Quelladresse + EtherType/Size + CRC = 12 Byte
 \end{description}
 
 \subsection{Funktechnologien}
@@ -527,6 +586,9 @@ Die Sicherungsschicht ist für \textit{Medium Access Control} (MAC; Medienzugrif
     \item[OFDM (\textit{Orthogonal frequency-division multiplexing})] Digitaler Datenstrom wird auf mehreren Trägerfrequenzen übertragen.
     %
     \item[MIMO (\textit{Multiple-input and multiple-output})] Nutzung von n Sende- und n Empfangsantennen pro Gerät für n-fache Kanalkapazität. Hardwarekosten steigen durch komplizierte Kanalmatrixberechnung.
+    %
+    \item [Fehlerrate]
+    $e_{Frame}=F\cdot8\cdot p$ wobei p die Bitfehlerrate ist. Genauer: $e_{Frame}=(1-(1-p))\cdot F\cdot8$
 \end{description}
 
 \subsection{Resilient Packet Ring (RPR)}
@@ -581,7 +643,7 @@ Um zwischen verschiedenen Standorten (z.B. größere Firmen) mehrere getrennte L
             \draw[->] (vpidl) -- (ovpid.south);
             \draw[->] (vpidl) -- (ivpid.south);
     \end{tikzpicture}
-    \caption{QIEEE 802.1ad Q-in-Q}
+    \caption{IEEE 802.1ad Q-in-Q}
 \end{minipage}
 \end{figure}
 
@@ -592,6 +654,29 @@ Um zwischen verschiedenen Standorten (z.B. größere Firmen) mehrere getrennte L
     \item[Egress-Router] entfernen Label von Paketen, sendet sie anhand dieser in externes Netz weiter.
     \item[Label] bestimmen pro Punkt-zu-Punkt-Verbindung eindeutig die Route.
 \end{description}
+
+\begin{table}[ht]
+\begin{minipage}{0.5\textwidth}
+	\centering
+	\begin{tabular}{c|c|c}
+		in & dest & out\\
+		\hline
+		(Port,Label) & IP & (Port,Label)\\
+		... & ... & ...
+	\end{tabular}
+	\caption{Ingress/Egress Routingtabelle}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+	\centering
+	\begin{tabular}{c|c}
+		in & out\\
+		\hline
+		(Port,Label)  & (Port,Label)\\
+		... & ...
+	\end{tabular}
+	\caption{Switch Routingtabelle}
+\end{minipage}
+\end{table}
 
 \subsection{SONET/SDH}
 \begin{description}
@@ -640,6 +725,27 @@ Beide Technologien werden zur Bündelung mehrerer Datenströme (z.B. Telefonverb
         \item[SPE:] Synchronous Payload Envelope
     \end{description}
 \end{minipage}
+
+\subsection{OTN (Optical Transport Network)}
+\begin{minipage}{0.6\textwidth}
+	Kann SONET/SDH- oder anderen Traffic (Ethernet, MPLS, ...) über optische Verbindung transportieren. Datenübertragung basiert auf DWDM.
+\end{minipage}
+\hspace{0.1\textwidth}
+\begin{minipage}{0.3\textwidth}
+	\begin{tabular}{|l|l|}
+		\hline
+		Variante & Max. Datenrate ($\frac{\text{Gbit}}{\text{s}}$)\\
+		\hline
+		OTU-1 & 2,7\\
+		OTU-2 & 10,7\\
+		OTU-3 & 43,0\\
+		OTU-4 & 112,0\\
+		\hline
+	\end{tabular}
+\end{minipage}
+
+\subsection{Rahmenbildung}
+Zwischen Rahmenbegrenzungsfeldern werden beliebige Bits übertragen. Problem, wenn Bitfolge der Rahmenbegrenzung in den Daten vorkommt. Lösung durch Bit-Stuffing (nach jeder fünften 1 wird eine 0 eingefügt) oder Byte-Stuffing (vor Bitfolge, welche Rahmenbegrenzung entspricht, wird Escape-Zeichen eingefügt).
 
 \section{Vermittlungsschicht}
 \subsection{Dijkstra}
@@ -906,7 +1012,8 @@ Beide Technologien werden zur Bündelung mehrerer Datenströme (z.B. Telefonverb
     %
     \item[Schiebefensterprotokoll]
     \begin{samepage}
-    Effizienzsteigerung, indem man $F$ viele Pakete hintereinander versendet, ohne auf die Bestätigung des vorherigen Pakets warten zu müssen. (\textit{Stop-and-Wait ist wie ein Schiebefensterprotokoll mit $F = 1$})
+    Effizienzsteigerung, indem man $F$ viele Pakete hintereinander versendet, ohne auf die Bestätigung des vorherigen Pakets warten zu müssen. (\textit{Stop-and-Wait ist wie ein Schiebefensterprotokoll mit $F = 1$})\\
+    Bei Fenstergröße $n$ werden Laufnummern $0...n$ vergeben, damit bei wiederholtem Senden von $F0$ (ACK war verloren) der Empfänger das nicht als $F0$ im zweiten Durchlauf akzeptiert, da er noch auf $Fn$ wartet.
     \bigskip \\
     Bei Erhalt eines Pakets mit falscher Sequenznummer (Empfangs- = Sendereihenfolge!): \\
     \textbf{Go-Back-N:}
@@ -930,9 +1037,12 @@ Beide Technologien werden zur Bündelung mehrerer Datenströme (z.B. Telefonverb
     %
     \item[Max-Min-Fairness] Jeder bekommt gleich viel\footnote{Oder gewichtet: Jeder bekommt $\frac{\text{eigenes Gewicht}}{\text{Summe aller Gewichte}}$ viel} aus dem Topf. Hat jemand mehr als er braucht, kommt der Überschuss wieder in den Topf. Dieser Algorithmus wird wiederholt bis alle gesättigt sind oder der Topf leer ist.
     %
-    \item[Lastberechnung] $\text{Last}_{\text{neu}} = a \cdot \text{Last}_{\text{alt}} + (1 - a) \cdot \text{Last}_{\text{gemessen}} \hs{1cm} a \ldots \text{Anpassungsfaktor}$
+    \item[Choke-Verfahren] Überlaststeuerung an Gateways. Wenn eingehender Traffic größer als möglicher ausgehender ($\text{Last}>\text{Schwellwert}$) ist, wird Choke-Paket gesendet, um Sender zum Stoppen aufzufordern.
+    \begin{description}
+    	\item[Lastberechnung] $\text{Last}_{\text{neu}} = a \cdot \text{Last}_{\text{alt}} + (1 - a) \cdot \text{Last}_{\text{gemessen}} \hs{1cm} a \ldots \text{Anpassungsfaktor}$
+	\end{description}
     %
-    \item[Bandwidth Delay Product] $\text{BDP} = b \cdot \frac{d}{v} \hs{1cm} b \ldots \text{Bitrate}, d \ldots \text{Kabellänge}, v \ldots \text{Übertragunsgeschw.}$
+    \item[Bandwidth Delay Product] $\text{BDP} = b \cdot T = b \cdot \frac{d}{v} \hs{1cm} b \ldots \text{Bitrate}, d \ldots \text{Kabellänge}, v \ldots \text{Übertragunsgeschw.}$ (Menge an Daten, die sich auf der Leitung befinden)
     %
     \begin{samepage}
     \item[Worst-Case-Paketeffizienz mit $F = 64$] \hfill
@@ -945,6 +1055,15 @@ Beide Technologien werden zur Bündelung mehrerer Datenströme (z.B. Telefonverb
     \end{samepage}
 \end{description}
 
+\begin{tabular}{c|c|c}
+	Technik & IFG & Mindestframegröße\\
+	\hline
+	Ethernet & 47 Bit & 64 Byte\\
+	Fast Ethernet & 12 Byte & 64 Byte\\
+	Gigabit Ethernet & 8 Byte & 512 Byte\\
+	10GB Ethernet & 5 Byte & \\
+\end{tabular}
+
 \section{Internetdienste}
 
 \begin{description}
@@ -956,8 +1075,9 @@ Beide Technologien werden zur Bündelung mehrerer Datenströme (z.B. Telefonverb
     \begin{samepage}
     System zum Auflösen von {\host}s zu IPs.
     \begin{itemize}
-        \item Client sendet Ziel-\host an den lokalen DNS-Server
-        \item Lokaler DNS-Server befragt den Root-DNS-Server nach dem \host
+        \item Client sendet Ziel-\host an den lokalen DNS-Server, dieser kümmert sich um Namensauflösung und liefert Ergebnis zurück
+        \item Lokaler DNS-Server befragt entsprechend Namenshierarchie höhere/niedere DNS-Server nach dem \host, falls ihm IP unbekannt
+        \item DNS-Root-Server für Top Level Domains
         \item \textbf{Rekursiver Ansatz:} \texttt{lookup(rootServer, host)} \\
             \texttt{lookup(server, host):}
             \begin{itemize}
@@ -997,7 +1117,7 @@ Beide Technologien werden zur Bündelung mehrerer Datenströme (z.B. Telefonverb
     %
     \item[IMAP (\textit{Internet Message Access Protocol})] Protokoll zum selektiven Abrufen von E-Mails von Servern (\textit{E-Mail bleibt auf dem Server}).
     %
-    \item[SNMP (\textit{Simple Network Management Protocol})] Protokoll zum einheitlichen Konfigurieren und Verwalten von Netzwerkgeräten.
+    \item[SNMP (\textit{Simple Network Management Protocol})] Protokoll zum einheitlichen Konfigurieren und Verwalten von Netzwerkgeräten.Nachrichtentypen: \texttt{GET}, \texttt{GETNEXT}, \texttt{GETBULK}, \texttt{SET}, \texttt{RESPONSE}, \texttt{TRAP}
 \end{description}
 
 \section{Multimediakommunikation}
@@ -1019,7 +1139,13 @@ Beide Technologien werden zur Bündelung mehrerer Datenströme (z.B. Telefonverb
     \item[SIP (\textit{Session Initiation Protocol})] Protokoll zum Aufbauen von VoIP-Sessions, meist über SIP-Proxys. Es verwendet das SDP (\textit{Session Description Protocol}), was eigentlich nur eine Beschreibungssprache und \textit{kein} Protokoll ist.
     %
     \item[RTP (\textit{Real-time Transport Protocol})] Protokoll zur effizienten Übertragung von Audio- und Videodaten. Flusskontrolle und Quality-of-Service werden vom RTCP (\textit{Real-time Transport Control Protocol}) übernommen.
+    %
+    \item[RTCP (\textit{Real-Time Control Protocol})] Steuerung des Transports, z.B.\ Anpassung der Übertragungsrate
+    \item[MCU (\textit{Multipoint Control Unit})] Teilnehmer senden ihren Stream nur an MCU, welche den Stream an die anderen Teilnehmer verteilt. Ohne MCU sendet jeder Teilnehmer seinen Stream an jeden anderen Teilnehmer.
 \end{description}
+\begin{itemize}
+	\item Übergang von VoIP zu analoger Telefonie (PSTN, Public Switched Telephone Network) über Mediagateways bei Provider
+\end{itemize}
 
 \section{Verteilte Systeme}
 
@@ -1027,6 +1153,7 @@ Beide Technologien werden zur Bündelung mehrerer Datenströme (z.B. Telefonverb
     \item[RPC (\textit{Remote Procedure Call})] Aufruf einer Funktion auf einem entfernten Rechner.
     \item[Stub] Schnittstelle zwischen den Anwendungen und dem Transportsystem. Sie (de)kodiert die Aufrufe und Ergebnisse.
     \item[RPC-Bindevorgang] Der RPC-Server wird über Direktadressierung, Broadcast oder einen Verzeichnisdienst ausfindig gemacht. Nach dem Binding können RPCs gesendet werden.
+    \item[Directory Service] Client befragt Directory Service nach Serverprozessen; dieser Antwortet mit Adresse eines Servers, Schnittstellenbeschreibung; Client sendet Bindungsanfrage an Server, prüfen, ob Prozess verfügbar ist; Bestätigung durch Server; Client ruft Prozedur auf Server auf; Server gibt Rückgabe
 \end{description}
 
 \begin{tabular}{l|l|l|l}
