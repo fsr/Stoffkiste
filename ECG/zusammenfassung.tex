@@ -62,7 +62,7 @@
 \item Spatprodukt: $[\vec{u}, \vec{v}, \vec{w}] = \langle \vec{u}, \vec{v} \times \vec{w} \rangle = \det(\vec{u}, \vec{v}, \vec{w})$, Tetraedervolumen ein sechstel davon
 \item $\text{dist}(\underline{x}) = \langle \hat{n}, \underline{x} - \underline{r} \rangle$, wobei $\underline{x}$ der Punkt ist und $\underline{r}$ ein Punkt auf der Ebene
 \item Projektion eines Punktes auf den nächstgelegenen Punkt der Ebene (Lot): $\text{Proj}(\underline{x}) = \underline{x} - \text{dist}(\underline{x})\hat{n}$ 
-\item Bayzentrische Koordinaten: Punkt $\underline{p}$ im Dreieck $\underline{p_0}$, $\underline{p_1}$, $\underline{p_2}$ mit $\underline{p} = \sigma_0 \underline{p_0} \sigma_1 \underline{p_1} \sigma_2 \underline{p_2}$ und $\sigma_0 + \sigma_1 + \sigma_2 = 1$. Im Fall $\underline{p} = \underline{p_i}$ gilt $\sigma_i = 1$ und $\sigma_{j \neq i} = 0$. Berechnung mit LGS:
+\item Baryzentrische Koordinaten: Punkt $\underline{p}$ im Dreieck $\underline{p_0}$, $\underline{p_1}$, $\underline{p_2}$ mit $\underline{p} = \sigma_0 \underline{p_0} \sigma_1 \underline{p_1} \sigma_2 \underline{p_2}$ und $\sigma_0 + \sigma_1 + \sigma_2 = 1$. Im Fall $\underline{p} = \underline{p_i}$ gilt $\sigma_i = 1$ und $\sigma_{j \neq i} = 0$. Berechnung mit LGS:
 \[
 \begin{pmatrix}x \\ y \\ z\end{pmatrix}
 =
@@ -146,7 +146,7 @@ Es gibt 16 mögliche Fälle (4 Symetrieklassen). Ist auf allen 4 Kanten einer Ze
 \item Rekursives Füllen: Funktion \lstinline|fill(x,y)| färbt den Pixel an $x, y$ (falls dieser nicht außerhalb des Bildbereichs liegt und eine ähnliche Farbe wie der) und ruft sich selbst für die umliegenden Pixel auf. Toll einfach zu implementieren, aber führt zu Stapelüberläufen und abhängig von Definition der Pixelnachbarschaft
 \item Pixellaufalgorithmus: Füllfunktion füllt eine Linie in einem Polygon auf und startet Rekursion für Pixel der darüber und darunterliegenden Zeile, an denen ein Pixellauf von rechts beginnt
 \item Graphisches Debuggen: Fehler treten erst nach sehr vielen Iterationen auf, daher muss ein "graphischer Debugger" geschaffen werden, der erlaubt, die Anzahl der Iterationen für einen Algorithmus vorzugeben. Vorher wird Zustand der Datenstrukturen gespeichert. Dann wird der Algorithmus mit verschiedenen Iterationszählern gestartet.
-\item Brute-Force-Algorithmus für das Füllen von Dreiecken: Rechteck um das Dreieck wird betrachtet, anschließend werden die bayzentrischen Koordinaten für jeden Pixel bestimmt und damit geprüft, ob der Pixel im Dreieck liegt (inkrementell)
+\item Brute-Force-Algorithmus für das Füllen von Dreiecken: Rechteck um das Dreieck wird betrachtet, anschließend werden die baryzentrischen Koordinaten für jeden Pixel bestimmt und damit geprüft, ob der Pixel im Dreieck liegt (inkrementell)
 \item Sweep-Line-Algorithmus: Alle vom Dreieck geschnittenen Zeilen werden durchwandert (da Dreieck konvex ist, ist der Schnit ein Interval). Interval und Koordinaten werden von Zeile zu Zeile mitgeführt und alle inneren Pixel auf berechnete Farbe gesetzt. Bei Polygonen können dies entsprechend mehrere Intervalle sein ("Liste aktiver Intervalle wird mitgeführt"). Bei Dreiecken nebeneinander soll jeder Pixel nur einmal gezeichnet werden (keine Löcher, keine doppelten Pixel bei Transparenz).\\ Daher zeichne Pixel, deren Zentrum im Dreieck liegt. Pixel auf Kanten: Zwei Richtungen werden festgelegt, wobei der Punkt der ersten Richtung zugerdnet wird, wenn die Kante nicht parallel zur ersten Richtung ist. Punkt auf Ecke: Wenn Kante parallel zur ersten Richtung die Ecke verlässt, weise Punkt dem rechts gelegenen Dreieck zu, ansonsten dem auf das die Richtung zeit
 \item Polygon: Kantenzug, der Eckpunkte verbindet. Einfache Polygone: konvex, konkav - nicht einfach: nicht überlappend, überlappend. Überlappende Polygone können dabei Einschlüsse haben
 \end{compactitem}
@@ -449,7 +449,7 @@ Daher werden zwei Schnittfunktionen implementiert: Schnittprüfung mit beliebige
 \item Schnittberechnung: Bei Schnitt eines Strahls mit einem Körper schneidet der Strahl den Körper über einem Interval
 \item Achsenparallele Quader: Berechne Schnittinterval $T_{x/y/z}$ mit den drei Ebenenstreifen, $T_Q = T_X \cap T_Y \cap T_Z$
 \item Normale ergibt sich entlang einer einer Koordinatenachse
-\item Schnittberechnung mit Dreieck: Schnitt mit Ebene testen und dann bayzentrische Koordinaten testen
+\item Schnittberechnung mit Dreieck: Schnitt mit Ebene testen und dann baryzentrische Koordinaten testen
 \item Unterteile Welt in regelmäßiges Voxelgitter zur Beschleunigung und markiere Voxel, in denen Objekte enthalten sind
 \item Traversierung: Voxel entlang des Strahls verfolgen
 \item Gitterauflösung ist dabei entscheidend für Qualität des Ergebnisses, sehr kleine Objekte kommen nicht gut. Mögliche Verbesserung durch Schachtelung des Gitters.
