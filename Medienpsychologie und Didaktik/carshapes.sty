@@ -1,0 +1,186 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{carshapes}
+
+\RequirePackage{tikz}
+
+
+\makeatletter
+
+\def\pgf@body@color{black!30}
+\def\pgf@window@color{black!10}
+
+\pgfdeclareshape{sedan top}{
+\inheritsavedanchors[from=coordinate]
+\inheritanchor[from=coordinate]{center}
+\backgroundpath{
+% Body
+\begin{pgfscope}
+    \pgftransformshift{\centerpoint}
+    \pgfmathdivide{\pgfkeysvalueof{/pgf/minimum width}}{1pt}
+    \pgftransformscale{\pgfmathresult}
+
+    \pgfpathmoveto{\pgfpoint{-0.3764698682720557}{0.16169217949171047}}
+    \pgfpathlineto{\pgfpoint{0.3371231697857909}{0.17694315802976227}}
+    \pgfpathlineto{\pgfpoint{0.36786879148692225}{0.16589767639860994}}
+    \pgfpathlineto{\pgfpoint{0.4064052148177093}{0.13879466238659263}}
+    \pgfpathlineto{\pgfpoint{0.4393446579325617}{0.10613070348195595}}
+    \pgfpathlineto{\pgfpoint{0.45329950694358345}{0.07840237877506098}}
+    \pgfpathlineto{\pgfpoint{0.45329950694358345}{-0.07840334453180331}}
+    \pgfpathlineto{\pgfpoint{0.43933991312769727}{-0.1061282429017343}}
+    \pgfpathlineto{\pgfpoint{0.4063926179906356}{-0.1387866550035162}}
+    \pgfpathlineto{\pgfpoint{0.3678546410511762}{-0.16588533150807783}}
+    \pgfpathlineto{\pgfpoint{0.3371231697857909}{-0.17693102308634803}}
+    \pgfpathlineto{\pgfpoint{-0.3764698682720557}{-0.16169356514268857}}
+    \pgfpathlineto{\pgfpoint{-0.3944099628675368}{-0.15772328458879273}}
+    \pgfpathlineto{\pgfpoint{-0.4099758704803143}{-0.14724966111630228}}
+    \pgfpathlineto{\pgfpoint{-0.43396985110493147}{-0.11051053207766995}}
+    \pgfpathlineto{\pgfpoint{-0.4484212506633208}{-0.05891246295317149}}
+    \pgfpathlineto{\pgfpoint{-0.4532995069435834}{0.00010826972869789077}}
+    \pgfpathlineto{\pgfpoint{-0.4485740585736087}{0.059115381041558314}}
+    \pgfpathlineto{\pgfpoint{-0.4342143437613922}{0.11067259025797227}}
+    \pgfpathlineto{\pgfpoint{-0.41018980239450586}{0.14734361665050213}}
+    \pgfpathlineto{\pgfpoint{-0.39454366978903876}{0.15777297487265582}}
+    \pgfpathlineto{\pgfpoint{-0.3764698682720557}{0.16169217949171047}}
+    \pgfpathclose
+
+    \pgfpathmoveto{\pgfpoint{0.13271865580424752}{0.21099658055215992}}
+    \pgfpathlineto{\pgfpoint{0.14640536035629512}{0.21031786350943238}}
+    \pgfpathlineto{\pgfpoint{0.1537574564883996}{0.19881177469739017}}
+    \pgfpathlineto{\pgfpoint{0.16526045907780879}{0.16238122593263837}}
+    \pgfpathlineto{\pgfpoint{0.14705384501404595}{0.15750667374937677}}
+    \pgfpathlineto{\pgfpoint{0.13271865580424752}{0.21099658055215992}}
+    \pgfpathclose
+
+    \pgfpathmoveto{\pgfpoint{0.13271865580424752}{-0.21099658055215995}}
+    \pgfpathlineto{\pgfpoint{0.14705384501404595}{-0.15751099866000545}}
+    \pgfpathlineto{\pgfpoint{0.16526045907780879}{-0.16238219168938073}}
+    \pgfpathlineto{\pgfpoint{0.1537574564883996}{-0.19880160066005706}}
+    \pgfpathlineto{\pgfpoint{0.14640536035629512}{-0.21030964827870924}}
+    \pgfpathlineto{\pgfpoint{0.13271865580424752}{-0.21099658055215995}}
+    \pgfpathclose
+    \color{\pgf@body@color}
+    \pgfusepath{fill,draw}
+\end{pgfscope}
+}
+    
+\beforebackgroundpath{
+% Windows:
+\begin{pgfscope}
+    \pgftransformshift{\centerpoint}
+    \pgfmathdivide{\pgfkeysvalueof{/pgf/minimum width}}{1pt}
+    \pgftransformscale{\pgfmathresult}
+    
+    \pgfpathmoveto{\pgfpoint{-0.3278343587292163}{-0.14804700247958225}}
+    \pgfpathlineto{\pgfpoint{-0.2234184193273709}{-0.15031023241047897}}
+    \pgfpathlineto{\pgfpoint{-0.21525116152061965}{-0.14108410631462961}}
+    \pgfpathlineto{\pgfpoint{-0.21003597013857514}{-0.13038163208575007}}
+    \pgfpathlineto{\pgfpoint{-0.28007422369443574}{-0.13072059170758982}}
+    \pgfpathlineto{\pgfpoint{-0.30920043509746165}{-0.1357313491830563}}
+    \pgfpathlineto{\pgfpoint{-0.3278343587292163}{-0.14804700247958225}}
+    \pgfpathclose
+    
+    \pgfpathmoveto{\pgfpoint{-0.20348981900264201}{-0.15067134145325653}}
+    \pgfpathlineto{\pgfpoint{-0.06450146780296512}{-0.1538205482216657}}
+    \pgfpathlineto{\pgfpoint{-0.06439150590049697}{-0.1433681755964485}}
+    \pgfpathlineto{\pgfpoint{-0.06919084662824423}{-0.13038163208575007}}
+    \pgfpathlineto{\pgfpoint{-0.19919598054747503}{-0.13038163208575007}}
+    \pgfpathlineto{\pgfpoint{-0.20370480485136538}{-0.1408899052305777}}
+    \pgfpathlineto{\pgfpoint{-0.20348981900264201}{-0.15067134145325653}}
+    \pgfpathclose
+    
+    \pgfpathmoveto{\pgfpoint{-0.045098155167206846}{-0.1540846616959763}}
+    \pgfpathlineto{\pgfpoint{0.15615715204592737}{-0.1585443583742794}}
+    \pgfpathlineto{\pgfpoint{0.1406284134709018}{-0.14934034810782904}}
+    \pgfpathlineto{\pgfpoint{0.11302876535256408}{-0.1409152584445346}}
+    \pgfpathlineto{\pgfpoint{0.025565845773536638}{-0.13038163208575007}}
+    \pgfpathlineto{\pgfpoint{-0.057380061564002535}{-0.13038163208575007}}
+    \pgfpathlineto{\pgfpoint{-0.05322499815376351}{-0.14451459183370835}}
+    \pgfpathlineto{\pgfpoint{-0.045098155167206846}{-0.1540846616959763}}
+    \pgfpathclose
+    
+    \pgfpathmoveto{\pgfpoint{-0.40326793829427443}{0.13060698932209738}}
+    \pgfpathlineto{\pgfpoint{-0.3824075926603322}{0.1357263398448233}}
+    \pgfpathlineto{\pgfpoint{-0.3588179344937687}{0.12593398637201397}}
+    \pgfpathlineto{\pgfpoint{-0.3514240168957798}{0.12001473733011214}}
+    \pgfpathlineto{\pgfpoint{-0.34496142471276847}{0.11392921017083832}}
+    \pgfpathlineto{\pgfpoint{-0.3529478130774541}{0.11007500098054127}}
+    \pgfpathlineto{\pgfpoint{-0.3657244094702585}{0.09329891199185718}}
+    \pgfpathlineto{\pgfpoint{-0.37254805610979685}{0.0726124571577818}}
+    \pgfpathlineto{\pgfpoint{-0.3805180685992867}{0.000180701484371307}}
+    \pgfpathlineto{\pgfpoint{-0.37254805610979685}{-0.0722854855163738}}
+    \pgfpathlineto{\pgfpoint{-0.3657244094702585}{-0.09297209991025879}}
+    \pgfpathlineto{\pgfpoint{-0.3529478130774541}{-0.10974802933913329}}
+    \pgfpathlineto{\pgfpoint{-0.34496142471276847}{-0.11360265842366608}}
+    \pgfpathlineto{\pgfpoint{-0.3514240168957798}{-0.11968776568870415}}
+    \pgfpathlineto{\pgfpoint{-0.3588179344937687}{-0.125607014730606}}
+    \pgfpathlineto{\pgfpoint{-0.3824075926603322}{-0.1353993682034153}}
+    \pgfpathlineto{\pgfpoint{-0.40326793829427443}{-0.13026868053632312}}
+    \pgfpathlineto{\pgfpoint{-0.4222685883138931}{-0.10640394125801027}}
+    \pgfpathlineto{\pgfpoint{-0.43333610263538563}{-0.07768028665777657}}
+    \pgfpathlineto{\pgfpoint{-0.44306093711508027}{1.652283817825885e-5}}
+    \pgfpathlineto{\pgfpoint{-0.44306093711508027}{0.00034488013056435516}}
+    \pgfpathlineto{\pgfpoint{-0.43333610263538563}{0.07800725829918456}}
+    \pgfpathlineto{\pgfpoint{-0.4222685883138931}{0.10673106826028549}}
+    \pgfpathlineto{\pgfpoint{-0.40326793829427443}{0.13060698932209738}}
+    \pgfpathclose
+    
+    \pgfpathmoveto{\pgfpoint{0.08894048278100244}{0.12330964739833968}}
+    \pgfpathlineto{\pgfpoint{0.19794922533389572}{0.14278056300605982}}
+    \pgfpathlineto{\pgfpoint{0.20644788466624256}{0.13751550918351546}}
+    \pgfpathlineto{\pgfpoint{0.222695482172937}{0.06873333144353315}}
+    \pgfpathlineto{\pgfpoint{0.22845193821962387}{-5.4754208346744125e-5}}
+    \pgfpathlineto{\pgfpoint{0.2232262704763964}{-0.06884897871395386}}
+    \pgfpathlineto{\pgfpoint{0.2065276645710423}{-0.1376495814130026}}
+    \pgfpathlineto{\pgfpoint{0.19806679571991634}{-0.14278194865703794}}
+    \pgfpathlineto{\pgfpoint{0.08894048278100244}{-0.12328122055857689}}
+    \pgfpathlineto{\pgfpoint{0.08393954243276867}{-0.1201782021561044}}
+    \pgfpathlineto{\pgfpoint{0.08264206924418414}{-0.11443908774135557}}
+    \pgfpathlineto{\pgfpoint{0.09009859307272902}{-0.05721800915724597}}
+    \pgfpathlineto{\pgfpoint{0.09258411501205184}{9.964090215246757e-6}}
+    \pgfpathlineto{\pgfpoint{0.09009859307272902}{0.05724005780356717}}
+    \pgfpathlineto{\pgfpoint{0.08264206924418414}{0.11446751458111835}}
+    \pgfpathlineto{\pgfpoint{0.08393954243276867}{0.12019487195726514}}
+    \pgfpathlineto{\pgfpoint{0.08894048278100244}{0.12330964739833968}}
+    \pgfpathclose
+    
+    \pgfpathmoveto{\pgfpoint{-0.045098155167206846}{0.15407991689111186}}
+    \pgfpathlineto{\pgfpoint{0.15615715204592737}{0.1585429727233013}}
+    \pgfpathlineto{\pgfpoint{0.1406284134709018}{0.14934404737604628}}
+    \pgfpathlineto{\pgfpoint{0.11302876535256408}{0.14091770222898686}}
+    \pgfpathlineto{\pgfpoint{0.025565845773536638}{0.13038066632900772}}
+    \pgfpathlineto{\pgfpoint{-0.057380061564002535}{0.13038066632900772}}
+    \pgfpathlineto{\pgfpoint{-0.05322499815376351}{0.14451850524798585}}
+    \pgfpathlineto{\pgfpoint{-0.045098155167206846}{0.15407991689111186}}
+    \pgfpathclose
+    
+    \pgfpathmoveto{\pgfpoint{-0.20348981900264201}{0.15066995580227843}}
+    \pgfpathlineto{\pgfpoint{-0.06450146780296512}{0.1538191625706876}}
+    \pgfpathlineto{\pgfpoint{-0.06439150590049697}{0.14336038235943221}}
+    \pgfpathlineto{\pgfpoint{-0.06919084662824423}{0.13038066632900772}}
+    \pgfpathlineto{\pgfpoint{-0.19919598054747503}{0.13038066632900772}}
+    \pgfpathlineto{\pgfpoint{-0.20370480485136538}{0.14089376825754693}}
+    \pgfpathlineto{\pgfpoint{-0.20348981900264201}{0.15066995580227843}}
+    \pgfpathclose
+    
+    \pgfpathmoveto{\pgfpoint{-0.3278343587292163}{0.14804561682860415}}
+    \pgfpathlineto{\pgfpoint{-0.2234184193273709}{0.15030926665373662}}
+    \pgfpathlineto{\pgfpoint{-0.21525116152061965}{0.14108251071653358}}
+    \pgfpathlineto{\pgfpoint{-0.21003597013857514}{0.13038066632900772}}
+    \pgfpathlineto{\pgfpoint{-0.28007422369443574}{0.13072445473455904}}
+    \pgfpathlineto{\pgfpoint{-0.30920043509746165}{0.13573569508839667}}
+    \pgfpathlineto{\pgfpoint{-0.3278343587292163}{0.14804561682860415}}
+    \pgfpathclose
+    \color{\pgf@window@color}
+    \pgfusepath{fill,draw}
+ \end{pgfscope}
+ }
+ }
+% Use these with PGF
+\def\pgfsettopcolor#1{\def\pgf@body@color{#1}}%
+\def\pgfsetbottomcolor#1{\def\pgf@window@color{#1}}%
+
+% Use these with TikZ
+\tikzoption{body color}{\pgfsettopcolor{#1}}
+\tikzoption{window color}{\pgfsetbottomcolor{#1}}
+
+\makeatother

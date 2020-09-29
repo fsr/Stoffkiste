@@ -1,0 +1,1489 @@
+\documentclass[a4paper]{article}
+% For UTF-8 encoding
+\usepackage[utf8]{inputenc}
+% For reverse enumerations
+\usepackage{etaremune}
+% Fopr fancy figures
+\usepackage{tikz}
+\usepackage{carshapes}
+% For curly braces in itemize
+\usepackage{picture}
+% For \underbrace, \text, etc.
+\usepackage{amsmath}
+% For \bfseries
+\usepackage{array}
+% For clickable links
+\usepackage{hyperref}
+% For description parameters
+\usepackage{enumitem}
+% For proper hyphenation etc.
+\usepackage[german]{babel}
+% For sine wave plots
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.9}
+% For ceil and floor symbols
+\usepackage{mathtools}
+
+% For tablestuff
+\usepackage{booktabs}
+% More tablestuff
+\usepackage{makecell}
+%For pretty text arrows
+\usepackage{textcomp}
+
+% Set page margins
+\usepackage[top=2cm, bottom=2cm, left=3cm, right=3cm]{geometry}
+
+\usetikzlibrary{shapes, calc, decorations.pathreplacing, arrows, positioning}
+
+\newcommand{\hs}[1]{\hspace{#1}}
+\newcommand{\sphantom}{\vphantom{\text{/}}}
+\newcommand{\PI}{3.14156}
+\newcommand\mybox[2][]{\tikz[overlay]\node[fill=blue!20,inner sep=2pt, anchor=text, rectangle, rounded corners=1mm,#1] {#2};\phantom{#2}}
+\newcommand{\host}{\mybox{\bf Host} }
+\newcommand{\tub}[2]{$\underbrace{#1}_{#2}$}
+
+\title{Medienpsychologie und Didaktik - Zusammenfassung}
+\author{
+    Markus Vogel\\\href{mailto:markus.vogel3@mailbox.tu-dresden.de}{\tt markus.vogel3@mailbox.tu-dresden.de} 
+}
+\date{Juli 2019\\Version: \texttt{GITVERSION}}
+
+\begin{document}
+
+\maketitle
+TODO: Ausdünnen, aktuell zu viele Informationen enthalten
+\section{Grundbegriffe - Medien, Lernen, Interaktivität, Lernspiel}
+
+\subsection{Wissen}
+\begin{description}
+    \item[Daten] Wahrnehmbare Zeichenverbände
+    \item[Information] Für ein Subjekt verwertbare Daten
+    \item[Wissen] Für ein Subjekt relevante und mental verknüpfbare Informationen
+\end{description}
+~\\
+\begin{tikzpicture}
+	\node[draw] (Daten) at (0,5) {Daten};
+	\node[draw] (Information) at (0,4) {Information};
+	\node[draw] (Wissen) at (0,3) {Wissen};
+	\node[draw] (Intelligenz) at (0,2) {Intelligenz};
+	\node[draw] (Reflektion) at (0,1) {Reflektion};
+	
+	\node[anchor=west] (aufnehmen) at (3,4.5) {aufnehmen, sammeln, organisieren};
+	\node[anchor=west] (verarbeiten) at (3,3.5) {verarbeiten, verbinden, generieren};
+	\node[anchor=west] (entscheiden) at (3,2.5) {entscheiden, Probleme lösen};
+	\node[anchor=west] (Wirkungen) at (3,1.5) {Wirkungen};
+	
+	\draw[->] (Daten) to (aufnehmen);
+	\draw[->] (aufnehmen) to (Information);
+	\draw[->] (Information) to (verarbeiten);
+	\draw[->] (verarbeiten) to (Wissen);
+	\draw[->] (Wissen) to (entscheiden);
+	\draw[->] (entscheiden) to (Intelligenz);
+	\draw[->] (Intelligenz) to (Wirkungen);
+	\draw[->] (Wirkungen) to (Reflektion);
+	
+	\draw [decorate,decoration={brace,amplitude=10pt,mirror,raise=4pt},yshift=0pt]
+	(8.5,3) -- (8.5,5.5) node [black,midway,anchor=west, xshift=15pt] {Informationsmanagement};
+	\draw [decorate,decoration={brace,amplitude=10pt,mirror,raise=4pt},yshift=0pt]
+	(8.5,0.5) -- (8.5,3) node [black,midway,anchor=west, xshift=15pt] {Wissensmanagement};
+\end{tikzpicture}
+
+\subsubsection{Arten von Wissen}
+\begin{tabular}{ p{4.5cm} p{4.5cm} p{4.5cm} }\toprule[1.5pt]
+ 	\bf Deklarativ (declarative) 				
+ 	& \bf Konzeptuell (conceptual) 	
+ 	& \bf Prozedural (procedural) \\ \midrule
+ 	Faktenwissen 				
+ 	& Konzeptwissen			   	
+ 	& Strategiewissen \\ 
+ 	
+ 	existiert explizit 			
+ 	& existiert explizit		
+ 	& existiert oft nur implizit \\ 
+ 	
+ 	"knowing that..." 			
+ 	& "knowing how..." 	
+ 	& "Know How" Können \\ 
+ 	
+ 	z.B. "Leistung ist Arbeit pro Zeiteinheit." 
+ 	& z.B. "Ebbe und Flut entstehen durch..."
+ 	& z.B. "Wenn das Auto nicht anspringt, prüfe..." \\ 
+ 	\bottomrule[1.5pt]
+\end{tabular}
+
+\subsection{Lernen}
+\begin{description}
+	\item[Psychologisch] dauerhafte Änderung des Verhaltens, die durch Übung erfolgt
+	\item[Pädagogisch] Erwerb von neuem oder Veränderung der Ausprägung eines Wissens, einer Fähigkeit oder Einstellung
+\end{description}
+
+\begin{tikzpicture}
+\node[draw] (Arten) at (0,0) {Arten des Lernens};
+
+\node[draw, anchor=west] (visuell) at (1,1) {visuell};
+\node[draw, anchor=east] (auditiv) at (-1,1) {auditiv};
+\node[draw] (kinaesthetisch) at (0,-1) {kinästhetisch};
+
+\draw[->] (Arten) to (visuell);
+\draw[->] (Arten) to (auditiv);
+\draw[->] (Arten) to (kinaesthetisch);
+
+\node[anchor=west] (Notizen) at (3,1) {Notizen};
+\node[anchor=west] (Textinformationen) at (3,2) {Textinformationen};
+\node[anchor=west] (zusehen) at (1,2) {zusehen};
+
+\draw[->] (visuell) to (Notizen);
+\draw[->] (visuell) to (Textinformationen);
+\draw[->] (visuell) to (zusehen);
+
+\node[anchor=east] (hoeren) at (-1,2) {hören};
+\node[anchor=east] (Unterhaltung) at (-3,2) {Unterhaltung};
+\node[anchor=east] (vorlesen) at (-3,1) {vorlesen lassen};
+\node[text width=2cm, anchor=east] (vermeiden) at (-3,-0.5) {Vermeiden:\\ -Lärm\\ -Ablenkung};
+
+\draw[->] (auditiv) to (hoeren);
+\draw[->] (auditiv) to (Unterhaltung);
+\draw[->] (auditiv) to (vorlesen);
+\draw[->] (auditiv) to (vermeiden);
+
+\node (Nachahmung) at (3,-1) {Nachahmung};
+\node (Szenarien) at (3,-2) {Szenarien};
+\node (zeigen) at (0,-2) {zeigen lassen};
+\node (Modelle) at (-2,-2) {Modelle};
+
+\draw[->] (kinaesthetisch) to (Nachahmung);
+\draw[->] (kinaesthetisch) to (Szenarien);
+\draw[->] (kinaesthetisch) to (zeigen);
+\draw[->] (kinaesthetisch) to (Modelle);
+\end{tikzpicture}
+
+\subsection{Medien}
+Etymologie: lat. für Mittel, Vermittelndes\\~\\
+Kommunikationswissenschaftlich:
+\begin{itemize}
+	\item ermöglichen intentionale Zeichenprozesse
+	\item über räumliche/zeitliche Distanz
+	\item und damit Verständigung	
+\end{itemize}
+~\\
+\begin{tikzpicture}
+\node[draw] (Medientypen) at (0,0) {Medientypen};
+
+\node[draw, anchor=west] (Interaktionsmedien) at (1,1) {Interaktionsmedien};
+\node[draw, anchor=east] (Praesentationsmedien) at (-1,1) {Präsentationsmedien};
+\node[draw] (Kommunikationsmedien) at (0,-1) {Kommunikationsmedien};
+
+\draw[->] (Medientypen) to (Interaktionsmedien);
+\draw[->] (Medientypen) to (Kommunikationsmedien);
+\draw[->] (Medientypen) to (Praesentationsmedien);
+
+\node[anchor=west] (Formular) at (5,1) {Formular};
+\node[anchor=west] (interaktives) at (1,2) {Interaktives Video};
+
+\draw[->] (Interaktionsmedien) to (Formular);
+\draw[->] (Interaktionsmedien) to (interaktives);
+
+\node[anchor=east] (Video) at (-1,2) {Video, Animation};
+\node[anchor=east] (Audio) at (-4.5,2) {Audio};
+\node[anchor=east] (Text) at (-5,1) {Text, Tabelle};
+\node[anchor=east] (Grafik) at (-3,-0.5) {Grafik, Foto};
+
+\draw[->] (Praesentationsmedien) to (Video);
+\draw[->] (Praesentationsmedien) to (Audio);
+\draw[->] (Praesentationsmedien) to (Text);
+\draw[->] (Praesentationsmedien) to (Grafik);
+
+\node (Synchron) at (3,-2) {Synchron};
+\node (Asynchron) at (-2,-2) {Asynchron};
+
+\draw[->] (Kommunikationsmedien) to (Synchron);
+\draw[->] (Kommunikationsmedien) to (Asynchron);
+
+\node (Chat) at (5,-2){Chat};
+\node (konferenz) at (3,-3){Audio-/Videokonferenz};
+
+\draw[->] (Synchron) to (Chat);
+\draw[->] (Synchron) to (konferenz);
+
+\node (Email) at (-4,-2){Email};
+\node (Forum) at (-2,-3){Forum};
+
+\draw[->] (Asynchron) to (Email);
+\draw[->] (Asynchron) to (Forum);
+\end{tikzpicture}
+
+\subsection{Interaktivität}
+Wechselbeziehung von Mensch und Computer \textrightarrow Unterscheidung nach dem Grad der Eigentätigkeit
+\begin{description}
+	\item[Stufe I:] Objekte betrachten
+	\item[Stufe II:] Multiple Darstellungen betrachten
+	\item[Stufe III:] Repräsentationsform variieren
+	\item[Stufe IV:] Inhalt der Komponente beeinflussen, Variation durch Parameter-, Datenvariation
+	\item[Stufe V:] Objekt/Inhalt der Repräsentation konstruieren und Prozesse generieren
+	\item[Stufe VI:] Konstruktive und manipulierende Handlungen mit situationsabhängigen Rückmeldungen
+\end{description}
+
+\subsubsection{Formen der Interaktivität}
+
+\begin{itemize}
+	\item User Interface:
+	\begin{itemize}
+		\item Button
+		\item Schieberegler
+		\item ...
+	\end{itemize}
+	\item Navigation:
+	\begin{itemize}
+		\item Link
+		\item Grafiken
+	\end{itemize}
+	\item Manipulation:
+	\begin{itemize}
+		\item direkte Einflussnahme auf Objekt
+		\item unmittelbar Sichtbar (rückgängig!)
+	\end{itemize}
+\end{itemize}
+
+\subsection{Lernspiel}
+
+\begin{itemize}
+	\item Handlungssituation, die ein hohes Maß an aktiver Beteiligung und Selbststeuerung erlaubt
+	\item Inhalte, Struktur und Ablauf sind in der Absicht der Wissensvermittlung gestaltet.
+	\item Lernende erarbeiten allein durch die Interaktion neue Inhalte
+\end{itemize}
+
+\section{Grundlagen der Didaktik und Psychologie}
+
+\subsection{Begriffsbildung - Grundbegriffe der Didaktik}
+
+\subsubsection{Kognitive Bedingungen des Lernens}
+Lernen und Behalten \textrightarrow Gedächtnis
+\begin{itemize}
+	\item Grundaufbau und Struktur aus psychologischer Sicht
+	(sensorisch, Kurzzeit, Langzeit)
+\end{itemize}
+~\\
+Frage nach pädagogischer Relevanz: Was/Wie lernen?
+
+\begin{description}
+	\item[Wissensorganisation] Lernen/Behalten als Aufbau und Verfügbarmachen von Wissensstrukturen beschreibbar (Repräsentations- und Operationskodierung)
+	\item[Individuelle Unterschiede] ~\\Begabung - Gesamtheit der angeborenen Fähigkeiten...\\
+	Lernstile - dauerhaft geprägtes Verhalten
+\end{description}
+
+\subsubsection{Affektive Bedingungen des Lernens}
+
+Motivation als Einstimmung/Orientierung auf das Lernen durch
+\begin{itemize}
+	\item zentrale Bedürfnisse
+	\item Stand der persönlichen Entwicklung
+	\item persönliche Stärken
+	\item Anregung von Motiven
+\end{itemize}
+
+\subsubsection{Soziale Bedingungen des Lernens}
+Soziales lernen betrachtet aus pädagogischer Sicht
+\begin{itemize}
+	\item die Übernahme von Normen und Werten aus der sozialen Umgebung
+	\item die Einstellung als Disposition der Persönlichkeit
+\end{itemize}
+~\\
+Handlungsfelder pädagogischer Einwirkung sind
+\begin{itemize}
+	\item Familie
+	\item Schule, Uni
+	\item Altersgruppe
+\end{itemize}
+mit Aspekten wie
+\begin{itemize}
+	\item normative Ordnung
+	\item soziale Kontrolle
+	\item Wandel normativer Orientierungen
+\end{itemize}
+
+\subsubsection{Begriffe}
+\begin{description}
+	\item[Bildung] bezeichnet einen Persönlichkeitszustand, der den Einzelnen befähigt, sein Handeln auf Einsicht und Sachkompetenz zu gründen und es kritisch prüfend unter dem Prinzip der
+	Selbstbestimmung zu verantworten.
+	\item[Lehren] Inhalt mit dem Ziel/einer Absicht an eine Gruppe/einem Einzelnen zu vermitteln
+	\item[Didaktik] Als Wissenschaft des Lehrens- und Lernens beschäftigt sich die Didaktik mit inhaltlichen Fragen und methodischen Überlegungen zur Gestaltung von Lehr- und
+	Lernprozessen. 
+\end{description}
+
+Zentrale Frage: Was soll mit welchem Ziel gelehrt werden?
+
+\subsection{Lerntheorien, Taxonomie von Lernzielen}
+
+Didaktisches Dreieck: lehren, lernen, auswählen\\
+
+\begin{tikzpicture}
+\node[draw] (Lehrender) at (1,1) {Lehrender};
+\node[draw] (Lernender) at (0,0) {Lernender};
+\node[draw] (Stoff) at (2,0) {Stoff};
+
+\draw[-] (Lehrender) to (Lernender);
+\draw[-] (Lernender) to (Stoff);
+\draw[-] (Stoff) to (Lehrender);
+\end{tikzpicture}
+~\\~\\
+Trichter Modell
+\begin{itemize}
+	\item Lernstoff grundsätzlich immer vermittelbar
+	\item Lehrer weiß, was der Lerner braucht
+	\item Lehrer kennt den Lernprozess des Lerners und kann ihn steuern
+	\item Wissen kann durch Sprache auf den Lerner übertragen werden
+	\item Lerner nimmt Stoff auf und speichert diesem im Gedächtnis
+\end{itemize}
+
+\subsubsection{Lerntheorien}
+
+\begin{tabular}{ p{2cm} p{4cm} p{4cm} p{4cm} }\toprule[1.5pt]			
+	& \bf Behaviorismus
+	& \bf Kognitivismus
+	& \bf Konstruktivismus
+	\\ \midrule
+	
+	Gehirn ist 				
+	& passiver Behälter		   	
+	& Informationsverarbeitendes Gerät
+	& informationell geschlossenes System
+	\\ 
+	
+	Wissen wird
+	& abgelagert
+	& verarbeitet und eingeordnet
+	& schrittweise konstruiert
+	\\ 
+	
+	Wissen ist
+	& eine korrekte Input- Output-Relation
+	& ein adäquater interner Verarbeitungsprozess
+	& mit einer Situation operieren zu können
+	\\ 
+	
+	Lernziele
+	& richtige Reaktionen/ Antworten
+	& richtige Suche nach Antworten
+	& komplexe Situationen bewältigen
+	\\ 
+	
+	Paradigma
+	& Frage-Antwort (Stimulus-Response)
+	& Aufgabe- bzw Problem- lösung
+	& Arbeits- bzw Lernstrategie
+	\\ 
+	
+	Strategie
+	& vortragen/lehren
+	& beobachten und helfen
+	& kooperieren
+	\\ 
+	
+	Lehrer ist
+	& Vermittler
+	& Tutor
+	& Coach, Trainer
+	\\ 
+	
+	Feedback
+	& extern vorgegeben
+	& extern modelliert
+	& intern modelliert
+	\\ 
+
+	\bottomrule[1.5pt]
+\end{tabular}
+~\\
+...und Konnektivismus?
+\begin{itemize}
+	\item Keine Lerntheorie, sondern eher 'pädagogische Sicht auf Bildung'
+	\item Eng an Konstruktivismus orientiert \textrightarrow eher eine konstruktivistische Erweiterung
+\end{itemize}
+
+\subsubsection{Lernziele}
+
+Ein Lernziel ist die sprachlich artikulierte Vorstellung einer durch Unterricht, andere Lehrveranstaltungen oder auch Lernmaterialien zu bewirkende gewünschte Verhaltensdisposition eines Lernenden.\\~\\
+Lernziele beschreiben Bildungsabsichten des Lehrenden und geben an, welche Kompetenzen bzw. was an Wissen/Können/Haltung in welcher Qualität (Taxonomie) ausgeprägt sein soll.
+
+\begin{itemize}
+	\item Lehren und Lernen ohne Ziele undenkbar
+	\item Ziel als sprachliche Artikulation von erwarteten Leistungsdispositionen/ Verhaltensänderungen
+	\item Operationalisierung als Basis der Kontrolle des Erreichens der Ziele beim Lernenden
+\end{itemize}
+~\\
+Lernziele werden beschrieben durch:
+\begin{description}
+	\item[Kompetenz] Was soll ein Lernen wissen und können?
+	\item[Ergebnis] Wie weißt ein Lerner die Zielerreichung nach?
+\end{description}
+~\\
+\begin{etaremune}
+	\item Kreieren: plant, produziert, generiert
+	\item Evaluieren: überprüft, beurteilt, entscheidet
+	\item Analysieren: differenziert, unterscheidet, findet Analogien
+	\item Anwenden: nutzt das Modell XY, das Vorgehen PQ um ein Problem zu lösen
+	\item Verstehen: erläutert, erklärt, findet Beispiele, subsumiert, generalisiert
+	\item Erinnern: kennt, nennt, zählt auf
+\end{etaremune}
+~\\
+
+\begin{tabular}{ p{4.5cm} p{4.5cm} p{4.5cm} }\toprule[1.5pt]			
+	\bf Bereich
+	& \bf Stufung nach
+	& \bf Stufen
+	\\ \midrule
+	
+	\makecell[l]{Kognitiv\\ Denken\\ Wissen\\ Problemlösen\\ intellektuelle Fähigkeiten}				
+	& Komplexität		   	
+	& \makecell[l]{Beurteilung\\ Synthese\\ Analyse\\ Anwendung\\ Verständnis\\ Kenntnis}
+	\\ \midrule
+	
+	\makecell[l]{Affektiv\\ Gefühle\\ Wertungen\\ Einstellungen und Haltungen}
+	& Verinnerlichung
+	& \makecell[l]{Erfülltsein durch einen Wert\\ Wertesystem aufbauen\\ Werten\\ Reagieren\\ Beachten/Aufmerksam werden}
+	\\ \midrule
+	
+	\makecell[l]{Psychomotorisch\\ Bereich von erwerbbaren\\ Fertigkeiten}
+	& Koordination
+	& \makecell[l]{Naturalisierung\\ Handlungsgliederung\\ Handlungspräzision\\ Manipulation\\ Imitation}
+	\\
+	
+	\bottomrule[1.5pt]
+\end{tabular}
+~\\
+\begin{description}
+	\item[behavioristische Sicht:] sprachlich artikulierte Vorstellung über die durch Lehren zu bewirkende gewünschte Verhaltensänderung eines Lernenden \textrightarrow beobachtbar
+	\item[kognitive Sicht:] sprachlich artikulierte Vorstellung über die durch Lehren zu bewirkende gewünschte Verhaltensdisposition \textrightarrow nicht direkt beobachtbar
+	\item[konstruktivistische Sicht:] Lernmöglichkeit unter Nutzung geeigneter Lernumgebungen zur Wissenskonstruktion \textrightarrow nicht ohne Handlungsrahmen realisierbar
+\end{description}
+
+\subsection{Lernen als Prozess}
+
+\begin{tikzpicture}
+\node[draw, text width=2.5cm] (Umwelt) at (0,0) {Umwelt (Reiz)};
+\node[draw, text width=2.5cm] (Input) at (3,2) {Input durch Sinnesorgane};
+\node[draw, text width=2.5cm] (Speicherung) at (6,2) {Speicherung und Vergleich motorische Programme};
+\node[draw, text width=2.5cm] (Output) at (9,2) {Output durch gezeigtes Verhalten, Reaktion};
+\node[draw, text width=2.5cm] (Umwelt2) at (12,0) {Umwelt};
+
+\draw[->] (Umwelt) to (Input);
+\draw[->] (Input) to (Speicherung);
+\draw[->] (Speicherung) to (Output);
+\draw[->] (Output) to (Umwelt2);
+\draw[->] (Umwelt2) to (Umwelt);
+\end{tikzpicture}
+~\\~\\~\\
+\begin{tikzpicture}
+\node[anchor=west] (Habituation) at (0,5) {Habituation};
+\node[anchor=west] (Assoziationslernen) at (0,4) {Assoziationslernen};
+\node[anchor=west] (Verbales) at (0,3) {Verbales Lernen};
+\node[anchor=west] (Komplexes) at (0,2) {Komplexes und kognitives Lernen};
+\node[anchor=west] (Modelllernen) at (0,1) {Modelllernen};
+
+\draw[->] (6,5) to (6,1);
+
+\node[anchor=west] (Komplexitaet) at (7,3) {Komplexität der Lerninhalte und Lernvorgänge};
+\end{tikzpicture}
+
+\subsubsection{Habituation und Sensitivierung}
+\begin{itemize}
+	\item Habituation: Automatische Gewöhnung an wiederkehrenden Reiz, der keine Konsequenzen hat
+	\item Sensitivierung: Intensivere Reaktion auf erschreckende oder schmerzvolle Reize
+\end{itemize}
+
+\subsubsection{Klassische Konditionierung}
+\begin{itemize}
+	\item Ein (zuvor neutraler) Reiz wird mit einem anderen Reiz (der ein Verhalten auslöst) durch wiederholtes gemeinsames Auftreten assoziiert
+	\item Konditionierung nimmt mit der Zeit wieder ab
+\end{itemize}
+
+\subsubsection{Operante Konditionierung}
+\begin{tabular}{ p{4.5cm} p{4.5cm} p{4.5cm} }\toprule[1.5pt]
+	Verhaltenskonsequenz
+	& Angenehmer Reiz
+	& Unangenehmer Reiz
+	\\ \midrule
+	
+	Darbietung eines Reizes
+	& Positive Verstärkung
+	& Bestrafung
+	\\
+	
+	Entfernung eines Reizes
+	& Bestrafung
+	& Negative Verstärkung
+	\\
+	
+	\bottomrule[1.5pt]
+\end{tabular}
+\\~\\
+Keine Konsequenz \textrightarrow Löschung
+
+\subsubsection{Modelllernen}
+\begin{itemize}
+	\item Lernen durch Imitation
+	\item Übernahme von Verhaltensweisen durch Beobachtung erfolgreichen fremden Verhaltens
+\end{itemize}
+
+\subsubsection{Komplexes und Kognitives Lernen}
+Implizites lernen: Lernsituationen, in denen die Person Strukturen einer relativ komplexen Reizumgebung lernt, ohne dies zu beabsichtigen und ohne, dass das resultierende Wissen verbalisierbar ist.
+
+\begin{itemize}
+	\item Finden beiläufig statt, also ohne, dass die Versuchsperson dazu aufgefordert wird, die Strukturen intentional zu lernen
+	\item Ist vermutlich weniger von Aufmerksamkeitsfaktoren abhängig als explizites Lernen
+	\item Es wird angenommen, dass dieses Lernen auch ungewusst bleiben kann
+\end{itemize}
+~\\
+Beispiele:
+\begin{itemize}
+	\item Spracherwerb (Muttersprache)
+	\item Erlernen motorischer Fähigkeiten
+	\item Evaluatives Konditionieren in der Werbung
+	\item Systematische Desensibilisierung (in der Verhaltenstherapie)
+\end{itemize}
+
+\subsection{Anwendung auf die Planung eines Lernspiels}
+User Centered Design, Konzept der nutzerorientierten Gestaltung.\\
+\\
+Arbeitsschritte zur Planung eines Lernspiels:
+
+\begin{itemize}
+	\item Thema, Spielstory/-Idee, Lerninhalte, Zielgruppe für das Lernprogramm festlegen
+	\item Lernziele formulieren und Stoff- und Beispielsammlung anlegen
+	\item Inhalte und Beispiele (verwendete Medien) auswählen \textrightarrow Ablauf konzipieren
+	\item Navigationsmöglichkeiten definieren
+	\item Konzept ausarbeiten und realisieren, dabei methodische Formen beachten
+	\item Erprobung mit ausgewählten Nutzern \textrightarrow Dokumentation fertig stellen
+\end{itemize}
+~\\
+Tipp: Erstellen eines „Drehbuchs“: Erst wenn das Drehbuch fertig ist, können die Programmierer, Screendesigner, Grafiker und Animatoren anfangen, das Spiel umzusetzen
+\\~\\
+Navigations- und Interaktionsmöglichkeiten:
+\begin{itemize}
+	\item Strukturbaum
+	\item Flowcharts
+	\item Mockups
+	\item Skizzen und Scribbles
+\end{itemize}
+~\\
+Grobstruktur zur Entwicklung einer Konzeption zur Erarbeitung eines Lernspiels:
+\begin{itemize}
+	\item Spielidee / Lernziele bestimmen: Festlegung von Zielen (Taxonomie) und zu Ergebnissen (qualitativ)
+	\item Lehrstoff / Lernprozess analysieren: Darstellung der Stoffstruktur; Beachtung von Lerntypen/Lernverhalten
+	\item Vorkenntnisse angeben: Angabe der Ausgangssituation (differenziert), Zielgruppe beachten
+	\item Spielstrategie/Materialien ausarbeiten: Wahl der Inhalte und der Medien; geplanter Ablauf
+	\item Aufgaben /Tests zusammenstellen: Prüfung der Lernergebnisse; Erwartungen an Lösung voraus denken
+	\item Evaluationen planen und durchführen: Überprüfung an der Zielgruppe
+	\item Ergebnisse dokumentieren: Einschätzung der Ergebnisse (ev. Revision der
+	Materialien)
+\end{itemize}
+~\\
+Motivation: als Einstimmung Orientierung auf das Lernen durch:
+\begin{itemize}
+	\item zentrale Bedürfnisse
+	\item persönliche Entwicklung
+	\item persönliche Stärken/ Schwächen
+	\item Anregung von Motiven
+\end{itemize}
+~\\
+Welche motivationalen Elemente/ Mittel gibt es?
+\begin{itemize}
+	\item Spielidee/ Story
+	\item Spielcharaktere (NPC)
+	\item Problemstellung
+	\item Intro vor dem Spiel (Emotionen, Neugier wecken)
+\end{itemize}
+~\\
+Spielcharaktere (NPC)
+\begin{itemize}
+	\item können als Freunde durch das Spiel begleiten
+	\item als Gegner gegen den Spieler antreten
+	\item als virtuelle Berater oder Coaches agieren, die bei Spielaufgaben Tipps geben
+\end{itemize}
+~\\
+Charakterisierung:
+\begin{itemize}
+	\item Baut sozialie Bindung und Sympathie zu den Spielfiguren auf
+	\item Stichpunkte zu Herkunft und Persönlichkeit, Charakter-Merkmale
+	\item Wie reagieren Charaktere im Dialog auf die Spieler?
+	\item Figuren sollen sich ihrem Charakter getreu verhalten, dürfen nicht aus der Rolle fallen
+\end{itemize}
+~\\
+Eigenen Avatar wählen steigert die Immersivität des Spielgefühls, Identifikation mit dem Lernspiel
+\\~\\
+Spielhandlung:
+\begin{itemize}
+	\item Zieht sich durch das ganze Spiel
+	\item Bildet einen Rahmen um die Spiel-Missionen
+\end{itemize}
+~\\
+Lineare Spielhandlungen / nicht lineare Spielhandlung müssen klare Bedingungen definieren, die gelten müssen, damit ein Spielereignis eintritt.\\~\\
+\\
+Einstieg ins Lernspiel:
+\begin{itemize}
+	\item Spieler muss Spielregeln + Umgang mit neuen Spielelementen lernen
+	\item Hilfen anbieten (über NPC oder Hilfebereiche)
+	\item Tutorials, Einführungsmissionen
+	\item "Guided Tour"
+\end{itemize}
+
+\section{Didaktisches Design von Lernszenarien}
+
+ \subsection{Didaktisches Design}
+ 
+\begin{description}
+	\item[Definition] Didaktisches Desugb hat die Aufgabe, mit dem Einsatz und der Gestaltung von Medien das Lernen und Lehren zu verbessern. Dies besteht in Überlegungen und Empfehlungen, wie man Medien für verschiedene Lehr- / Lernsituationen auswählt, kombiniert, einsetzt und bewertet. Eine Teilaufgabe des didaktischen Designs ist die Herstellung von Medien im Sinne einer 'gestaltungsorientierten Mediendidaktik'.
+\end{description}
+~\\
+\begin{description}
+	\item[Planung] ist ein probeweises Zusammenstellen von Aktionen derart, dass ihre Ausführung ein gegebenes Problem löst.
+	\item[Strukturierung des Stoffes] dient der didaktisch begründeten Aufteilung komplexer Inhalte in lehrbare Unerrichtssequenzen nach den Schwerpunkten Motivierung, Orientierung, Darbietung, Erarbeitung, Vertiefung, Zusammenfassung
+	\item[Ziele] langfristiger Kursplan, kurzfristiger Veranstaltungsplan
+	\item[Motivation] allein vorm Rechner? Wie will/ kann ich den Lerner motivieren?
+	\item[Zielbestimmung] Arten von Zielen, Operationalisierung. Wie formuliere ich ein Ziel in verschiedenen Stufen und für die Zielgruppe?
+	\item[Steuerung] Abhängigkeit vom didaktischen Modell. Wie finde ich geeignete Modelle/ Abläufe?
+	\item[Feedback] Rückkopplung für Lernenden an Aufgaben. Wie vergleiche ich Lösungen?
+	\item[Abschluss] Lernen braucht Erfolgskontrolle. Wie teste/ überprüfe ich anforderungsgerecht Lernsequenzen?
+\end{description}
+
+\subsection{Didaktische Strukturen}
+
+Didaktisches Design bezeichnet die Konzeption multimedialer Lernangebote insbesondere unter didaktischen Aspekten:
+\begin{itemize}
+	\item Analyse der Zielgruppe
+	\item Transformation von Lerninhalten
+	\item Struktur von Lernangeboten
+	\item Organisation von Lernszenarien
+\end{itemize}
+
+\subsubsection{Inhaltskomponente}
+
+\begin{description}
+	\item[Tätigkeitsanalyse] insbes. bei Fokussierung des Lehrziels auf Arbeitstätigkeiten
+	\item[Aufgabenanalyse] Erfassung der sachlogischen Struktur des Gegenstandes
+	\item[Sammlung und Gliederung] relevante Themen, Aspekte, Probleme usw. unstrukturiert sammeln (brainstorming). Strukturierung mit Sicht auf Erweiterbarkeit und Analyseebene.
+	\item[Gewichtung und Reduktion] Auswahl und Stellenwert der Lehrinhalte, Lehrinhalte auf wesentliche Aspekte bveschränken
+\end{description}
+
+\subsubsection{Ergebniskomponente}
+
+Formulierung von Zielen, welche die Qualität des Lernprozesses beschreiben, bzw Kompetenzen darstellen, die in dessen Ergebnis erreicht werden sollen.
+\begin{itemize}
+	\item Modelle der Lernzieldefinition (Arten von Zielen, Operationalisierbarkeit, Taxonomie)
+	\item Wissensrepräsentation von Lehrinhalten (wissenspsychologische Aufbereitung)
+	\item Lernprozesse und kognitive Operationen (Operationen des Lerners)
+\end{itemize}
+~\\
+Differenzierung von Lehr- und Lernzielen. (Didaktisches Design: nur Lehrziele, Lernziele kaum vorhersehbar.)
+
+\subsubsection{Exposition}
+
+Beruht auf Modellen zur zeitlichen Strukturierung (einfache Sequenzmodelle)
+\\~\\
+Heuristische Lehrprinzipien:\\
+Allgemeines - Besonderes\\
+Induktion - Deduktion\\
+\\
+Allgemeine didaktische Modelle, Prinzipien zur zeutlichen Organisation
+\textrightarrow Ansatz zur Automatisierung des didaktischen Design
+\begin{itemize}
+	\item Ordnung von Realität
+	\item logische Struktur
+	\item Erkenntnissprozess
+	\item ...
+\end{itemize}
+~\\
+empirische Prüfung wegen Komplexität kaum möglich, ABER: \textrightarrow verschiedene Elemente aus Erfahrung
+
+\begin{description}
+	\item[Lernelemente] Lehrziele benennen, Wiederholung/ Einstieg, Lerinformation klar, Aktivität des Lerners vordenken, Lernfortschritt
+	\item[Lerndauer] wichtiger Aspekt zur Bestimmung des Lernerfolgs (Aufteilung von Lernzeiten)
+	\item[Lernerfolgskontrolle] wichtiger Bestandteil sequentieller Lernorganisation wegen Verzweigungsentscheidungen
+	\item[Lernweganalysen] zeitliche Folge des Aufsuchens von Lernsequenzen (Vergleichbarkeit, kein kausaler Zusammenhang zum Lernenden)
+\end{description}
+
+\subsubsection{Exploration}
+
+Vorstellung über exploratives Lernen mit Erwartung überfrachtet (bes. durch Mutimedia)
+\\~\\
+Merkmale:
+\begin{itemize}
+	\item selbst Lernziel stecken
+	\item Weg zum Erreichen selbst entscheiden
+	\item Ablauf spiralförmig (Umwege)
+	\item Aktivität führt zu Befriedigung
+\end{itemize}
+~\\
+Bedingungen:
+\begin{itemize}
+	\item basiert auf menschlicher Neugier
+	\item keine zuverlässigen Lernerfolge
+\end{itemize}
+
+\begin{description}
+	\item[Sachlogische Strukturierung] Netz von Informationselementen, Planung einer kognitiven Landkarte, Konzeption für Orientierung
+	\item[Lernwegkontrolle] Rahmenbedingungen-Entscheidung wichtig/unwichtig beim Lernenden, Lernerkontrolle (Strukturierung, Ziel, Zielgruppe)
+	\item[Orientierung bei Interaktionen] Inhaltsbezogen, Grafik, Indizierung, Orientierungspunkte, Lesezeichen, Filter
+	\item[Aspekte bei Mediennutzung] Anreiz, Motivation  - Erkennbarkeit der Tätigkeiten - Möglichkeit der Kontrolle - Wiederholbarkeit - Arbeitshaltung beim Lernen
+\end{description}
+
+\subsubsection{Konstruktion}
+
+Einfache Übertragung von Lehrfunktionen auf interaktive elektronische Medien unerschätzen Relevanz für das Lernen:
+
+\begin{itemize}
+	\item Medien können Informationen nicht nur darstellen und kommunizieren, Mediensysteme sind mächtige Werkzeuge zur aktiven Konstruktion und Kommunikation von Wissen
+	\item Informationen/ Wissen von Medien abrufen, sammeln, strukturieren, auf externe Speicher ablegen, publizieren und kommunizieren
+\end{itemize}
+
+\subsubsection{Motivationsstrukturen}
+
+Sachverhalt aus der Realität:\\
+\begin{tikzpicture}
+\node[draw] (Video) at (0,0) {Video};
+\node[draw] (Problem) at (2,0) {Problem};
+\node[draw] (Frage) at (4,0) {Frage};
+\node[draw] (Arbeitsschritte) at (6.5,0) {Arbeitsschritte};
+
+\draw[->] (Video) to (Problem);
+\draw[->] (Problem) to (Frage);
+\draw[->] (Frage) to (Arbeitsschritte);
+\end{tikzpicture}
+
+~\\
+Begründung aus Fachaspekten (innerfachlich):\\
+\begin{tikzpicture}
+\node[draw] (letzte) at (0,0) {letzte FE};
+\node[draw] (Thema) at (2,0) {Thema};
+\node[draw] (Arbeitsschritte) at (4.5,0) {Arbeitsschritte};
+
+\draw[->] (letzte) to (Thema);
+\draw[->] (Thema) to (Arbeitsschritte);
+\end{tikzpicture}
+
+~\\
+Konstruktion eines Widerspruchs:\\
+\begin{tikzpicture}
+\node[draw] (Aussage1) at (0,1) {Aussage 1};
+\node[draw] (Aussage2) at (0,-1) {Aussage 2};
+\node[draw] (Widerspruch) at (2,0) {Widerspruch!};
+\node[draw] (Vorgehen) at (4.5,0) {Vorgehen?};
+
+\draw[->] (Aussage1) to (Widerspruch);
+\draw[->] (Aussage2) to (Widerspruch);
+\draw[->] (Widerspruch) to (Vorgehen);
+\end{tikzpicture}
+
+\subsubsection{Vermittlungsstrukturen}
+
+Thematisch: (Exposition)\\
+\begin{tikzpicture}
+\node[draw] (Thema) at (0,0) {Thema};
+\node[draw] (Gliederung) at (2,0) {Gliederung};
+\node[draw] (Schritt1) at (4.5,0) {Schritt 1};
+\node (dotdotdot) at (6,0) {...};
+\node[draw] (SchrittN) at (8,0) {Schritt N};
+
+\draw[->] (Thema) to (Gliederung);
+\draw[->] (Gliederung) to (Schritt1);
+\draw[->] (Schritt1) to (dotdotdot);
+\draw[->] (dotdotdot) to (SchrittN);
+\end{tikzpicture}
+
+~\\
+Strukturiert (Exploration):\\
+\begin{tikzpicture}
+\node[draw] (Zielstellung) at (0,0) {Zielstellung};
+\node[draw] (Ablauf) at (2,0) {Ablauf};
+\node[draw] (Auswahl) at (4,0) {Auswahl};
+\node[draw] (SchrittX) at (6,0) {SchrittX};
+\node[draw] (Test) at (8,0) {Test};
+\node (dotdotdot) at (9.2,0) {...};
+
+\draw[->] (Zielstellung) to (Ablauf);
+\draw[->] (Ablauf) to (Auswahl);
+\draw[->] (Auswahl) to (SchrittX);
+\draw[->] (SchrittX) to (Test);
+\draw[->] (Test) to (dotdotdot);
+\end{tikzpicture}
+
+~\\
+Offen (Konstruktion):\\
+\begin{tikzpicture}
+\node[draw] (Problem) at (0,0) {Problem};
+\node[draw] (Werkzeuge) at (2,0) {Werkzeuge};
+\node[draw] (Loesung) at (4,0) {Lösung};
+\node (dotdotdot) at (5.5,0) {...};
+
+\draw[->] (Problem) to (Werkzeuge);
+\draw[->] (Werkzeuge) to (Loesung);
+\draw[->] (Loesung) to (dotdotdot);
+\end{tikzpicture}
+
+\subsubsection{Test-Strukturen}
+
+zufällige Auswahl:\\
+\begin{tikzpicture}
+\node (dot1) at (0,0) {...};
+\node[draw] (Aufgabe) at (2,0) {Aufgabe};
+\node[draw] (Kontrolle) at (4,0) {Kontrolle};
+\node[draw] (Vergleich) at (6,0) {Vergleich};
+\node (dot2) at (8,0) {...};
+
+\draw[->] (dot1) to (Aufgabe);
+\draw[->] (Aufgabe) to (Kontrolle);
+\draw[->] (Kontrolle) to (Vergleich);
+\draw[->] (Vergleich) to (dot2);
+\draw[-] (6,-0.5) to (6,-1);
+\draw[-] (6,-1) to (2,-1);
+\draw[->] (2,-1) to (2,-0.5);
+\end{tikzpicture}
+
+~\\
+Strukturiert (Exploration):\\
+\begin{tikzpicture}
+\node (dot1) at (0,0) {...};
+\node[draw] (A1) at (2,0) {A1};
+\node[draw] (Kontrolle) at (4.5,0.22) {Kontrolle};
+\node[draw] (Vergleich) at (5.5,-0.22) {Vergleich};
+\node[draw] (Ablauf) at (5,-2) {Ablauf (Vorschlag)};
+\node[draw] (A2) at (8,0) {A2};
+\node (dot2) at (10,0) {...};
+
+\draw[->] (dot1) to (A1);
+\draw[->] (A1) to (Kontrolle);
+\draw[->] (Vergleich) to (Ablauf);
+\draw[->] (Ablauf) to (A1);
+\draw[->] (Ablauf) to (A2);
+\draw[->] (A2) to (dot2);
+\end{tikzpicture}
+
+\subsection{Grundprinzipien des Instruktion Design}
+
+Instruktionsdesign beinhaltet als Grundprinzipien
+\begin{itemize}
+	\item die Sicherung der Lernvoraussetzung für die jeweils folgenden Lehrinhalte, sowie
+	\item die Differenzierung der didaktischen Prozesse nach unterschiedlichen Lehrzielkategorien
+\end{itemize}
+~\\
+Daraus abgeleitet: Lehrschritte als spezifische Abfolge von Lehrereignissen \textrightarrow repräsentieren innere und äußere Lernbedingungen für erwünschte Lernresultate
+\\~\\
+Lernschritte:
+\begin{itemize}
+	\item Aufmerksamkeit gewinnen
+	\item Informieren über Lehrziele
+	\item Vorwissen aktivieren
+	\item Darstellung des Lehrstoffes
+	\item Lernen anleiten
+	\item ausführen/anwenden lassen
+	\item informative Rückmeldung geben
+	\item Leistung kontrollieren und beurteilen
+	\item Behalten und Transfer sichern
+\end{itemize}
+
+\subsubsection{ARCS Modell}
+
+\begin{itemize}
+	\item Aufmerksamkeit erlangen (Attention)
+	\item Relevanz, Bedeutsamkeit des Lehrstoffes vermitteln (Relevance)
+	\item Erfolgszuversicht (Confidence)
+	\item Zufriedenheit, Befriedigung (Satisfaction)
+\end{itemize}
+~\\
+Konsequenz: Motivation als Gestaltungsprinzip im Designprozess
+
+\subsubsection{Die PAS 1032-1}
+
+\begin{description}
+	\item[Anforderungsermittlung] Ermittlung des Bedarfs, der Ziele und der Anforderungen an die Stakeholder
+	\item[Rahmenbedingung] Entwicklung der Rahmenbedingungen für die Entwicklung eines Bildungsangebots
+	\item[Konzeption] Konzeption eines Bildungsangebots unter Berücksichtigung von Anforderungen und Rahmenbedingungen
+	\item[Produktion] Umsetzung der Konzeption in Produktstrukturen und Produkte
+	\item[Einführung] Überführung der Lernressource von der Entwicklungs- in die Betriebsumgebung
+	\item[Durchführung] Durchführung und Nutzung des Bildungsangebots
+	\item[Evaluation] Systematische Untersuchung der Verwendbarkeit bzw Güte eines Bildungsangebots
+\end{description}
+
+\subsubsection{ADDIE Modell}
+Analysis, Design, Development, Implementation, Evaluation
+
+\subsection{Planungsbeispiel}
+
+Wie können Bilder das Verstehen unterstützen?
+\begin{itemize}
+	\item Arten von Bildern unterscheiden sich (real - abstrakt \textrightarrow Bildverstehen)
+	\item Unterstützung des natürlichen Bildverstehens (Figur - Grund-Trennung, Schattierung und Farbe, Blickwinkel)
+	\item Funktionen von Bildern (Kognition, Motivation, Dekoration, Kompensation)
+\end{itemize}
+~\\
+Texte lernförderlich gestalten
+\begin{itemize}
+	\item Grundregel: Eine Aussage pro Bildschirmseite
+	\item Weg mit Adjektiven - her mit Verben
+	\item Keine Passivkonstruktionen verwenden - Aktivitäten mit Handelnden benennen
+	\item Keine abstrakten Substantive
+	\item Fremdwörter zielgruppengerecht einsetzen
+	\item Schachtelsätze vermeiden
+\end{itemize}
+~\\
+Audio lernförderlich gestalten
+\begin{itemize}
+	\item Lernförderlichkeit von Musik und Sprache (Inhalt unterstützen, Stimmungen erzeugen, Sprechtexte - Modalitätsprinzip)
+\end{itemize}
+
+\section{Psychologische Grundlagen des Lernens}
+
+\subsection{Wahrnehmungsphänomene}
+
+\begin{tikzpicture}
+\node (Reize) at (0,0) {sensorische Reize};
+\node[draw] (Gedaechtnis) at (4,0) {sensorisches Gedächtnis};
+\node[draw] (Arbeitsgedaechtnis) at (8,0) {Arbeitsgedächtnis};
+\node[draw] (Langzeitgedaechtnis) at (12,0) {Langzeitgedächtnis};
+\node (Codieren) at (6,-0.5) {Codieren};
+\node (Codieren2) at (10,0.5) {Codieren};
+\node (Wiedererinnern) at (10,-0.5) {Wiedererinnern};
+
+\draw[->] (Reize) to (Gedaechtnis);
+\draw[->] (Gedaechtnis) to (Arbeitsgedaechtnis);
+\draw[->] (Arbeitsgedaechtnis) to (Langzeitgedaechtnis);
+\draw[->] (Langzeitgedaechtnis) to (Arbeitsgedaechtnis);
+\end{tikzpicture}
+\\~\\
+Aber, Fehler in der Wahrnehmung auf verschiedenen Prozessstufen. (Optische Täuschungen)\\
+(Nähe, Ähnlichkeit, Geschlossenheit, Prägnanz)\\~\\
+\\
+Ergebnis der Evolution: Wir nehmen die Welt nicht so wahr, wie sie ist, sondern wie es in der Vergangenheit nützlich war, sie wahrzunehmen.
+
+\subsection{Gedächtnis: Arten, Speicherung von Inhalten}
+
+\subsubsection{Konzepte und Konzeptsystem}
+
+Concept
+\begin{itemize}
+	\item mentale Repräsentation
+	\item Übersetzung: Konzept, Konzeption, Begriff, Idee, Symbol
+\end{itemize}
+
+Concept System
+\begin{itemize}
+	\item kategoriales Wissen über Erfahrungen
+	\item Fundament aller kognitiven Prozesse
+\end{itemize}
+
+\subsubsection{Semantische Relationen}
+
+\begin{itemize}
+	\item Wissen über Kategorien und Relationen
+	\item Wichtige semantische Relationen: Synonymie, Antonymie, Hierarchie
+	\item Sortierung aller Merkmale eines Objekts in hierarchische Kategorien
+	\item Kategorien auf unterschiedlichen Abstraktionsebenen
+\end{itemize}
+
+\subsubsection{Amodale Systeme}
+
+\begin{tikzpicture}
+\node (Reize) at (0,0) {sensorische Reize, zB Auto};
+\node (Gedaechtnis) at (3,0) {...};
+\node[draw, text width=2cm] (Merkmale) at (4,2) {AUTO:\\Maschine\\Motor\\Reifen};
+\draw (6,-1.6) rectangle (10,2.2);
+\node[draw, text width=2.7cm] (Frame) at (4,-2) {AUTO\\(MOTOR=V4)\\(REIFEN=4)\\(FARBE=ROT)};
+\node[draw, ellipse] (Vehicle) at (8,1.5) {Fahrzeug};
+\node[draw, ellipse] (Boat) at (9,0.3) {Boot};
+\node[draw, ellipse] (Car) at (7,0) {Auto};
+\node[draw, ellipse] (Tire) at (7,-1) {Reifen};
+\node[draw, ellipse] (Door) at (8.7,-1) {Türe};
+\node (Merkmalsliste) at (4,3.2) {\bf Merkmalsliste};
+\node (Semantisches Netzwerk) at (8,2.5) {\bf Semantisches Netzwerk};
+\node (Frame2) at (4,-3.2) {\bf Frame};
+
+\draw[->] (Reize) to (Gedaechtnis);
+\draw[->] (Gedaechtnis) to (Merkmale);
+\draw[->] (Gedaechtnis) to (Frame);
+\draw[->] (Gedaechtnis) to (6,0);
+\draw[-] (Vehicle) to (Boat);
+\draw[-] (Vehicle) to (Car);
+\draw[-] (Car) to (Tire);
+\draw[-] (Car) to (Door);
+\end{tikzpicture}
+
+\subsubsection{Perzeptuelle Symbol Systeme}
+
+\begin{tikzpicture}
+\node (Reize) at (0,0) {sensorische Reize};
+\draw (5,0) circle (1cm);
+\draw (10,0) circle (1cm);
+
+\draw[->] (Reize) to (4,0);
+\draw[->] (6,0) to (9,0);
+
+\draw (5,-4.5) circle (1cm);
+\draw (10,-4.5) circle (1cm);
+
+\draw[->] (9,-4.5) to (6,-4.5);
+
+\node [sedan top,body color=red!50,window color=black!80,minimum width=1.8cm] at (5,0) {};
+\node [sedan top,body color=red!50,window color=black!80,minimum width=1.8cm] at (5,-4.5) {};
+
+\node (Aufnahme) at (5,1.3) {\bf Aufnahme};
+\node[text width=3cm] (Neuronen) at (5.3,-2) {Neuronen feueren um eine Sensorrepräsentation zu produzieren};
+\node[text width=3cm] (Speicher) at (10.3,-2) {Neuronen in einer assoziativen Region speichern die Sensorrepräsentation};
+
+\node (Simulation) at (5,-3.2) {\bf Simulation};
+\node[text width=3cm] (Neuronen) at (5.3,-6.5) {Neuronen feuern um die frühere Sensorrepräsentation nachzuspielen};
+\node[text width=3cm] (Speicher) at (10.3,-6.5) {Neuronen reaktivieren die frühere Sensorrepräsentation};
+
+\draw[fill=black] (9.3,-4.3) circle (0.05cm);
+\draw[fill=black] (9.4,-4.5) circle (0.05cm);
+\draw[fill=black] (9.6,-4.2) circle (0.05cm);
+\draw[fill=black] (9.4,-4.7) circle (0.05cm);
+\draw[fill=black] (9.6,-4.6) circle (0.05cm);
+
+\draw[fill=black] (9.3,0.2) circle (0.05cm);
+\draw[fill=black] (9.4,0) circle (0.05cm);
+\draw[fill=black] (9.6,0.3) circle (0.05cm);
+\draw[fill=black] (9.4,-0.2) circle (0.05cm);
+\draw[fill=black] (9.6,-0.1) circle (0.05cm);
+\end{tikzpicture}
+\\~\\
+Vergessenskurve: Nach 1h nur noch bei 40 Prozent, nach 5 Tagen aber noch bei 28 Prozent.
+\\~\\
+Schwierigkeit der Speicherung ist abhängig von Inhalt, je abstrakter, desto schwerer zu speichern.
+
+\subsection{Grundlegende Gestatungsempfehlungen}
+
+Hilfetexte durch überlegte Gestaltung überflüssig machen.
+\\~\\
+\begin{tabular}{ p{3cm} p{5cm} p{5cm} }\toprule[1.5pt]
+	\bf Prinzip 				
+	& \bf Schlecht 	
+	& \bf Gut \\ \midrule
+	
+	\bf Einfache Wörter 				
+	& öffentlicher Personennahverkehr			   	
+	& Bus und Bahn \\ \midrule
+	
+	\bf \makecell[l]{Verben,\\aktive Formen}
+	& Morgen findet die Wahl zum Heim-Beirat statt.
+	& Morgen wählen wie den Heim-Beirat. \\ \midrule
+	
+	\bf Positive Sprache
+	& Peter ist nicht krank 	
+	& Peter ist gesund \\ \midrule
+	
+	\bf \makecell[l]{Kurze Sätze,\\1 Gedanken \\pro Zeile}
+	& \makecell[l]{Wenn sie mir sagen, was Sie\\wünschen, kann ich Ihnen\\weiterhelfen.}
+	& \makecell[l]{Ich kann Ihnen helfen.\\Sagen Sie mir: Was wünschen sie?} \\ \midrule
+	
+	\bf Am Zeilenende nicht trennen
+	& \makecell[l]{Der Urlaub auf Mall-\\orca war ein Erlebnis.}
+	& \makecell[l]{Der Urlaub auf Mallorca\\war ein Erlebnis.} \\ 
+	\bottomrule[1.5pt]
+\end{tabular}
+~\\~\\
+Empirische Überprüfung von Gestaltungsempfehlungen möglich zB via Eyetracking.
+
+\subsubsection{Berücksichtigung der Eigenschaften der Lernenden}
+
+Beispiele für relevante Eigenschaften
+\begin{itemize}
+	\item Räumliches Vorstellungsvermögen
+	\item Kognitiver Stil (zB. Visualisierer vs Verbalisierer)
+	\item Geschlecht (mentale Rotationsfähigkeit, Computeraffinität)
+	\item Vorerfahrungen, Expertise
+\end{itemize}
+~\\
+Expertise-Umkehr-Effekt: Rolle von Vorwissen beim Lernen\\
+Effekt von Gestaltungsempfehlungen schwächer, wenn Vorwissen nicht beachtet.
+\begin{itemize}
+	\item Überforderung und Unterforderung wirken demotivierend
+	\item bestimmte Hilfen (zB. Visualisierungen) für Novizen sind für Experten redundant \textrightarrow hinderlich
+\end{itemize}
+~\\~\\
+\begin{tikzpicture}
+\node (Anforderungen) at (-1.3,2.5) {Anforderungen};
+\node (Faehigkeiten) at (5,-0.5) {Fähigkeiten};
+
+\node[text width=2cm] (ZPD) at (5,2.6) {Zone der\\proximalen\\Entwicklung\\(ZPD)};
+
+\draw[->] (0,0) to (0,5);
+\draw[->] (0,0) to (10,0);
+\draw[->] (0,0) to (7,1.3);
+\draw[->] (0,0) to (2.5,4);
+
+\node[anchor=west] (Unterforderung) at (7,1.3) {Unterforderung};
+\node (Ueberforderung) at (2.5,4.2) {Überforderung};
+
+\draw[-] (0,0) to (10,3.4);
+\draw[-] (0,0) to (5.5,5);
+\draw[-] (10,5) to (10,3.4);
+\draw[-] (10,5) to (5.5,5);
+\end{tikzpicture}
+
+\subsection{Anwendung auf die Planung eines Lernspiels}
+
+Figur und Grund: Figuren sollten sich vom Grund abtrennen.\\
+\\
+Gesetz der Nähe:
+\begin{itemize}
+	\item Nah beieinander liegende Elemente werden als Einheit wahrgenommen.
+	\item Eignet sich um strukturelle Zusammenhänge abzubilden \textrightarrow die Informationsdichte reduziert sich
+	\item Zusammengehörende Objekte sollten auch möglichst eng beieinander stehen.
+	\item Bsp. Grafiken und Beschriftungen: Eine Beschriftung sollte möglichst nahe an dem Detail stehen, das es erläutert. Eine Beschriftung innerhalb einer Grafik ist daher oft einer Legende vorzuziehen.
+\end{itemize}
+~\\
+Mehrfache Codierung von Lerninhalten
+\begin{itemize}
+	\item zB. visuell und auditiv: Lerninhalte werden durch Sprechtexte und Geräusche unterstützt und anschaulicher
+\end{itemize}
+
+\section{Lernerfolgskontrolle und Evaluation}
+
+\subsection{Bildungsqualität}
+
+Wie erfolgt Messung von Qualität in Bildungskontexten?
+\begin{itemize}
+	\item nach vorgegebenen Kriterien (präzise genug?)
+	\item nach persönlichem Gefühl? (stimmungsabhängig?)
+	\item nach Randerscheinungen? (persönlicher Eindruck?)
+\end{itemize}
+
+\begin{description}
+	\item[Qualität] Güte/Wert eines Objekts. Aber ist relativ, jeder Mensch hat eine andere Vorstellung von Qualität.
+	\item[Qualitätssicherung] Sicherstellung, dass spezielle Verfahren, Mechanismen und Prozesse dafür sorgen, dass die gewünschte Qualität auch zustande kommt.
+\end{description}
+
+Beispiele für Qualitätsuntersuchungen:
+\begin{itemize}
+	\item Schule: Abitur
+	\item Bildungsstandards, Ausarbeitung durch KMK
+	\item Universitäten: Studien- und Prüfungsordnungen
+\end{itemize}
+
+\subsubsection{Leitbilder für lernerbezogene Standards}
+
+Der informationsmündige Lernende
+\begin{itemize}
+	\item kann effektiv und effizient auf Informationen zugreifen.
+	\item kann Informationen kritisch und kompetent bewerten.
+	\item nutzt Informationen genau und kreativ.
+\end{itemize}
+~\\
+Der unabhängige Lernende
+\begin{itemize}
+	\item setzt sich mit Informationen auseinander, die für ihn interessant sind.
+	\item erfreut sich an Literatur und anderen kreativen Formen von Information.
+	\item zielt darauf ab, bei der Informationssuche und bei der Generierung von
+	Wissen Exzellenz zu erreichen.
+\end{itemize}
+~\\
+Der sozial verantwortliche Lernende
+\begin{itemize}
+	\item erkennt die Wichtigkeit von Informationen in der Gesellschaft an.
+	\item verhält sich ethisch einwandfrei.
+	\item nimmt effektiv am Gruppengeschehen teil, um Informationen zu
+	generieren.
+\end{itemize}
+
+\subsubsection{Kardinalfehler - Konsequenzen}
+
+Überblick zu klassischen Fehlern
+\begin{itemize}
+	\item Missachtung einer völlig anderen Lernkultur (Zielgruppe und Rahmenbedingungen analysieren)
+	\item Missachtung der Komplexität (Prototyp als Testfall betrachten)
+	\item Missachtung der Risiken (Aufwand/ Machbarkeit beachten)
+	\item unrealistische Zielsetzungen (Verhältnis zur gewohnten Beschäftigung mit dem Thema)
+	\item Unterschätzung von Vorarbeiten (Motivation berücksichtigen)
+\end{itemize}
+~\\
+Folgerungen:
+\begin{itemize}
+	\item Lernprogramme sind nicht im Sinne klassischer Softwareprodukte verifizierbar
+	\item Notwendigkeit einer zielgruppenorientierten Evaluation
+\end{itemize}
+
+\subsection{Empirische Forschungsmethoden}
+
+\begin{description}
+	\item[Prozessevaluation] bei der Evaluation stehen Aspekte des Planungs- und/oder Entwicklungsprozesses bzw. Vorgehensweisen bei der konkreten Anwendung eines Bildungsangebots bzw. einzelner Komponenten des betreffenden Angebots im Vordergrund
+	\item[Produktevaluation] bezieht sich die Evaluation auf ein entwickeltes Produkt, wie ein Bildungsangebot oder Teile davon, und auf Aspekte der Qualität, der Effizienz und des Nutzens
+	\item[Lernergebnisevaluation] die Evaluation misst die Erreichung der intendierten Lernwirkung – beispielsweise den Lerneffekt der Teilnehmer in der Vorlesung Mediendidaktik und -psychologie
+	\item[Performance-Evaluation] bezieht sich auf die Veränderung eines Merkmals – bspw. den Lernfortschritt oder die Verbesserung eines Produktes innerhalb eines Zeitraums
+\end{description}
+~\\
+Formative Evaluation
+\begin{itemize}
+	\item dient der Qualitätssicherung (vorrangiges Ziel: Ermittlung von Schwachstellen)
+	\item meist entwicklungsbegleitend
+	\item liefert Ansatzpunkte zur Optimierung eines Prozesses
+\end{itemize}
+~\\
+Summative Evaluation
+\begin{itemize}
+	\item dient der abschließenden Kontrolle von Qualität, Wirkungen und Nutzen
+	\item Interesse gilt der Frage, ob ein Erwartungen der Umsetzungen in Praxis
+	entsprechen
+	\item Wichtig: Vorher Erfolg definieren (vorab definierte Bewertungskriterien und
+	Zielzustände, anhand derer gemessen wir)
+\end{itemize}
+~\\
+Das Ziel der Dokumentenanalyse ist die Untersuchung von Sprachdokumenten (Fachliteratur,
+Prüfungsordnungen u.ä.), um für die Einschätzung relevante Informationen zu erhalten, die weder
+erreichbar noch zugänglich sind. (»non-reaktives Verfahren«)
+~\\~\\
+Befragungen zielen darauf ab, Informationen und Einschätzungen einer Gruppe von Befragten
+(Experten, Anwender, Lernende) zu bestimmten Themenbereichen der Qualitätssicherung zu
+erheben. Die erhobenen Daten werden analysiert, hinsichtlich ihres Aussagengehalts interpretiert
+und im Hinblick auf bestimmte Kriterien eingeschätzt. (»reaktives Verfahren«)
+~\\~\\
+Unter Beobachtung als Evaluationsmethode wird ein planmäßiges Vorgehen verstanden, um
+Daten über sinnlich wahrnehmbare Ereignisse und Verhaltensaspekte zu gewinnen. Beobachtung
+kann sowohl als Fremdbeobachtung als auch als Selbstbeobachtung durchgeführt werden.
+~\\~\\
+Verhaltensrecording ist eine Methode zur Erfassung von automatisch entstehenden Daten
+(z.B. Aktionen in CBT), um vollständige und differenzierte Daten zum Nutzerverhalten zu
+erheben.
+~\\~\\
+Tests sind standardisierte Verfahren zur Messung der Ausprägung empirisch abgrenzbarer
+Verhaltens- und Leistungsmerkmale.
+~\\~\\
+(ermöglichen unterschiedlichen Anwendern ein gleichartiges Vorgehen bei der
+Testdurchführung; Vermeidung störender Einflüsse auf die Testergebnisse)
+~\\~\\
+normorientierter Test
+\begin{itemize}
+	\item individuelle Testleistung wird mit der durchschnittlichen Leistung einer Bezugsgruppe in
+	diesem Test verglichen;
+	\item durchschnittliche Leistung der Bezugsgruppe ist hier die Norm
+\end{itemize}
+~\\
+kriteriumsorientierter Test
+\begin{itemize}
+	\item individuelle Leistung wird an einem vorab definierten Kriterium
+	gemessen; gesetztes Ziel ist hier das Kriterium
+\end{itemize}
+~\\
+situativer Test
+\begin{itemize}
+	\item Rollenspiele, Fallstudien, Gruppendiskussionen, Planspiele,
+	...; zur Erfassung von Vorgehensweisen bei realitätsnahen
+	Aufgaben
+\end{itemize}
+~\\
+Unter dem Begriff Empirische Untersuchung versteht man ein wissenschaftliches Verfahren
+zur kontrollierten Überprüfung der Wirkungen einer Investitionsmaßnahme an einer oder
+mehreren Gruppen systematisch zusammengestellter Personen (Untersuchungsteilnehmer).
+~\\~\\
+Fragebogen - Forderungen
+\begin{itemize}
+	\item Fragebogen muss standardisiert sein, d. h. allen Befragten Übersichten mit den gleichen
+	Inhalten, in der Regel Fragen, vorgelegen
+	\item Fragebogen sollte unter möglichst vergleichbaren Bedingungen eingesetzt werden
+	\item Fragen sollten so interessant gestaltet sein, dass der Befragte sich wie bei einer echten
+	Gesprächssituation fühlt
+	\item Fragen so eindeutig formulieren, dass keine Fehlinterpretationen auftreten können
+	\item Dimensionen der sprachlichen Gestaltung beachten und damit der Verständlichkeit
+	des Fragebogens große Aufmerksamkeit schenken
+	\item Fragen möglichst neutral halten sind und keine Wertungen enthalten
+	\item Gewährleisten, dass alle möglichen Antworten, die vorgegeben werden, auch
+	sinnvoll und logisch sind
+	\item Angebotene Alternativen sorgsam abwägen und für ihre Ausgewogenheit Sorge tragen
+	\item Bedenken, dass die Fragen sich nicht gegenseitig beeinflussen und in einem
+	ausgewogenen Verhältnis zueinander stehen
+	\item Fragen dürfen vom Interviewer unter keinen Umständen kommentiert werden
+\end{itemize}
+~\\
+Wie kann man Lernprogramme beurteilen?
+\\~\\
+Kriterienkatalog
+\begin{itemize}
+	\item kostengünstig: durch fachkundige Personen erstellt; ein Beispielprogramm genügt
+	\item einfache Organisation: unabhängige Bewertung, kaum gesonderte Lernsituation
+	\item NACHTEIL: Vollständigkeit und Detaillierungsgrad; Gewichtungsverfahren
+\end{itemize}
+~\\
+Rezensionen
+\begin{itemize}
+	\item durch Fachzeitschriften meist kostengünstig
+	\item implizite Schwerpunktsetzung (allerdings meist subjektiv)
+	\item NACHTEIL: Vergleichbarkeit gering
+\end{itemize}
+~\\
+Vergleichsgruppen
+\begin{itemize}
+	\item Untersuchung realer Lernsituationen in parallelen Gruppen
+	\item Wissenschaftlichkeit gewährleistet
+	\item NACHTEIL: hoher Untersuchungsaufwand; Isolation von Untersuchungsvariablen
+\end{itemize}
+~\\
+Expertenurteil
+\begin{itemize}
+	\item Werturteil durch Experten in moderierten Gruppensitzungen (Delphi-Methode)
+	\item NACHTEIL: Urteil schwer nachvollziehbar; Reliabilitätsproblem
+\end{itemize}
+~\\
+Fazit: alle Verfahren Stärken und Schwächen, Kombination sinnvoll
+~\\
+\subsubsection{Fragearten}
+Offene Fragen
+\begin{itemize}
+	\item Überlassen dem Befragten selbst, eine Antwort zu formulieren
+	\item offene Fragen können sowohl Entscheidungs- als auch Ergänzungsfragen sein
+	\item bei Fragebögen einer Meinungsumfrage sind es Fragen die nicht mit bestimmten Antwortalternativen versehen sind
+\end{itemize}
+~\\
+Geschlossene Fragen
+\begin{itemize}
+	\item inhaltlich: Frage, die dem Gefragten nur die Möglichkeit lassen, sich mit Ja oder Nein oder für eine vorgegebene Alternative zu entscheiden
+	\item bei Fragebögen, Fragen, die zugleich alle möglichen Antwort-Alternativen vorgeben, die in der Regel durch Ankreuzen beantwortet werden
+\end{itemize}
+
+\subsection{Usability Testing}
+
+Nutzerzentrierter Designprozess (nach DIN EN ISO 9241)\\~\\
+\begin{tikzpicture}
+\node[text width=4cm] (Erarbeiten) at (8,0) {Erarbeiten von\\Gestaltungslösungen zur Erfüllung der Nutzungsanforderungen};
+\node[text width=4cm] (Evaluieren) at (4,2) {Evaluieren von Gestaltungslösungen anhand der Anforderungen};
+\node[text width=4cm] (Verstehen) at (8,4) {Verstehen und Festlegen des Nutzungskonzextes};
+\node[text width=4cm] (Festlegen) at (12,2) {Festlegen der Nutzungsanforderungen};
+\node[text width=4cm] (Planen) at (4,6) {Planen des nutzungs-\\orientierten Gestaltungsprozesses};
+\node[text width=4cm] (Gestaltungsloesung) at (0,4) {Gestaltungslösung erfüllt die Nutzungsanforderungen};
+
+\draw[->] (Erarbeiten) to (Evaluieren);
+\draw[->] (Evaluieren) to (Verstehen);
+\draw[->] (Evaluieren) to (Festlegen);
+\draw[->] (Evaluieren) to (Erarbeiten);
+\draw[->] (Evaluieren) to (Gestaltungsloesung);
+\draw[->] (Festlegen) to (Erarbeiten);
+\draw[->] (Verstehen) to (Festlegen);
+\draw[->] (Verstehen) to (Planen);
+\end{tikzpicture}
+~\\
+Eine Methode: Personas erstellen:
+\begin{itemize}
+	\item archetypischer Nutzer
+	\item eine fiktive, nichtreale Person, die der/einer Zielgruppe entspricht
+	\item hilft uns, aus Sicht des Nutzers zu denken und zu handeln
+	\item ergänzend zu Personas werden Szenarien definiert, in denen die Persona Aufgaben mit dem Produkt/ System bewältigt
+\end{itemize}
+~\\
+Mögliche Gedanken:
+\begin{itemize}
+	\item Was erwartet die Persona von dem Produkt?
+	\item Welche Weltanschauung hat sie?
+	\item Welches Device nutzt sie?
+	\item Was motiviert sie? Was sind ihre Ziele?
+	\item Wie informiert sie sich generell? Welche Online-/Offline-Medien nutzt sie.
+\end{itemize}
+~\\
+Was ist ein Usability-Test?
+\begin{itemize}
+	\item Methode der Evaluation von Gebrauchstauglichkeit
+	\item ein Produkt wird von Nutzern getestet
+	\item unter Beobachtung
+\end{itemize}
+~\\
+Gegenstand eines Tests
+\begin{itemize}
+	\item Gestaltungs- oder Interaktionskonzepte
+	\item Softwareprodukt als Prototyp (Paper Prototype. Mockup, Klickdummy, funktionierende Version eines Produktes, Wizard–of-Oz)
+	\item Vor, während oder nach der Entwicklung
+\end{itemize}
+~\\
+Hilfsmittel
+\begin{itemize}
+	\item Lautes Denken
+	\item Eyetracking
+	\item Fragebögen
+	\item Reflexives Interview
+	\item Nutzungsdaten
+\end{itemize}
+~\\
+Wie?
+\begin{itemize}
+	\item Mittels realer oder realistischer AUfgaben
+\end{itemize}
+~\\
+Mit welchem Ziel?
+\begin{itemize}
+	\item Prüfung oder Verbesserung des Gegenstandes
+	\item Identifikation von Problemen
+\end{itemize}
+~\\
+Wo?
+\begin{itemize}
+	\item Im Usability-Labor
+	\item Im Feld
+	\item Via Remote Session
+\end{itemize}
+~\\
+Wer sind die Probanden?
+\begin{itemize}
+	\item Angehörige der Zielgruppe
+\end{itemize}
+~\\
+Ergebnisse:
+\begin{itemize}
+	\item Quantitativ
+	\begin{itemize}
+		\item Bearbeitungszeit einer Aufgabe
+		\item Anzahl der bearbeiteten Aufgaben
+		\item Zeit für Fehlerkorrekturen
+		\item Zahl der Fehler
+		\item Zahl vom Benutzer der benutzten Befehle / Funktionen
+	\end{itemize}
+	\item Qualitativ
+	\begin{itemize}
+		\item Aussagen zu Benutzungsprozessen aus „lautem Denken“
+		\item Einschätzungen der Nutzer
+	\end{itemize}
+\end{itemize}
+~\\
+Testsetting:
+\begin{itemize}
+	\item Rahmenbedingungen klären (Raum, Technik, Aufgaben, Entlohnung)
+	\item Testpersonen akquirieren
+	\item Testaufgaben vorbereiten
+	\item Pre-Test
+\end{itemize}
+~\\
+Durchführung:
+\begin{itemize}
+	\item Instruktion des Probanden
+	\item Aufgabenstellung nennen
+	\item Beobachtung des Probanden
+	\item Reflexives Interview
+	\item Ggf. abschließender Fragebogen für demografische Daten
+\end{itemize}
+
+\subsection{Anwendungsbeispiele}
+
+Was kann App-Usability von Kindern lernen?\\~\\
+Erwartungshaltung von Kindern an Apps
+\begin{itemize}
+	\item Feedback auf Aktionen (Sound, Animation, ...)
+	\item Wiederholung: Bekanntes wiedererkennen
+	\item Abwechslung: Neues entdecken
+	\item Erfolgserlebnisse
+	\item + elterliche Erwartungen: Lehrreich, nicht zu nervig
+\end{itemize}
+~\\
+Beispiel Kinder-App:\\
+~\\
+DOs:
+\begin{itemize}
+	\item Einfacher Szenenwechsel mit Pfeiltasten oben
+	\item Reduzierter Startscreen
+\end{itemize}
+~\\
+DONTs:
+\begin{itemize}
+	\item Startscreen unübersichtlich
+	\item Startbutton unter zu vielen Buttons verstecken
+\end{itemize}
+~\\
+Fazit: Was für Kinder gut ist, ist für Erwachsene manchmal nicht gut. Es kommt auf die richtige Usability Zielgruppe an.
+
+
+\end{document}

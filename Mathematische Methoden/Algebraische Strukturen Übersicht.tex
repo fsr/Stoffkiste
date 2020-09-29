@@ -1,0 +1,325 @@
+\documentclass[18pt] {article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{framed}
+\usepackage{titling}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\setlength{\droptitle}{-10em}
+\linespread{1.2}
+\title{Übersicht über die Algebraischen Strukturen aus der Vorlesung "Mathematische Methoden für Informatiker II"}
+\date{\vspace{-4ex}}
+\author{Klaus-Rudolf Kladny}
+\begin{document}
+\maketitle
+\vspace{15mm}
+\underline{\huge Gruppentheorie:}\\
+
+\textbf{1. Halbgruppe $(S, *)$}
+\begin{framed}
+Eigenschaften: \\
+\begin{enumerate}
+\item Existenz einer Menge S (darf auch leer sein)
+
+\item Existenz einer zweistelligen Operation:\\
+$$*: S \times S \rightarrow S, (a, b) \mapsto a * b$$
+
+\item Assoziativität bezüglich $*$ :\\
+$$\forall a, b, c \in S:   a*(b*c) = (a*b)*c$$
+
+\item Abgeschlossenheit bezüglich $*$ :\\
+$$\forall a, b \in S:   (a*b) \in S$$
+\end{enumerate}
+\end{framed} 
+\bigskip
+\large{\underline{Unterhalbgruppe}}
+
+Eine Unterhalbgruppe $(U, *)$ einer Halbgruppe $(S, *)$ ist eine Halbgruppe mit folgenden 
+
+Eigenschaften:\\
+
+\begin{enumerate}
+\item $U \subseteq S$ und $U \neq \emptyset$
+
+\item $a, b \in U \Rightarrow (a * b) \in U$
+\end{enumerate}
+\pagebreak
+\textbf{2. Monoid $(S, *, e)$}
+\begin{framed}
+Eigenschaften: \\
+
+\begin{enumerate}
+\item Es gelten alle Eigenschaften für Halbgruppen
+
+\item Existenz eines neutralen Elements $e$ :
+$$\forall a \in S :   e*a = a*e = a$$
+\end{enumerate}
+\end{framed} 
+\bigskip
+\textbf{3. Gruppe $(S, *, e)$}
+\begin{framed}
+Eigenschaften: \\
+
+\begin{enumerate}
+\item Es gelten alle Eigenschaften für Monoide
+
+\item Es existieren inverse Elemente:
+\end{enumerate}
+$$ \forall a \in S :  \exists! a^{-1} : a * a^{-1} = a^{-1} * a = e $$
+\end{framed} 
+
+\underline{Beispiele für Gruppen:}
+
+Permutationsgruppen, Automorphismengruppen, Faktorgruppen, Menge der ganzen Zahlen 
+
+mit der Addition $(\mathbb{Z}, +)$\\
+
+\textbf{3.1 Abelsche Gruppe $(S, *, e)$}
+\begin{framed}
+Eigenschaften: \\
+\begin{enumerate}
+\item Es gelten alle Eigenschaften für Gruppen
+
+\item Kommutativität bezüglich $*$ :\\
+$$ \forall a, b \in S: a * b = b * a$$
+\end{enumerate}
+\end{framed} 
+\pagebreak
+\textbf{3.2 Zyklische Gruppe $(S, *, e)$}
+\begin{framed}
+Eigenschaften: \\
+
+\begin{enumerate}
+\item Es gelten alle Eigenschaften für Gruppen
+
+\item Es existiert ein Element, welches mit $\cdot$ die gesamte Gruppe erzeugt. (erzeugendes Element)
+\end{enumerate}
+\end{framed} 
+
+\underline{Bemerkung zu zyklischen Gruppen}: 
+
+Sei im Algemeinen $n$ die Kardinalität der Gruppe
+\begin{enumerate}
+\item Es gibt zu jedem $n \in \mathbb{N}$ bis auf Isomorphie genau eine zyklische Gruppe mit dieser Kardinalität.
+\item Die Gruppe hat $\phi (n)$ erzeugende Elemente.
+\item Jede zyklische Gruppe ist abelsch (kommutativ bzgl. $\cdot$).
+\item Das direkte Produkt zweier zyklischer Gruppen ist zyklisch, gdw. die Kardinalitäten der Gruppen teilerfremd sind.
+
+\item Es gibt immer mindestens ein Element, welches mit $\cdot$ die gesamte Gruppe alleine erzeugt.
+
+\item Zu jedem Teiler $t$ von $n$ existiert genau eine Untergruppe. Sei $a$ ein erzeugendes Element der gesamten Gruppe. Dann wird die Untergruppe der Ordung $t$ vom Element $a^{n/t}$ erzeugt.
+
+\end{enumerate}
+
+\large{\underline{Untergruppe}}
+
+Eine Untergruppe $(U, *)$ einer Gruppe $(S, *)$ mit dem neutralen Element $e$ ist eine Gruppe 
+
+mit folgenden Eigenschaften:\\
+
+\begin{enumerate}
+\item $U \subseteq S$ und $U \neq \emptyset$
+
+\item $e \in U$
+
+\item $a, b \in U \Rightarrow (a * b) \in U$
+
+\item $a \in S \Rightarrow a^{-1} \in U$ (Muss nur in nicht endlichen Gruppen gezeigt werden)\\
+\end{enumerate}
+\pagebreak
+
+\underline{Satz von Lagrange}:
+
+$$\vert S  \vert = [S : U] \cdot \vert U \vert$$\\
+
+Folgerung: Die Mächtigkeit jeder Untergruppe teilt die Mächtigkeit der Gruppe.\\
+
+
+\bigskip
+\underline{\huge Ringtheorie:}\\
+
+\textbf{1. Halbring (auch: Semiring) $(H, +, \cdot)$}
+\begin{framed}
+Eigenschaften: \\
+
+\begin{enumerate}
+\item Existenz einer nichtleeren (!) Menge H
+
+\item Existenz zweier zweistelliger Operationen:\\
+$$+: H \times H \rightarrow H, \indent (a, b) \mapsto a + b$$
+$$\cdot : H \times H \rightarrow H, \indent (a, b) \mapsto a \cdot b$$
+
+\item $(H, +)$ ist eine kommutative Halbgruppe.
+
+\item $(H, \cdot )$ ist eine Halbgruppe. 
+
+\item Es gelten die Distributivgesetze:
+
+$$ \forall a, b, c \in H : (a + b) \cdot c = a \cdot c + b \cdot c$$
+$$ \forall a, b, c \in H : c \cdot (a + b) = c \cdot a + c \cdot b$$
+\end{enumerate}
+\end{framed}
+\bigskip
+
+\pagebreak
+\textbf{2. Ring $(H, +, \cdot)$}
+\begin{framed}
+Eigenschaften: \\
+
+\begin{enumerate}
+\item Es gelten alle Eigenschaften für Halbringe.
+
+\item (H, +) ist eine abelsche Gruppe.
+\begin{enumerate}
+\item Das neutrale Element wird als Nullelement $0$ bezeichnet
+\end{enumerate}
+\end{enumerate}
+\end{framed} 
+\bigskip
+
+
+\textbf{3.1 kommutativer Ring $(H, +, \cdot)$}
+\begin{framed}
+Eigenschaften: \\
+
+\begin{enumerate}
+\item Es gelten alle Eigenschaften für Ringe
+
+\item $(H, \cdot )$ ist eine kommutative Halbgruppe
+\end{enumerate}
+
+\end{framed} 
+\bigskip
+\textbf{3.2 euklidischer Ring $(H, +, \cdot)$}
+\begin{framed}
+Eigenschaften: \\
+
+\begin{enumerate}
+
+\item Es gelten alle Eigenschaften für Ringe
+
+\item $\forall a, b \in H\setminus\{0\}:$ Es kann ein größter gemeinsamer Teiler $ggT(a, b)$ mit dem euklidischen Algorithmus bestimmt werden.
+\end{enumerate}
+\end{framed}
+\pagebreak
+\textbf{3.3 Integritätsring $(H, +, \cdot)$}
+\begin{framed}
+Eigenschaften: \\
+\begin{enumerate}
+\item Es gelten alle Eigenschaften für kommutative (!) Ringe.
+
+\item Es gibt ein neutrales Element bezüglich der Multiplikation, welches als 
+
+Einselement $1$ bezeichnet wird.
+
+\item Es existieren keine Nullteiler:
+
+(Erinnerung)$$ a \in H \ ist \ Nullteiler \Leftrightarrow \exists b \in H : a \cdot b = 0$$
+\end{enumerate}
+\end{framed}  
+
+\textbf{3.3.1 Polynomring $(R[x], +, \cdot)$}
+\begin{framed}
+Eigenschaften: \\
+
+\begin{enumerate}
+\item $(R, +, \cdot)$ ist ein Ring.
+
+\item Er ist ein nicht endlicher Integritätsring, also kein Körper.
+
+\end{enumerate}
+\end{framed}
+
+\bigskip
+
+\textbf{3.4 Körper $(H, +, \cdot)$}
+\begin{framed}
+Eigenschaften: \\
+
+\begin{enumerate}
+\item Es gelten alle Eigenschaften für kommutative (!) Ringe
+
+\item Es gibt ein neutrales Element bezüglich der Multiplikation, welches als 
+
+Einselement $1$ bezeichnet wird.
+
+\item $(H, \cdot)$ ist eine Gruppe
+\end{enumerate}
+\end{framed} 
+\bigskip
+\pagebreak
+\underline{\large Unterring}:
+
+Ein Unterring $(U, +, \cdot)$ eines Rings $(H, +, \cdot)$ ist ein Ring mit folgenden Eigenschaften:\\
+
+\begin{enumerate}
+\item $U \subseteq S$ und $U \neq \emptyset$
+\item
+\begin{enumerate}
+\item $a, b \in U \Rightarrow (a + b) \in U$
+
+\item $a, b \in U\Rightarrow (a \cdot b) \in U$
+\end{enumerate}
+
+\item$a \in U \Rightarrow a^{-1} \in U$ (Dies muss nur in nicht endlichen Ringen gezeigt werden)
+\end{enumerate}
+
+\bigskip
+\underline{Zusammenhang zwischen Integritätsring und Körper}:
+
+Jeder Körper ist ein Integritätsring und jeder endliche Integritätsring ist ein Körper.\\
+
+\textbf{3.4.1 Endlicher Körper (auch: Galoiskörper) $(H, +, \cdot)$}
+\begin{framed}
+Eigenschaften: \\
+
+\begin{enumerate}
+
+\item Es gelten alle Eigenschaften für Körper
+
+\item Die Anzahl der Elemente ist endlich und sogar eine Primzahlpotenz
+\end{enumerate}
+\end{framed}
+\bigskip
+\underline{Multiplikative Gruppe}:
+
+Ist die Gruppe, welche aus allen Elementen des Körpers mit Ausnahme des 
+
+Nullelements mit $\cdot$ entsteht.\\
+\bigskip
+
+\underline{Bemerkung zu endlichen Körpern}:
+\begin{enumerate}
+\item Es gibt zu jeder Primpotenz bis auf Isomorphie genau einen endlichen Körper.
+
+\item Es gibt immer ein primitives Element, welches mit $\cdot$ den gesamten Körper bis auf das Nullelement alleine erzeugt.
+
+\end{enumerate}
+\pagebreak
+\textbf{3.4.1.1 Endlicher Polynomkörper  $(K[x]/f(x), +, \cdot)$}
+\begin{framed}
+Eigenschaften: \\
+\begin{enumerate}
+\item Es gelten alle Eigenschaften von endlichen Körpern.
+
+\item $f(x)$ ist ein irreduzibles Polynom. Also $\nexists g(x), h(x) \in K[p]/f(x): g(x) \cdot h(x) = f(x)$\\
+
+\end{enumerate}
+
+Zusätzliche Eigenschaft:\\
+
+Ist $x$ ein Erzeuger (\textit{Primitives Element} genannt) der multiplikativen Gruppe
+
+$K[p]/f(x)\setminus\{0\}$, so wird $f(x)$ als \textit{Primitives Polynom} bezeichnet.
+\end{framed}
+
+\bigskip
+\underline{Bemerkung zu endlichen Polynomkörpern}: \\
+
+Sei im Allgemeinen $p$ die Primzahl und $k$ der Grad des irreduziblen Polynoms $f(x)$
+\begin{enumerate}
+\item Der Körper besteht aus $p^{k}$ Elementen.
+
+\item Die multiplikative Gruppe des Körpers besteht aus $p^{k} - 1$ Elementen, da die $0$ nicht darin vorkommt.
+\end{enumerate}
+\end{document}
