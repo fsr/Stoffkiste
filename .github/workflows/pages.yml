@@ -22,11 +22,14 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Install TexLive
-        run: sudo apt-get update && sudo apt-get install texlive-full
-    
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
+
+      # Convert .tex to .pdf
+      - uses: xu-cheng/latex-action@v2
+        with:
+          root_file: "**/*.tex"
+          glob_root_file: true
 
       # Runs a set of commands using the runners shell
       - name: Run buildscript
