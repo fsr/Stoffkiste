@@ -44,7 +44,7 @@ jobs:
           # Duration after which artifact will expire in days.      
   deploy:
     # Only run on the master branch (not on PRs)
-    if: github.ref == 'refs/heads/develop'
+    if: github.ref == 'refs/heads/master'
     
     # Add a dependency to the build job
     needs: build
