@@ -1,6 +1,6 @@
 # Stoffkiste - Eine Lernstoffsammlung der Informatik TU Dresden
 
-[Der Index mit allen PDFs ist hier verfügbar](https://fsr.github.io/Stoffkiste/)
+[Der Index mit allen PDFs ist hier verfügbar](https://www.ifsr.de/studium/stoffkiste)
 
 - Die Sammlung steht jeder Person frei zur Verfügung.
 - Jede Person kann zu der Lernstoffsammlung beitragen. Bitte öffne ein Issue oder eine Pullrequest um Inhalte hinzuzufügen. Alternativ kannst du auch deine Zusammenfassung als **.pdf** oder **.tex** per Mail an die Fachschaft versenden.
