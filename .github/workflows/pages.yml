@@ -32,6 +32,7 @@ jobs:
           glob_root_file: true
           work_in_root_file_dir: true
           extra_system_packages: "inkscape" # Inkscape for SVGs
+          latexmk_shell_escape: true
 
       # Runs a set of commands using the runners shell
       - name: Run buildscript
