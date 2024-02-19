@@ -317,22 +317,22 @@ Berechnung der \href{https://webaim.org/resources/contrastchecker/}{Luminanz} L 
 \end{equation*}
 
 \textbf{R} \colonequals
-\begin{cases}
+$\begin{cases}
  \text{if } R_{sRGB} \leq 0.03928 & R = \frac{R_{sRGB}}{12.92} \\
  \text{else } & R=(\frac{R_{sRGB}+0.055}{1.055}) ^ {2.4}
-\end{cases}
+\end{cases}$
 
 \textbf{G} \colonequals
-\begin{cases}
+$\begin{cases}
  \text{if } G_{sRGB} \leq 0.03928 & G = \frac{G_{sRGB}}{12.92} \\
  \text{else } & G=(\frac{G_{sRGB}+0.055}{1.055}) ^ {2.4}
-\end{cases}
+\end{cases}$
 
 \textbf{B} \colonequals
-\begin{cases}
+$\begin{cases}
  \text{if } B_{sRGB} \leq 0.03928 & B = \frac{B_{sRGB}}{12.92} \\
  \text{else } & B=(\frac{B_{sRGB}+0.055}{1.055}) ^ {2.4}
-\end{cases}
+\end{cases}$
 \subsection{Evaluationsmethoden}
 Qualitäts- bzw. Gütekriterien für die Evaluation sind Objektivität (sind die Ergebnisse unabhängig vom Versuchsleiter?), Validität (gleiche Ergebnisse für denselben Gegenstand?), Reliabilität (mißt der Fragebogen was er messen soll?)
 \begin{itemize}
@@ -511,7 +511,7 @@ Dabei sind $\begin{pmatrix} x_0 \\ y_0 \end{pmatrix}$ und $\begin{pmatrix} x_3 \
 \item $\leftrightarrow$ Reize $\leftrightarrow$ (Psychophysik) $\leftrightarrow$ Wahrnehmung $\leftrightarrow$ (Psycho-, Neuro- und Biophysiologie) $\leftrightarrow$ Neuronale Prozesse (Physiologie) $\leftrightarrow$
 \item \textbf{Funktionale Physiologie:} Erkenntnisse durch Patienten mit verletzten Gehirnen, elektrische Störungen von außen, durch teilweise Einschläferung, mit Elektro-Enzephalographie, Magneto-Enzephalographie
 \end{itemize}
-\subsubsection{Psychophysikalische Skalierung}
+\subsection{Psychophysikalische Skalierung}
 \begin{itemize}
 \item \textbf{Wahrnehmung ist relativ:} Größe / Helligkeit 
 \item \textbf{Auflösung des Auges:} $\delta$ minimaler Sehwinkel, bei dem 2 Linien im Abstand $s$ getrennt erkannt werden\[s = 2a \cdot \tan{\frac{\delta}{2}}\] mit Betrachtungsabstand $a$
@@ -532,7 +532,7 @@ Dabei sind $\begin{pmatrix} x_0 \\ y_0 \end{pmatrix}$ und $\begin{pmatrix} x_3 \
 \item \textbf{Bel:} Logarithmus des Quotienten zweier Leistungen \[Pegel = \lg \frac{R}{R_0} \text{ [Bel]}\]
 \item \textbf{Dezibel:} Zehntel eines Bels  \[Pegel=10 \cdot \lg \frac{R}{R_0} =10 \cdot \lg\left(\frac{A^2}{A_0^2}\right)=20 \cdot \lg\left(\frac{A}{A_0}\right)\] [dB] und $A_0=2\cdot10^{-5}$ Pa heißt der Luftschall
 \end{itemize}
-\subsubsection{Gestalt}
+\subsection{Gestalt}
 \begin{itemize}
 \item \textbf{Wahrnehmung:} Extraktion elementarer Merkmale (Kanten, Farbe) $\rightarrow$ Präattentive Verarbeitung (Erkennen elementarer Bestandteile) $\rightarrow$ Attentive Verarbeitung (Konstruktion des Gesamten)
 \item Wörter eines Textes werden nicht Buchstabe für Buchstabe wahrgenommen (Auge liest 6-8 Buchstaben und springt dann weiter (ca. 20 ms)), Hören funktioniert ähnlich (Speicherdauer ca. 1,5 s)
