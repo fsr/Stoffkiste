@@ -1,0 +1,2 @@
+<!-- This file is not named `*.html` so `/build.sh` does not index it. -->
+<style>@media print { body { max-width: none; } }</style>

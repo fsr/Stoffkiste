@@ -25,6 +25,48 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
+      # create TheoLog/Übungen.html
+      - uses: docker://pandoc/core:3
+        with:
+          args: >-
+            --standalone --toc --mathml
+            --output=TheoLog/Übungen.html
+            --include-in-header=TheoLog/header-html.txt
+            TheoLog/preamble.md
+            TheoLog/loesung01.md
+            TheoLog/loesung02.md
+            TheoLog/loesung03.md
+            TheoLog/loesung04.md
+            TheoLog/loesung05.md
+            TheoLog/loesung06.md
+            TheoLog/loesung07.md
+            TheoLog/loesung08.md
+            TheoLog/loesung09.md
+            TheoLog/loesung10.md
+            TheoLog/loesung11.md
+            TheoLog/loesung12.md
+
+      # create TheoLog/Übungen.tex
+      - uses: docker://pandoc/core:3
+        with:
+          args: >-
+            --standalone
+            --output=TheoLog/Übungen.tex
+            --include-in-header=TheoLog/header-tex.txt
+            TheoLog/preamble.md
+            TheoLog/loesung01.md
+            TheoLog/loesung02.md
+            TheoLog/loesung03.md
+            TheoLog/loesung04.md
+            TheoLog/loesung05.md
+            TheoLog/loesung06.md
+            TheoLog/loesung07.md
+            TheoLog/loesung08.md
+            TheoLog/loesung09.md
+            TheoLog/loesung10.md
+            TheoLog/loesung11.md
+            TheoLog/loesung12.md
+
       # Convert .tex to .pdf
       - uses: xu-cheng/latex-action@v3
         with:

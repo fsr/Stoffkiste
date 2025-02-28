@@ -1,0 +1,14 @@
+% This file is not named `*.tex` so `/build.sh` does not try to typeset it.
+
+\usepackage[margin=20mm,footskip=10mm]{geometry}
+\usepackage[default]{opensans}
+% FIXME \bm
+\newcommand*{\bm}[1]{#1}
+% add colored background to quotes, see https://tex.stackexchange.com/a/180400
+\usepackage{xcolor}
+\definecolor{darkgreen}{HTML}{36AB14}
+\colorlet{shadecolor}{darkgreen!10}
+\usepackage{framed}
+\let\oldquote=\quote
+\let\endoldquote=\endquote
+\renewenvironment{quote}{\begin{snugshade}\begin{oldquote}}{\end{oldquote}\end{snugshade}}
