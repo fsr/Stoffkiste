@@ -16,3 +16,5 @@ Diese Notizen sind während meiner Vorbereitung für die Prüfung *Theoretische 
   * [Link zu den Online-Vorlesungen (Sommersemester 2021)](https://www.youtube.com/playlist?list=PLz7XhF-sAU8z4FtL7V9uefCXzW9Z9rk5c)
 
 Wenn Lösungen mit **TODO** markiert sind, sind diese nicht richtig ausgearbeitet und sollten eigentlich später nochmal genauer betrachtet werden.
+
+**Disclaimer:** Das ganze hat für die Note 3,0 gereicht.
