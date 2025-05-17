@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -euo pipefail
+shopt -s nullglob
 
 declare -a FILES
 
@@ -22,11 +23,11 @@ if [[ "$1" = "build" || "$1" = "deploy" ]]; then
 
     # building index file
     WS="        "
-    BODY="$(find . -name "*.pdf" -type f -printf "%h\n" | sort -u | while read DIR; do
+    BODY="$(find . '(' -name "*.html"  -o -name "*.pdf" ')' -type f -printf "%h\n" | sort -u | while read DIR; do
         pushd "$DIR" > /dev/null
         echo "$WS<h2>$(echo $DIR | cut -d'/' -f 2-)</h2>"
         echo "$WS<ul>"
-        for PDF in *.pdf; do
+        for PDF in *.html *.pdf; do
             echo "$WS    <li><a href='$DIR/$PDF'>$PDF</a></li>"
         done
         echo "$WS</ul>"
@@ -57,7 +58,7 @@ if [[ "$1" = "deploy" ]]; then
     DEPLOY_REPOSITORY=$2
     DEPLOY_BRANCH=$3
     echo "deploying to $DEPLOY_REPOSITORY:$DEPLOY_BRANCH"
-    find .  -name "*.pdf" -type f -print -exec git add {} \;
+    find . '(' -name "*.html"  -o -name "*.pdf" ')' -type f -print -exec git add {} \;
     CURR_COMMIT=$(git rev-parse HEAD)
     git add index.htm
     git commit -m "built PDFs and index"
