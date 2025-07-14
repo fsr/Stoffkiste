@@ -68,7 +68,7 @@ jobs:
             TheoLog/loesung12.md
 
       # Convert .tex to .pdf
-      - uses: xu-cheng/latex-action@v3
+      - uses: xu-cheng/latex-action@v4
         with:
           root_file: "**/*.tex"
           glob_root_file: true
